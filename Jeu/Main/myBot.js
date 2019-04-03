@@ -36,29 +36,28 @@ client.on('message', (message) => {
     // command est la commande écrite par le joueur
     const command = args.shift().toLowerCase();
 
-    if(command == 'id') {
-      if(message.member.roles.some(r=>['Joueur'].includes(r.name))) {
-        finJeu.initStat(message.author);
-        return;
-      }
-      else {
-        message.channel.send('Vous vous êtes déjà enregistré.');
-      }
-    }
-
     let partie;
     // on charge les informations du joueur
     try{
       partie = sfm.loadSave(message.author.id);
     }
     catch(e) {
-      finJeu.initStat(message.author);
+      initJeu.initstat(message.author);
       partie = sfm.loadSave(message.author.id);
     }
 
 
     switch(command) {
       // Start : commencer une partie
+      case 'id':
+        if(message.member.roles.some(r=>['Joueur'].includes(r.name))) {
+          initJeu.initstat(message.author);
+          return;
+        }
+        else {
+          message.channel.send('Vous vous êtes déjà enregistré.');
+        }
+        break;
       case 'start':
         partie.nbJour = -2;
         partie.tuto = false;
@@ -142,7 +141,7 @@ client.on('messageReactionAdd', (reaction, user) => {
 
 // Fonction qui s'active lorsqu'un joueur entre dans le serveur
 client.on('guildMemberAdd', (member) => {
-    finJeu.initStat(member.user);
+    initJeu.initstat(member.user);
 });
 
 /** Fonction qui renvoie l'id du channel qui a pour nom chanName
