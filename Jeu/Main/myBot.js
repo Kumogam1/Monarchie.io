@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const myBot = require('./myBot.js');
+
+
 const initJeu = require('./initJeu.js');
 const finJeu = require('./finJeu.js');
 const sfm = require('./saveFileManagement.js');
@@ -52,7 +54,7 @@ client.on('message', (message) => {
       // Start : commencer une partie
       case 'id':
         if(message.member.roles.some(r=>['Joueur'].includes(r.name))) {
-          initJeu.initstat(message.author);
+          initJeu.initStat(message.author);
           return;
         }
         else {
@@ -97,7 +99,10 @@ client.on('message', (message) => {
       default:
         message.channel.send('Commande inconnue');
         break;
+
 		}
+
+
   }
 });
 
