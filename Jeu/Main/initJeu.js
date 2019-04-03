@@ -1,8 +1,6 @@
 const Discord = require('discord.js');
 const sfm = require('./saveFileManagement.js');
 const myBot = require('./myBot.js');
-const calcul = require('../Evenement/calcul.js');
-const event = require('../Evenement/event.js');
 
 /** Fonction initialisant la partie
 * @param {string} message - Message discord
@@ -12,14 +10,14 @@ exports.initJeu = function initJeu(message, client) {
 
 	if(!message.member.roles.some(r=>['Joueur'].includes(r.name))) {
 
-		//On récupère les informations concernant le joueur
+		// On récupère les informations concernant le joueur
 		const partie = sfm.loadSave(message.author.id);
 		const eventName = 'Joueur';
 
-		//Création et assignation des roles au joueur
+		// Création et assignation des roles au joueur
 		const rolePers = initRole(message, eventName, client);
 
-		//Création des channels
+		// Création des channels
 		initChannelGrp(message, partie, message.author.username, rolePers);
 
 		message.delete();
@@ -39,17 +37,17 @@ exports.initJeu = function initJeu(message, client) {
 **/
 function initRole(message, eventName, client) {
 
-	//Nom du role
+	// Nom du role
 	const nomRole = eventName + '-' + message.author.username;
 
-	//Recherche du role 'Joueur'
+	// Recherche du role 'Joueur'
 	const myRole = message.guild.roles.find(role => {
 		if(role.name == 'Joueur') {
 			return role;
 		}
 	});
 
-	//Ajout du role 'Joueur' au joueur
+	// Ajout du role 'Joueur' au joueur
 	message.member.addRole(myRole);
 
 	message.guild.createRole({
@@ -57,7 +55,7 @@ function initRole(message, eventName, client) {
 		color: 0x00FF00,
 		permissions: 0,
 	}).then(role => {
-		//Ajout du role 'Joueur-pseudo' au joueur
+		// Ajout du role 'Joueur-pseudo' au joueur
 		message.member.addRole(role, nomRole)
 		.catch(error => client.catch(error));
 	})
@@ -65,6 +63,7 @@ function initRole(message, eventName, client) {
 	return nomRole;
 }
 
+// WIP
 /** Fonction créant un channel visible que pour l'utilisateur
 * @param {string} message - Message discord
 * @param {Object} partie - Objet json de la partie
@@ -83,7 +82,7 @@ function initChannel(message, partie, rolePers, channelName, chanGrpId) {
 		// Place le channel textuel dans la catégorie de jeu
 		chan.setParent(chanGrpId)
 		.then((chan2) => {
-			//On établit les permissions
+			// On établit les permissions
 			chan2.overwritePermissions(message.guild.roles.find(role => {
 				if(role.name == '@everyone') {
 					return role;
@@ -130,6 +129,8 @@ function initChannel(message, partie, rolePers, channelName, chanGrpId) {
 	return '```Added```';
 }
 
+
+// WIP
 /** Fonction initialisant les channels et les caractéristique de l'utilisateur
 * @param {string} message - Message discord
 * @param {Object} partie - Objet json de la partie
@@ -153,7 +154,7 @@ function initChannelGrp(message, partie, channelGrpName, rolePers) {
 	server.createChannel(channelGrpName, 'category')
 	.then(async chanGrp => {
 
-		//On initialise toutes les informations du joueur
+		// On initialise toutes les informations du joueur
 		res = chanGrp.id;
 		partie.chanGrp = chanGrp.id;
 		partie.player = message.author.id;
@@ -198,10 +199,10 @@ function initChannelGrp(message, partie, channelGrpName, rolePers) {
 **/
 function bienvenue(message) {
 
-	//on récupère les informations du joueur
+	// On récupère les informations du joueur
 	const partie = sfm.loadSave(message.author.id);
 
-	//On cherche l'id du channel 'hub'
+	// On cherche l'id du channel 'hub'
 	const chanId = myBot.messageChannel(message, 'hub', partie);
 
 	if(partie.tuto) {
@@ -228,32 +229,20 @@ function bienvenue(message) {
 	});
 }
 
-/** Fonction qui écrit le message de bienvenue du médecin
-* @param {string} message - Message discord
-* @param {string} partie.nom - Nom du personnage
+// WIP
+/** Fonction initialisant les channels et les caractéristiques de l'utilisateur
+* @param {string} user - Message discord
 **/
-exports.accueilMedecin = function accueilMedecin(message, partie)
-{
-	const doseInit = calcul.doses(partie)[0];
-	const doseObj = calcul.doses(partie)[1];
-	const augmentation = calcul.doses(partie)[2];
+exports.initStat = function initStat(user) {
 
-	const embed = new Discord.RichEmbed()
-	.setTitle('Bienvenue')
-	.setAuthor('Docteur Greece', 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/155/female-health-worker-type-1-2_1f469-1f3fb-200d-2695-fe0f.png')
-	.setColor(808367)
-	.setFooter('Dr Greece', 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/155/female-health-worker-type-1-2_1f469-1f3fb-200d-2695-fe0f.png')
-	.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Caduceus.svg/299px-Caduceus.svg.png') // Symbole médecine
-	.setTimestamp() // Crée de l'espace
-	.addField('Bonjour ' + partie.nom, 'Je m\'appelle Alda Greece, je serai votre diabètologue tout le long du jeu.\n' +
-						'Vous êtes actuellement atteint(e) de diabète **(1)**. Je vais en conséquence vous aider à gérer votre taux d\'insuline,' +
-						' à l\'aide d\'un bilan à chaque fin de journée dans lequel je vais vous donner des conseils ainsi qu\'un commentaire sur votre journée.')
-	.addField('(1)', '*Le diabète se caractérise par une hyperglycémie chronique,' +
-						'c’est-à-dire un excès de sucre dans le sang et donc un taux de glucose (glycémie) trop élevé*')
-	.addField('Conseil de début de partie', 'Votre objectif sera d\'atteindre un taux de glycémie entre 0.7g/L et 1.3g/L. Pour cela il est recommandé de commencer en prenant une dose d\'insuline de ' + doseInit.toFixed().toString() + ' (un dixième de votre poids) et de l\'augmenter de ' + augmentation + ' lors de chacune de vos prises jusqu\'à arriver à un taux convenable.')
+	// Création d'une collection comprenant les informations
+	const partie = {};
 
-	message.channel.send({ embed })
-	.then(async function(message) {
-		await message.react('➡');
-	});
-}
+	// Mise à zero des informations
+	partie.chanGrp = '';
+	partie.player = user.id;
+	partie.nbJour = 0;
+	partie.numJour = -1;
+
+	sfm.save(user.id, partie);
+};
