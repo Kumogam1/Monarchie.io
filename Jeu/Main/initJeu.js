@@ -161,33 +161,23 @@ function initChannelGrp(message, partie, channelGrpName, rolePers) {
 		partie.tabPerso = [];
 		partie.nom = '';
 		partie.sexe = '';
-		partie.age = 0;
-		partie.taille = 0;
-		partie.poids = 0;
+		partie.age = 20;
+
 		partie.partJour = 0;
 		partie.numJour = -1;
 		partie.numEvent = -1;
 		partie.choixPerso = 0;
 		partie.nbInsu = 3;
-		partie.insuline = 0;
-		partie.activite = [];
-		partie.impactActivite = [];
-		partie.impactNutrition = [];
-		partie.consequence = [];
+
 		partie.evenement = true;
 		partie.mort = false;
-		partie.glycemie = 2.5;
-		partie.tabGlycemie = [2.5];
-		partie.stress = 0;
-		partie.vie = 100;
-		partie.amput = 0;
-		partie.soda = true;
-		partie.faim = 0;
-		partie.breakdown = 50;
+
 		initChannel(message, partie, rolePers, 'Hub', res);
-		initChannel(message, partie, rolePers, 'Informations', res);
-		initChannel(message, partie, rolePers, 'Personnage', res);
-		initChannel(message, partie, rolePers, 'Journal', res);
+		initChannel(message, partie, rolePers, 'Historique', res);
+		initChannel(message, partie, rolePers, 'Statistiques', res);
+		initChannel(message, partie, rolePers, 'Conseil', res);
+		initChannel(message, partie, rolePers, 'Finances', res);
+		initChannel(message, partie, rolePers, 'Famille', res);
 		sfm.save(message.author.id, partie);
 	})
 	.catch(console.error);
