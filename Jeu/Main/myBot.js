@@ -12,7 +12,7 @@ const config = require('../token.json');
 // Fonction qui s'active quand le bot est lancé
 client.on('ready', () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
-  client.user.setActivity('aider les diabétiques');
+  client.user.setActivity('gouverner la France');
 });
 
 // Fonction qui s'active quand le bot est crash
@@ -174,18 +174,14 @@ function text(message) {
 
   const embed = new Discord.RichEmbed()
   .setColor(0x00AE86)
-  .setTitle('Bienvenue dans Medieval.io')
-  .addField('Qu\'est ce que Medieval.io ? La monarchie est soumise à des lois qui ne sont pas toujours contournables, même pas le monarque lui-même. Les droits de successions peuvent s\'avérer compliqués; il est alors primordial d\'assurer sa descendance afin de voir sa famille rester au pouvoir.')
-  .addField('Vous êtes Roi de France en l\'an de grâce 1300 et avez donc sous votre gouvernance un royaume et votre famille. Pour garantir la prospérité de la nation et de votre nom, vous allez devoir faire preuve de reflexion afin de garantir votre règne et celui de votre lignée.')
-  .addField('Pour cela vous allez devoir gérer vos relation et la legislation du pays.')
-  .addField('Comment jouer ?', 'Chaque tour dure 5 ans, vous pouvez alors choisir ce que vous voulez faire pour cette période.')
+  .setTitle('Bienvenue dans Medieval.io.')
+
+  .addField('Qu\'est ce que Medieval.io ?','La monarchie est soumise à des lois qui ne sont pas toujours contournables, même pas le monarque lui-même. Les droits de successions peuvent s\'avérer compliqués; il est alors primordial d\'assurer sa descendance afin de voir sa famille rester au pouvoir.')
+  .addField('Vous êtes Roi de France en l\'an de grâce 1300', 'Vous avez donc sous votre gouvernance un royaume et votre famille. Pour garantir la prospérité de la nation et de votre nom, vous allez devoir faire preuve de reflexion afin de garantir votre règne et celui de votre lignée. Pour cela vous allez devoir gérer vos relation et la legislation du pays.')
+  .addField('Comment jouer ?', 'Chaque tour dure 5 ans, vous pouvez alors choisir ce que vous voulez faire pour cette période. Tous les choix se feront à l\'aide des réactions que vous mettrez sous les messages ou par message texte.')
   .addField('Changer la législation',  'Vous pouvez changer les lois en votre faveure en faisant voter par le conseil pour que votre descendance reste au pouvoir après votre mort ou en abrogeant celles qui menacent votre lignée.')
   .addField('Gérer votre famille', 'Vous pouvez gérer votre famille, à commencer par vous-même. Vous pouvez vous marier, marier vos enfants avec d’autres nobles ou encore les confier à l’église ou aux forces armées de votre pays.')
-  .addField('Tous ces choix se feront à l\'aide des réactions que vous mettrez sous les messages ou par message texte.')
   .addField('Votre objectif ?', 'Faire régner votre déscendance le plus longtemps possible, si vous gérez votre règne correctement vous allez alors avancer dans le temps et voir les générations de votre famille se succéder au trone.')
-  .addField('Lancer le jeu : ', '/start')
-  .addField('Arrêt d\'urgence : ', '/end')
-  .addField('Autres commandes : ', '/help')
 
   message.channel.send({ embed });
 }
