@@ -1,6 +1,34 @@
 {
-  "chanGrp": "",
+  "chanGrp": "563033579748327436",
   "player": "73026412281344000",
-  "nbJour": 0,
-  "numJour": -1
+  "nbJour": -2,
+  "numJour": -1,
+  "tuto": false,
+  "tabPerso": [],
+  "nom": "",
+  "sexe": "",
+  "age": 0,
+  "taille": 0,
+  "poids": 0,
+  "partJour": 0,
+  "numEvent": -1,
+  "choixPerso": 0,
+  "nbInsu": 3,
+  "insuline": 0,
+  "activite": [],
+  "impactActivite": [],
+  "impactNutrition": [],
+  "consequence": [],
+  "evenement": true,
+  "mort": false,
+  "glycemie": 2.5,
+  "tabGlycemie": [
+    2.5
+  ],
+  "stress": 0,
+  "vie": 100,
+  "amput": 0,
+  "soda": true,
+  "faim": 0,
+  "breakdown": 50
 }
