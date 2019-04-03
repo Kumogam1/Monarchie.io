@@ -38,14 +38,15 @@ client.on('message', (message) => {
 
     let partie;
     // on charge les informations du joueur
+    /*
     try{
       partie = sfm.loadSave(message.author.id);
     }
     catch(e) {
-      initJeu.initstat(message.author);
+      initJeu.initStat(message.author);
       partie = sfm.loadSave(message.author.id);
     }
-
+*/
 
     switch(command) {
       // Start : commencer une partie
@@ -59,9 +60,7 @@ client.on('message', (message) => {
         }
         break;
       case 'start':
-        partie.nbJour = -2;
-        partie.tuto = false;
-        sfm.save(message.author.id, partie);
+        //sfm.save(message.author.id, partie);
         initJeu.initJeu(message, client);
         break;
       // Help : afficher toutes les commandes importantes
@@ -175,11 +174,15 @@ function text(message) {
 
   const embed = new Discord.RichEmbed()
   .setColor(0x00AE86)
-  .setTitle('Bienvenue dans Mellitus')
-
-  .addField('Qu\'est ce que Mellitus ?', 'Jouant la consience du personnage choisi ou créé, Mellitus a pour but de vous apporter une aide, afin de vous apprendre de manière assez ludique comment gérer votre taux d’insuline, tout en gardant le côté serious game. De plus, de nombreux événements vont apparaître lors de la partie afin de développer votre adaptation aux circonstances. En fin de journée, vous aurez accés aux informations concernant votre personnage ainsi qu\'un récapitulatif de votre journée. Le but du jeu étant de rester en vie le plus longtemps possible.')
-  .addField('Le diabète', 'Voici un lien qui va vous renvoyer sur un pdf qui vous expliquera plus en détail le diabète ➡ https://drive.google.com/open?id=1AZ9kk6WSVgL33GI2OUzjU2g6XPzKwNqX')
-  .addField('Comment jouer ?', 'La partie est divisée en jour et chaque jour est une suite de choix. A chaque choix, ses conséquences.\n Durant la partie, vous ferez vos choix de 2 façons différentes : sous forme de texte ou sous forme de boutons.\nLe jeu n\'étant pas terminé, il ne peut accueillir qu\'un seul joueur à la fois.')
+  .setTitle('Bienvenue dans Medieval.io')
+  .addField('Qu\'est ce que Medieval.io ? La monarchie est soumise à des lois qui ne sont pas toujours contournables, même pas le monarque lui-même. Les droits de successions peuvent s\'avérer compliqués; il est alors primordial d\'assurer sa descendance afin de voir sa famille rester au pouvoir.')
+  .addField('Vous êtes Roi de France en l\'an de grâce 1300 et avez donc sous votre gouvernance un royaume et votre famille. Pour garantir la prospérité de la nation et de votre nom, vous allez devoir faire preuve de reflexion afin de garantir votre règne et celui de votre lignée.')
+  .addField('Pour cela vous allez devoir gérer vos relation et la legislation du pays.')
+  .addField('Comment jouer ?', 'Chaque tour dure 5 ans, vous pouvez alors choisir ce que vous voulez faire pour cette période.')
+  .addField('Changer la législation',  'Vous pouvez changer les lois en votre faveure en faisant voter par le conseil pour que votre descendance reste au pouvoir après votre mort ou en abrogeant celles qui menacent votre lignée.')
+  .addField('Gérer votre famille', 'Vous pouvez gérer votre famille, à commencer par vous-même. Vous pouvez vous marier, marier vos enfants avec d’autres nobles ou encore les confier à l’église ou aux forces armées de votre pays.')
+  .addField('Tous ces choix se feront à l\'aide des réactions que vous mettrez sous les messages ou par message texte.')
+  .addField('Votre objectif ?', 'Faire régner votre déscendance le plus longtemps possible, si vous gérez votre règne correctement vous allez alors avancer dans le temps et voir les générations de votre famille se succéder au trone.')
   .addField('Lancer le jeu : ', '/start')
   .addField('Arrêt d\'urgence : ', '/end')
   .addField('Autres commandes : ', '/help')
