@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const myBot = require('./myBot.js');
+
+/*
 const initJeu = require('./initJeu.js');
 const finJeu = require('./finJeu.js');
 const event = require('../Evenement/event.js');
@@ -9,13 +11,15 @@ const sfm = require('./saveFileManagement.js');
 const as = require('../Graphiques/affichageStats.js');
 const cp = require('../Personnage/creationPerso.js');
 const bk = require('../Evenement/gestionBreakdown.js')
-
+*/
 const client = new Discord.Client();
 
 const config = require('../token.json');
+/*
 const perso = require('../Personnage/perso.json');
 const tableaux = require('../Evenement/tableaux.json');
 
+*/
 // listes pour les activités que le joueur peut pratiquer et des repas qu'il peut manger
 const emoteActiviteM = ['🎮', '🏃', '🛏', '📖'];
 const emoteActiviteA = ['🏀', '🏋', '🎮', '🎣', '🏊', '🚶', '🍷', '🎥'];
@@ -28,7 +32,7 @@ const emoteRepasS = ['🍔', '🍖', '🥗', '🍚', '🍝'];
 //Fonction qui s'active quand le bot est lancé
 client.on('ready', () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
-  client.user.setActivity('aider les diabétiques');
+  client.user.setActivity('performing at MAMA \'s 2020 ');
 });
 
 //Fonction qui s'active quand le bot est crash
@@ -68,19 +72,19 @@ client.on('message', (message) => {
       partie = sfm.loadSave(message.author.id);
     }
     catch(e) {
-      finJeu.initStat(message.author);
-      partie = sfm.loadSave(message.author.id);
+    //  finJeu.initStat(message.author);
+    //  partie = sfm.loadSave(message.author.id);
     }
 
 
     switch(command) {
       //Start : commencer une partie
-      case 'start':
+  /*    case 'start':
         partie.nbJour = -2;
         partie.tuto = false;
         sfm.save(message.author.id, partie);
         initJeu.initJeu(message, client);
-        break;
+        break; */
       //Help : afficher toutes les commandes importantes
       case 'help':
         const embed = new Discord.RichEmbed()
@@ -94,7 +98,7 @@ client.on('message', (message) => {
         .addField("/gly", "Afficher un graphique montrant le taux de glycemie *(Seulement en partie)*")
         message.channel.send({ embed });
         break;
-      //Tuto : commencer un tutoriel
+    /*  //Tuto : commencer un tutoriel
       case 'tuto':
         partie.nbJour = 1;
         partie.tuto = true;
@@ -157,7 +161,10 @@ client.on('message', (message) => {
       default:
         message.channel.send('Commande inconnue');
         break;
+          */
 		}
+
+
   }
 });
 
@@ -212,7 +219,7 @@ client.on('messageReactionAdd', (reaction, user) => {
   }
 
   //Action effectuée en fonction de la réaction
-  switch(reaction.emoji.name) {
+  /* switch(reaction.emoji.name) {
     //Choix d'un personnage prédéfini
     case '✅':
       choixPerso(reaction.message, partie);
@@ -262,6 +269,7 @@ client.on('messageReactionAdd', (reaction, user) => {
       event.event(reaction.message, partie, tabNR, tabER);
       break;
   }
+  */
 
   //Quand le joueur choisit son personnage (A, B, C ou D)
   if(reaction.emoji.name == '🇦'
