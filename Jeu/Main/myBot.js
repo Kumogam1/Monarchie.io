@@ -110,10 +110,7 @@ client.on('message', (message) => {
       default:
         message.channel.send('Commande inconnue');
         break;
-
 		}
-
-
   }
 });
 
@@ -143,8 +140,7 @@ client.on('messageReactionAdd', (reaction, user) => {
   switch(reaction.emoji.name) {
     // Choix d'un personnage prédéfini
     case '✅':
-        numPerso = 0;
-        initJeu.accueilMedecin(reaction.message, partie);
+        initJeu.accueil(reaction.message, partie);
       break;
     // Passer à l'évenement suivant
     case '➡':
@@ -165,6 +161,16 @@ client.on('messageReactionAdd', (reaction, user) => {
           value: fieldTextInfo
         }]
         } });
+      break;
+      case '👴':
+      break;
+      case '👱':
+      break;
+      case '👲':
+      break;
+      case '👵':
+      break;
+      case '👸':
       break;
   }
 });
@@ -196,7 +202,7 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
   return id;
 };
 
-function writePerso(message, numPerso) {
+exports.writePerso = function writePerso(message, numPerso) {
 
         var enf =""
         for (var i in perso.enfants[numPerso]){
