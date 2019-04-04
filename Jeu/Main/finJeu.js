@@ -116,7 +116,7 @@ exports.msgFin = function msgFin(message, partie) {
 			const embed = new Discord.RichEmbed()
 			.setColor(15013890)
 			.setImage('https://imgcs.artprintimages.com/img/print/peinture/color-me-happy-game-over-red_a-g-15238157-0.jpg')
-			.addField('__**C\'est perdu ou gagné ? A toi de juger !**__', textMort + 'Vous avez tenu ' + partie.numJour + ' jour(s).\n' + text + '\n\n')
+			.addField('__**C\'est perdu ou gagné ? A toi de juger !**__', textMort + 'Vous avez tenu ' + '-1' + ' jour(s).\n' + text + '\n\n')
 			.addField('Pour quitter la partie : ', '/quit');
 
 			message.channel.send({ embed });
