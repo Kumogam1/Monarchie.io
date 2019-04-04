@@ -11,6 +11,13 @@ const client = new Discord.Client();
 
 const config = require('../token.json');
 
+
+
+// Dossier des personnages
+const perso = require('../Personnages/perso.json');
+
+
+
 // Fonction qui s'active quand le bot est lancé
 client.on('ready', () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
@@ -129,16 +136,15 @@ tabNA = tableaux.nomActiviteM;
 tabEA = emoteActiviteM;
 tabIA = tableaux.impactAM;
 tabIR = tableaux.impactRM;
-  //Autre
-  default:
-    console.log('Partie du jour inconnue.');
-}
+
+console.log('Partie du jour inconnue.');
+
   // Action effectuée en fonction de la réaction
   switch(reaction.emoji.name) {
     // Choix d'un personnage prédéfini
     case '✅':
       choixPerso(reaction.message, partie);
-        numPerso = 1;
+        numPerso = 0;
       break;
     // Passer à l'évenement suivant
     case '➡':
@@ -208,7 +214,7 @@ function choixPerso(message, partie) {
     .then((msg) => {
 
           writePerso(msg, i);
-      
+
     });
 }
 
@@ -222,20 +228,27 @@ function writePerso(message, numPerso) {
           author:
           {
             name: 'Le Roi',
-            icon_url: perso.icone[3]
+        
           },
           fields: [{
               name: 'Nom',
-              value: perso.nom[3],
+              value: perso.nom[0],
           },
           {
               name: 'Sexe',
-              value: perso.sexe[3],
+              value: perso.sexe[0],
           },
           {
               name: 'Age',
-              value: perso.age[3],
-          }],
+              value: perso.age[0],
+          },
+          {
+            name: 'Enfants',
+            value: perso.enfants[0],
+          }
+
+
+        ],
         } });
 
 }
