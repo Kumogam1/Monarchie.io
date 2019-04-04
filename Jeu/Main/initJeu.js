@@ -241,7 +241,9 @@ exports.initStat = function initStat(user) {
 
 exports.accueil = function accueil(message, partie)
 {
+
 	myBot.clear(message);
+
 	const embed = new Discord.RichEmbed()
 	.setTitle('Le roi est mort, vive le roi !')
 	.setColor(808367)

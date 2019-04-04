@@ -164,6 +164,7 @@ client.on('messageReactionAdd', (reaction, user) => {
       break;
       case '👴':
         numPerso = 0;
+        writeFamille(reaction.message,numPerso,partie)
       break;
       case '👱':
         numPerso = 2;
@@ -173,9 +174,12 @@ client.on('messageReactionAdd', (reaction, user) => {
       break;
       case '👵':
         numPerso = 4;
+
       break;
       case '👸':
         numPerso = 5;
+      case '👶':
+        marierEnfant(reaction.message,numPerso,partie)
       break;
   }
 });
@@ -323,6 +327,164 @@ function writeStat(message, partie){
     ],
   } });
 }
+
+
+// Statistiques
+function writeStat(message, partie){
+
+  console.log("on ecrit");
+  const id = myBot.messageChannel(message, "famille", partie);
+  //Récupérer les enfants
+  var enf =""
+    var enf =""
+
+  for (var i in perso.enfants){
+    enf = enf + " " + perso.enfants[i];
+  }
+    for (var i in perso.enfants[numPerso]){
+      enf = enf + " " +perso.id[perso.enfants[i]]  + " "  + perso.nom[perso.enfants[i]];
+    }
+
+var id = myBot.messageChannel(message, "statistiques", partie);
+
+message.guild.channels.get(id).send({embed: {
+    color : 0Xa1f442,
+    author:
+    {
+      name: 'Statistiques',
+    },
+    fields: [
+    {
+      name : "Année actuelle",
+      value : "1300 (en dur, à mettre dans une variable globale)",
+    },
+    {
+      name : 'Nom',
+      value : perso.nom[0],
+    },
+    {
+      name : 'Age',
+      value : perso.age[0],
+    },
+    {
+      name : 'Epoux/se',
+      value : perso.epoux[0],
+    },
+    {
+      name : "Enfant(s)",
+      value : enf,
+    },
+  ],
+} });
+  const embed = new Discord.RichEmbed()
+	.setTitle('Gérez votre famille')
+	.setColor(808367)// Symbole médecine
+	.setTimestamp() // Crée de l'espace
+  .addField( )
+	.addField(':older_man:  ', ' afficher ici le nom et prénom ! \n afficher ici   l\'age ! ')
+  .addField(' :baby: ', enf)
+  .addField(':ring:  ', 'afficher ici le nom du conjoint ')
+  .setTimestamp()
+  .addField('Tuer : ', ':dagger:')
+  .addField('Marier : ', ':ring:')
+  .addField('Marier un enfant : ', ':ring: :baby:')
+
+  message.guild.channels.get(id).send({embed})
+  .then(async function(mess) {
+		await mess.react('🗡');
+    await mess.react('💍');
+    await mess.react('👶');
+	});
+}
+
+
+function writeFamille(message,numPerso,partie) {
+
+
+  console.log("on ecrit");
+  const id = myBot.messageChannel(message, "famille", partie);
+  //Récupérer les enfants
+  var enf =""
+
+    for (var i in perso.enfants[numPerso]){
+      enf = enf + " | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
+      // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
+    }
+
+    var conjoint = perso.nom[perso.epoux[numPerso]];
+    var nom = perso.nom[numPerso];
+
+  const embed = new Discord.RichEmbed()
+	.setTitle('Gérez votre famille')
+	.setColor(808367)// Symbole médecine
+	.setTimestamp() // Crée de l'espace
+  .addField( )
+	.addField(':older_man:  ', nom)
+  .addField(' :baby: ', enf)
+  .addField(':ring:  ', conjoint)
+  .setTimestamp()
+  .addField('Tuer : ', ':dagger:')
+  .addField('Marier : ', ':ring:')
+  .addField('Marier un enfant : ', ':ring: :baby:')
+
+  message.guild.channels.get(id).send({embed})
+  .then(async function(mess) {
+		await mess.react('🗡');
+    await mess.react('💍');
+    await mess.react('👶');
+	});
+}
+
+function marierEnfant(message,numPerso,partie) {
+  const id = myBot.messageChannel(message, "famille", partie);
+  var enf =""
+  var pret = "Morgane"
+  var nb = 0;
+  for (var i in perso.enfants[numPerso]){
+    enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
+    nb += 1;
+    // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
+  }
+  const embed = new Discord.RichEmbed()
+  .setTitle('Marier un enfant')
+  .setColor(808367)// Symbole médecine
+  .setTimestamp() // Crée de l'espace
+  .addField(' Liste des enfants  : ', enf)
+  .addField(' Liste des prétendant/es ', ' 1 - Morgane')
+  .addField(' Séléctionnez l\'enfant à marier et sa prétendante en écrivant le numéro de l\'enfant puis du prétendant', ' -')
+  .addField('exemple : commande 1 1', ' - ')
+  message.guild.channels.get(id).send({embed})
+  client.on('message', (message) => {
+
+    // Si le message provient d'un bot ou qu'il ne contient pas le prefix approprié, on ne fait rien
+  	if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+
+    else {
+      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+
+      var enfant;
+      var pretendante = 1;
+      // command est la commande écrite par le joueur
+       enfant = args[0].toLowerCase() - 1;
+       idenfant = perso.id[perso.enfants[numPerso][enfant] - 1];
+
+       console.log(idenfant);
+       perso.epoux[idenfant] = 8;
+       console.log(perso.epoux[idenfant]);
+
+       var phrase = "  " + perso.nom[perso.enfants[numPerso][enfant] - 1] + " et " + perso.nom[perso.epoux[idenfant] - 1] + " sont maintenant mari et femme ! ";
+       const embed = new Discord.RichEmbed()
+       .setTitle('Marier un enfant')
+       .setColor(808367)// Symbole médecine
+       .setTimestamp() // Crée de l'espace
+       .addField(' Félicitations !   : ', phrase)
+       message.guild.channels.get(id).send({embed})
+
+    }
+  });
+
+}
+
 
 
 /** Fonction qui écrit le texte explicatif sur le serveur Discord
