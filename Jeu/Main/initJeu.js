@@ -161,18 +161,13 @@ function initChannelGrp(message, partie, channelGrpName, rolePers) {
 		res = chanGrp.id;
 		partie.chanGrp = chanGrp.id;
 		partie.player = message.author.id;
-		partie.tabPerso = [];
 		partie.nom = '';
 		partie.sexe = '';
 		partie.age = 20;
 
-		partie.partJour = 0;
-		partie.numJour = -1;
-		partie.numEvent = -1;
+		partie.annee = 1300;
 		partie.choixPerso = 0;
-		partie.nbInsu = 3;
 
-		partie.evenement = true;
 		partie.mort = false;
 
 		initChannel(message, partie, rolePers, 'Hub', res);
@@ -241,9 +236,7 @@ exports.initStat = function initStat(user) {
 
 exports.accueil = function accueil(message, partie)
 {
-
 	myBot.clear(message);
-
 	const embed = new Discord.RichEmbed()
 	.setTitle('Le roi est mort, vive le roi !')
 	.setColor(808367)

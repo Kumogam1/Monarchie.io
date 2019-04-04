@@ -6,7 +6,8 @@ const myBot = require('./myBot.js');
 const initJeu = require('./initJeu.js');
 const finJeu = require('./finJeu.js');
 const sfm = require('./saveFileManagement.js');
-//const his = require('../Historique/historique.js')
+const his = require('../Historique/historique.js')
+const gt = require('../Event/gestionTour.js')
 
 const client = new Discord.Client();
 
@@ -60,6 +61,9 @@ client.on('message', (message) => {
 
 
     switch(command) {
+      case 'gt':
+        gt.gTours(message, partie)
+        break;
       case 'perso':
         for (var i=0; i < 5; i++){
           writePerso(message, i);
@@ -140,27 +144,11 @@ client.on('messageReactionAdd', (reaction, user) => {
   switch(reaction.emoji.name) {
     // Choix d'un personnage prédéfini
     case '✅':
-        initJeu.accueil(reaction.message, partie);
+      initJeu.accueil(reaction.message, partie);
       break;
     // Passer à l'évenement suivant
     case '➡':
-      const chanId1 = myBot.messageChannel(reaction.message, 'Statistiques', partie);
-      const chanId2 = myBot.messageChannel(reaction.message, 'Historique', partie);
-      const chanId3 = myBot.messageChannel(reaction.message, 'Conseil', partie);
-      const chanId4 = myBot.messageChannel(reaction.message, 'Famille', partie);
-      const chanId5 = myBot.messageChannel(reaction.message, 'Finances', partie);
-      if(partie.tuto)
-        fieldTextInfo = 'Voici le channel Statistiques .\n Toutes les informations sur votre famille apparaitront ici';
-      else
-        fieldTextInfo = 'Un petit récapitulatif du taux de glycémie.';
-
-      reaction.message.guild.channels.get(chanId2).send({embed: {
-        color: 15013890,
-        fields: [{
-          name: 'Channel Informations',
-          value: fieldTextInfo
-        }]
-        } });
+      gt.gTours(reaction.message, partie);
       break;
       case '👴':
         numPerso = 0;
@@ -205,7 +193,6 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
       if(channel.name === chanName)
       {
           id = channel.id;
-          console.log(id);
       }
   });
   return id;
