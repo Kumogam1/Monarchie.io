@@ -1,0 +1,8 @@
+﻿{
+	"nom" : ["François Ier","Charles Quint","Louis XVI","Marie-Antoinette","Françoise de Foix"],
+	"sexe" : ["Homme","Homme","Homme","Femme","Femme","Femme"],
+	"age" : ["70 ans","42 ans","20 ans","65 ans","19 ans"],
+	"epoux" : ["Marie-Antoinette", "Célibataire", "Célibataire", "François Ier","Célibataire"],
+	"enfants" : [["Amal", "Anais", "Edouard"], "❌", "❌", ["Amal", "Anais", "Edouard"], "❌"],
+	"icone" : ["👴","👱","👲","👵","👸"]
+}

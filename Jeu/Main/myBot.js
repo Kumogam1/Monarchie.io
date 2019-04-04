@@ -6,6 +6,7 @@ const myBot = require('./myBot.js');
 const initJeu = require('./initJeu.js');
 const finJeu = require('./finJeu.js');
 const sfm = require('./saveFileManagement.js');
+//const his = require('../Historique/historique.js')
 
 const client = new Discord.Client();
 
@@ -59,13 +60,24 @@ client.on('message', (message) => {
 
 
     switch(command) {
+      case 'perso':
+        for (var i=0; i < 5; i++){
+          writePerso(message, i);
+        }
+        break;
+      case 'fct':
+        writeStat(message, partie);
+        break;
       // Start : commencer une partie
       case 'start':
         //sfm.save(message.author.id, partie);
         initJeu.initJeu(message, client);
         break;
+      case 'test':
+        his.historique(message, partie);
+        break;
       // Help : afficher toutes les commandes importantes
-    case 'help':
+      case 'help':
         const embed = new Discord.RichEmbed()
         .setColor(15013890)
         .setTitle('**Help**')
@@ -108,22 +120,21 @@ client.on('messageReactionAdd', (reaction, user) => {
   // Si le message provient d'un bot, on ne fait rien
   if(user.bot) return;
 
-  // on charge les informations du joueur
+  // On charge les informations du joueur
   const partie = sfm.loadSave(user.id);
   let tabNR = []; // tableau des noms des repas
-let tabNA = []; // tableau des noms d'activités
-let tabER = []; // tableau des emotes des repas
-let tabEA = []; // tableau des emotes d'activités
-let tabIA = []; // tableau de l'impact des activités
-let tabIR = []; // tableau de l'impact  des repas
+  let tabNA = []; // tableau des noms d'activités
+  let tabER = []; // tableau des emotes des repas
+  let tabEA = []; // tableau des emotes d'activités
+  let tabIA = []; // tableau de l'impact des activités
+  let tabIR = []; // tableau de l'impact  des repas
 
-//On attribut à chaque tableau les informations appropriées en fonction de la partie du jour
-tabNR = tableaux.nomRepasM;
-tabNA = tableaux.nomActiviteM;
-tabIA = tableaux.impactAM;
-tabIR = tableaux.impactRM;
+  // On attribut à chaque tableau les informations appropriées en fonction de la partie du jour
+  tabNR = tableaux.nomRepasM;
+  tabNA = tableaux.nomActiviteM;
+  tabIA = tableaux.impactAM;
+  tabIR = tableaux.impactRM;
 
-console.log('Partie du jour inconnue.');
 
   // Action effectuée en fonction de la réaction
   switch(reaction.emoji.name) {
@@ -133,22 +144,38 @@ console.log('Partie du jour inconnue.');
       break;
     // Passer à l'évenement suivant
     case '➡':
-        writeFamille(reaction.message,numPerso,partie);
-    //  event.event(reaction.message, partie, tabNR, tabER);
+      const chanId1 = myBot.messageChannel(reaction.message, 'Statistiques', partie);
+      const chanId2 = myBot.messageChannel(reaction.message, 'Historique', partie);
+      const chanId3 = myBot.messageChannel(reaction.message, 'Conseil', partie);
+      const chanId4 = myBot.messageChannel(reaction.message, 'Famille', partie);
+      const chanId5 = myBot.messageChannel(reaction.message, 'Finances', partie);
+      if(partie.tuto)
+        fieldTextInfo = 'Voici le channel Statistiques .\n Toutes les informations sur votre famille apparaitront ici';
+      else
+        fieldTextInfo = 'Un petit récapitulatif du taux de glycémie.';
+
+      reaction.message.guild.channels.get(chanId2).send({embed: {
+        color: 15013890,
+        fields: [{
+          name: 'Channel Informations',
+          value: fieldTextInfo
+        }]
+        } });
       break;
       case '👴':
+        numPerso = 0;
       break;
       case '👱':
+        numPerso = 2;
       break;
       case '👲':
+        numPerso = 3;
       break;
       case '👵':
+        numPerso = 4;
       break;
       case '👸':
-
-      break;
-      case '👶':
-      marierEnfant(reaction.message,numPerso,partie);
+        numPerso = 5;
       break;
   }
 });
@@ -174,6 +201,7 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
       if(channel.name === chanName)
       {
           id = channel.id;
+          console.log(id);
       }
   });
   return id;
@@ -181,15 +209,16 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
 
 exports.writePerso = function writePerso(message, numPerso) {
 
-
-    // Affiche le texte du 4e personnage avec les réactions
+        var enf =""
+        for (var i in perso.enfants[numPerso]){
+          enf = enf + " " + perso.enfants[numPerso][i];
+        }
 
         message.channel.send({ embed: {
           color: 0x00AE86,
           author:
           {
-            name: 'Le Roi',
-
+            name: 'Présentation',
           },
           fields: [{
               name: 'Nom',
@@ -205,82 +234,61 @@ exports.writePerso = function writePerso(message, numPerso) {
           },
           {
             name: 'Enfants',
-            value: perso.enfants[numPerso],
+            value: enf,
+          },
+          {
+            name: 'Icone',
+            value : perso.icone[numPerso],
           }
-
-
         ],
         } });
 
 }
 
-function writeFamille(message,numPerso,partie) {
 
-  console.log("on ecrit");
-  const id = myBot.messageChannel(message, "famille", partie);
+// Statistiques
+function writeStat(message, partie){
+
   //Récupérer les enfants
-    var enf =""
-
-    for (var i in perso.enfants[numPerso]){
-      enf = enf + " " +perso.id[perso.enfants[i]]  + " "  + perso.nom[perso.enfants[i]];
-    }
-
-  const embed = new Discord.RichEmbed()
-	.setTitle('Gérez votre famille')
-	.setColor(808367)// Symbole médecine
-	.setTimestamp() // Crée de l'espace
-  .addField( )
-	.addField(':older_man:  ', ' afficher ici le nom et prénom ! \n afficher ici   l\'age ! ')
-  .addField(' :baby: ', enf)
-  .addField(':ring:  ', 'afficher ici le nom du conjoint ')
-  .setTimestamp()
-  .addField('Tuer : ', ':dagger:')
-  .addField('Marier : ', ':ring:')
-  .addField('Marier un enfant : ', ':ring: :baby:')
-
-  message.guild.channels.get(id).send({embed})
-  .then(async function(mess) {
-		await mess.react('🗡');
-    await mess.react('💍');
-    await mess.react('👶');
-	});
-}
-
-function marierEnfant(message,numPerso,partie) {
-
   var enf =""
-  var pret = "Morgane"
-  var nb;
-  for (var i in perso.enfants[numPerso]){
-    enf = enf + " " +perso.id[perso.enfants[i]]  + " "  + perso.nom[perso.enfants[i]];
-    nb += 1;
+
+  for (var i in perso.enfants){
+    enf = enf + " " + perso.enfants[i];
   }
-  const embed = new Discord.RichEmbed()
-  .setTitle('Marier un enfant')
-  .setColor(808367)// Symbole médecine
-  .setTimestamp() // Crée de l'espace
-  .addField(' Séléctionnez l\'enfant à marier et sa prétendante en écrivant le numéro de l\'enfant puis du prétendant')
-  .addField(' Liste des enfants  : ', enf)
-  .addField(' Liste des prétendant/es ', ' 1 - Morgane')
-  message.guild.channels.get(id).send({embed})
-  client.on('message', (message) => {
 
-    // Si le message provient d'un bot ou qu'il ne contient pas le prefix approprié, on ne fait rien
-  	if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+var id = myBot.messageChannel(message, "statistiques", partie);
 
-    else {
-      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-
-      var enfant;
-      var pretendante = 1;
-      // command est la commande écrite par le joueur
-      const command = args.shift().toLowerCase();
-
-
-    }
-  });
-
+message.guild.channels.get(id).send({embed: {
+    color : 0Xa1f442,
+    author:
+    {
+      name: 'Statistiques',
+    },
+    fields: [
+    {
+      name : "Année actuelle",
+      value : "1300 (en dur, à mettre dans une variable globale)",
+    },
+    {
+      name : 'Nom',
+      value : perso.nom[0],
+    },
+    {
+      name : 'Age',
+      value : perso.age[0],
+    },
+    {
+      name : 'Epoux/se',
+      value : perso.epoux[0],
+    },
+    {
+      name : "Enfant(s)",
+      value : enf,
+    },
+  ],
+} });
 }
+
 
 /** Fonction qui écrit le texte explicatif sur le serveur Discord
 * @param {string} message - Message discord
