@@ -145,38 +145,42 @@ client.on('messageReactionAdd', (reaction, user) => {
     case '➡':
       gt.gTours(reaction.message, partie);
       break;
-      case '👴':
-        numPerso = 0;
-        writeFamille(reaction.message,numPerso,partie)
-        writeConseil(reaction.message,partie) ;
+    case '👴':
+      myBot.clear(reaction.message);
+      numPerso = 0;
+      initJeu.initPerso(reaction.message, numPerso, partie);
       break;
-      case '👱':
-        numPerso = 2;
-        writeConseil(reaction.message,partie) ;
+    case '👱':
+      myBot.clear(reaction.message);
+      numPerso = 2;
+      initJeu.initPerso(reaction.message, numPerso, partie);
       break;
-      case '👲':
-        numPerso = 3;
-        writeConseil(reaction.message,partie) ;
+    case '👲':
+      myBot.clear(reaction.message);
+      numPerso = 3;
+      initJeu.initPerso(reaction.message, numPerso, partie);
       break;
-      case '👵':
-        numPerso = 4;
-        writeConseil(reaction.message,partie) ;
-
+    case '👵':
+      myBot.clear(reaction.message);
+      numPerso = 4;
+      initJeu.initPerso(reaction.message, numPerso, partie);
       break;
-      case '👸':
-        numPerso = 5;
-        writeConseil(reaction.message,partie) ;
-      case '👶':
-        marierEnfant(reaction.message,numPerso,partie)
+    case '👸':
+      myBot.clear(reaction.message);
+      numPerso = 5;
+      initJeu.initPerso(reaction.message, numPerso, partie);
       break;
-      case '🎊':
+    case '👶':
+      marierEnfant(reaction.message, numPerso, partie)
+      break;
+    case '🎊':
       if (partie.feteOrganise){
         fete(reaction.message, partie);
         partie.feteOrganise = false;
         sfm.save(reaction.message.author.id, partie);
       };
       break;
-      case '🏹':
+    case '🏹':
       if (partie.guerreDeclare){
         guerre(reaction.message, partie);
         partie.guerreDeclare = false;
@@ -467,19 +471,18 @@ message.guild.channels.get(id).send({embed: {
 
 function writeFamille(message,numPerso,partie) {
 
-
   console.log("on ecrit");
   const id = myBot.messageChannel(message, "famille", partie);
   //Récupérer les enfants
   var enf =""
 
-    for (var i in perso.enfants[numPerso]){
-      enf = enf + " | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
-      // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
-    }
+  for (var i in perso.enfants[numPerso]){
+    enf = enf + " | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
+    // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
+  }
 
-    var conjoint = perso.nom[perso.epoux[numPerso]];
-    var nom = perso.nom[numPerso];
+  var conjoint = perso.nom[perso.epoux[numPerso]];
+  var nom = perso.nom[numPerso];
 
   const embed = new Discord.RichEmbed()
 	.setTitle('Gérez votre famille')
