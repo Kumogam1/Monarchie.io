@@ -177,14 +177,14 @@ client.on('messageReactionAdd', (reaction, user) => {
       if (partie.feteOrganise){
         fete(reaction.message, partie);
         partie.feteOrganise = false;
-        sfm.save(reaction.message.author.id, partie);
+        sfm.save(partie.player, partie);
       };
       break;
     case '🏹':
       if (partie.guerreDeclare){
         guerre(reaction.message, partie);
         partie.guerreDeclare = false;
-        sfm.save(reaction.message.author.id, partie);
+        sfm.save(partie.player, partie);
       };
       break;
   }
