@@ -115,9 +115,8 @@ exports.msgFin = function msgFin(message, partie) {
 			// On écrit le message
 			const embed = new Discord.RichEmbed()
 			.setColor(15013890)
-			.setImage('https://imgcs.artprintimages.com/img/print/peinture/color-me-happy-game-over-red_a-g-15238157-0.jpg')
-			.addField('__**C\'est perdu ou gagné ? A toi de juger !**__', textMort + 'Vous avez tenu ' + '-1' + ' jour(s).\n' + text + '\n\n')
-			.addField('Pour quitter la partie : ', '/quit');
+			.setImage('http://image.noelshack.com/fichiers/2018/49/4/1544133070-1544132547663.gif')
+			.addField('**T\'as perdu :cry:**', 'Le conseil n\'a pas pu trouver de descendance.\nPour quitter la partie : `' + config.prefix + "quit`")
 
 			message.channel.send({ embed });
 		}

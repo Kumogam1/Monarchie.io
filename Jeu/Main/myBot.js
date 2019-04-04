@@ -1,6 +1,10 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const myBot = require('./myBot.js');
+
+const opi = require('../Personnages/opignon.json');
+
+
 const initJeu = require('./initJeu.js');
 const finJeu = require('./finJeu.js');
 const sfm = require('./saveFileManagement.js');
@@ -55,6 +59,14 @@ client.on('message', (message) => {
 
 
     switch(command) {
+      case 'perso':
+        for (var i=0; i < 5; i++){
+          writePerso(message, i);
+        }
+        break;
+      case 'fct':
+        writeConseil(message, partie);
+        break;
       // Start : commencer une partie
       case 'start':
         //sfm.save(message.author.id, partie);
@@ -131,27 +143,7 @@ client.on('messageReactionAdd', (reaction, user) => {
       break;
     // Passer à l'évenement suivant
     case '➡':
-<<<<<<< HEAD
-      const chanId1 = myBot.messageChannel(reaction.message, 'Statistiques', partie);
-      const chanId2 = myBot.messageChannel(reaction.message, 'Historique', partie);
-      const chanId3 = myBot.messageChannel(reaction.message, 'Conseil', partie);
-      const chanId4 = myBot.messageChannel(reaction.message, 'Famille', partie);
-      const chanId5 = myBot.messageChannel(reaction.message, 'Actions', partie);
-      if(partie.tuto)
-        fieldTextInfo = 'Voici le channel Statistiques .\n Toutes les informations sur votre famille apparaitront ici';
-      else
-        fieldTextInfo = 'Un petit récapitulatif du taux de glycémie.';
-
-      reaction.message.guild.channels.get(chanId2).send({embed: {
-        color: 15013890,
-        fields: [{
-          name: 'Channel Informations',
-          value: fieldTextInfo
-        }]
-        } });
-=======
       gt.gTours(reaction.message, partie);
->>>>>>> 80b3c1ed647aace4aa914bc5b73d8cc5ddb6e18e
       break;
       case '👴':
         numPerso = 0;
@@ -253,6 +245,41 @@ exports.writePerso = function writePerso(message, numPerso) {
 
 }
 
+// Conseil
+function writeConseil(message, partie){
+
+  var id = myBot.messageChannel(message, "conseil", partie);
+
+  var laws = "" ;
+
+  for(var i = 0 ; i<opi.loies.length ; i++){
+    laws += "**" + opi.loies[i] + "** : " + opi.loiesDesc[i] + "\n" ;
+  }
+
+  message.guild.channels.get(id).send({embed: {
+      color : 0X4141FF,
+      author:
+      {
+        name: 'Conseil',
+      },
+      fields: [
+        {
+          name : "Membres du conseil",
+          value : "les membres du conseils",
+        },
+        {
+          name : 'Loies Votables (' + opi.loies.length + ")",
+          value : laws,
+        },
+        {
+          name : 'Loies Adopées',
+          value : 'Liste des loies votables',
+        },
+      ],
+    }
+  }) ;
+}
+
 
 // Statistiques
 function writeStat(message, partie){
@@ -264,37 +291,37 @@ function writeStat(message, partie){
     enf = enf + " " + perso.enfants[i];
   }
 
-var id = myBot.messageChannel(message, "statistiques", partie);
+  var id = myBot.messageChannel(message, "statistiques", partie);
 
-message.guild.channels.get(id).send({embed: {
-    color : 0Xa1f442,
-    author:
-    {
-      name: 'Statistiques',
-    },
-    fields: [
-    {
-      name : "Année actuelle",
-      value : "1300 (en dur, à mettre dans une variable globale)",
-    },
-    {
-      name : 'Nom',
-      value : perso.nom[0],
-    },
-    {
-      name : 'Age',
-      value : perso.age[0],
-    },
-    {
-      name : 'Epoux/se',
-      value : perso.epoux[0],
-    },
-    {
-      name : "Enfant(s)",
-      value : enf,
-    },
-  ],
-} });
+  message.guild.channels.get(id).send({embed: {
+      color : 0Xa1f442,
+      author:
+      {
+        name: 'Statistiques',
+      },
+      fields: [
+      {
+        name : "Année actuelle",
+        value : "1300 (en dur, à mettre dans une variable globale)",
+      },
+      {
+        name : 'Nom',
+        value : perso.nom[0],
+      },
+      {
+        name : 'Age',
+        value : perso.age[0],
+      },
+      {
+        name : 'Epoux/se',
+        value : perso.epoux[0],
+      },
+      {
+        name : "Enfant(s)",
+        value : enf,
+      },
+    ],
+  } });
 }
 
 
