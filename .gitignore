@@ -1,0 +1,10 @@
+Jeu/Javadocs
+Jeu/node_modules
+Jeu/sauvegardesPartie
+Jeu/Sauvegardes
+Jeu/Personnage
+Jeu/Graphiques
+Jeu/Evenement
+*.png
+.gitignore
+Jeu/token.json
