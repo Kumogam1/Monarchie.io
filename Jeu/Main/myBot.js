@@ -12,8 +12,6 @@ const client = new Discord.Client();
 
 const config = require('../token.json');
 
-
-
 // Dossier des personnages
 const perso = require('../Personnages/perso.json');
 // Dossier des actions
@@ -148,7 +146,7 @@ client.on('messageReactionAdd', (reaction, user) => {
       const chanId2 = myBot.messageChannel(reaction.message, 'Historique', partie);
       const chanId3 = myBot.messageChannel(reaction.message, 'Conseil', partie);
       const chanId4 = myBot.messageChannel(reaction.message, 'Famille', partie);
-      const chanId5 = myBot.messageChannel(reaction.message, 'Finances', partie);
+      const chanId5 = myBot.messageChannel(reaction.message, 'Actions', partie);
       if(partie.tuto)
         fieldTextInfo = 'Voici le channel Statistiques .\n Toutes les informations sur votre famille apparaitront ici';
       else
@@ -176,6 +174,12 @@ client.on('messageReactionAdd', (reaction, user) => {
       break;
       case '👸':
         numPerso = 5;
+      break;
+      case '🎊':
+        fete(reaction.message, partie);
+      break;
+      case '🏹':
+        guerre(reaction.message, partie);
       break;
   }
 });
@@ -319,6 +323,55 @@ exports.clear = async function(message) {
     // message.delete();
     const fetched = await message.channel.fetchMessages();
     message.channel.bulkDelete(fetched);
+};
+
+exports.war = function war(){
+  var res = 0;
+  var adv = Math.floor(Math.random() * 10) + 1 ;
+  var us = Math.floor(Math.random() * 10) + 1;
+  if (us >= adv){
+    res = 1;
+  }
+  return res;
+};
+
+exports.party = function party(){
+  var res = 0;
+  var lame = Math.floor(Math.random() * 3);
+  if (lame != 0){
+    res = 1;
+  }
+  return res;
+};
+
+function guerre(message, partie){
+  var res = 'Vous avez perdue la guerre, l\'opinion générale à votre égart a baissé';
+  if (myBot.war() == 1){
+    res = 'Vous avez gagné la guerre, vous gagnez en popularité'
+  }
+
+  const embed = new Discord.RichEmbed()
+  .setColor(0x00AE86)
+  .setTitle('Guerre 🏹')
+  .addField('Vous avez déclaré une guerre contre un pays voisin.', res);
+
+  var id = myBot.messageChannel(message, "actions", partie);
+  message.guild.channels.get(id).send({ embed })
+};
+
+function fete(message, partie){
+  var res = 'La soirée fut un desastre, votre relation avec la noblesse s\'est envenimée';
+  if (myBot.party() == 1){
+    res = 'La soirée fut un succès, votre relation avec la noblesse s\'est améliorée'
+  }
+
+  const embed = new Discord.RichEmbed()
+  .setColor(0x00AE86)
+  .setTitle('Fête 🎊')
+  .addField('Vous avez organisé une fête.', res);
+
+  var id = myBot.messageChannel(message, "actions", partie);
+  message.guild.channels.get(id).send({ embed })
 };
 
 client.login(config.token);
