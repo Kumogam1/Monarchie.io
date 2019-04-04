@@ -67,6 +67,8 @@ client.on('message', (message) => {
       case 'fct':
         writeConseil(message, partie);
         break;
+      case 'gt':
+        gt.gTours(message, partie);
       // Start : commencer une partie
       case 'start':
         //sfm.save(message.author.id, partie);
