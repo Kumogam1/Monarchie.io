@@ -115,11 +115,30 @@ client.on('messageReactionAdd', (reaction, user) => {
 
   // on charge les informations du joueur
   const partie = sfm.loadSave(user.id);
+  let tabNR = []; // tableau des noms des repas
+let tabNA = []; // tableau des noms d'activités
+let tabER = []; // tableau des emotes des repas
+let tabEA = []; // tableau des emotes d'activités
+let tabIA = []; // tableau de l'impact des activités
+let tabIR = []; // tableau de l'impact  des repas
+
+//On attribut à chaque tableau les informations appropriées en fonction de la partie du jour
+tabNR = tableaux.nomRepasM;
+tabER = emoteRepasM;
+tabNA = tableaux.nomActiviteM;
+tabEA = emoteActiviteM;
+tabIA = tableaux.impactAM;
+tabIR = tableaux.impactRM;
+  //Autre
+  default:
+    console.log('Partie du jour inconnue.');
+}
   // Action effectuée en fonction de la réaction
   switch(reaction.emoji.name) {
     // Choix d'un personnage prédéfini
     case '✅':
       choixPerso(reaction.message, partie);
+        numPerso = 1;
       break;
     // Passer à l'évenement suivant
     case '➡':
@@ -169,6 +188,58 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
   });
   return id;
 };
+
+function choixPerso(message, partie) {
+    myBot.clear(message)
+    .catch((err) => {
+        console.log(err);
+    });
+
+    // Présente le choix du personnage
+
+    fieldText = 'Voici François I , le roi que vous allez incarner.';
+
+    const embed = new Discord.RichEmbed()
+    .setColor(15013890)
+    .setTitle('**Présentation du personnage**')
+    .addField(' 👴', fieldText)
+
+    message.channel.send({ embed })
+    .then((msg) => {
+
+          writePerso(msg, i);
+      
+    });
+}
+
+function writePerso(message, numPerso) {
+
+
+    // Affiche le texte du 4e personnage avec les réactions
+
+        message.channel.send({ embed: {
+          color: 0x00AE86,
+          author:
+          {
+            name: 'Le Roi',
+            icon_url: perso.icone[3]
+          },
+          fields: [{
+              name: 'Nom',
+              value: perso.nom[3],
+          },
+          {
+              name: 'Sexe',
+              value: perso.sexe[3],
+          },
+          {
+              name: 'Age',
+              value: perso.age[3],
+          }],
+        } });
+
+}
+
 
 /** Fonction qui écrit le texte explicatif sur le serveur Discord
 * @param {string} message - Message discord
