@@ -224,6 +224,10 @@ function writePerso(message, numPerso) {
           {
             name: 'Enfants',
             value: enf,
+          },
+          {
+            name: 'Icone',
+            value : perso.icone[numPerso],
           }
         ],
         } });
