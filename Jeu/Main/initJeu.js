@@ -235,3 +235,20 @@ exports.initStat = function initStat(user) {
 
 	sfm.save(user.id, partie);
 };
+
+
+
+
+exports.accueilMedecin = function accueilMedecin(message, partie)
+{
+
+	const embed = new Discord.RichEmbed()
+	.setTitle('Le roi est mort, vive le roi !')
+	.setColor(808367)// Symbole médecine
+	.setTimestamp() // Crée de l'espace
+	.addField(':older_man:  ', 'Voici François I, le roi que vous allez incarner ! ')
+
+	message.channel.send({ embed })
+	.then(async function(message) {
+		await message.react('➡');
+	});}
