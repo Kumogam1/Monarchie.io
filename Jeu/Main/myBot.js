@@ -7,6 +7,7 @@ const initJeu = require('./initJeu.js');
 const finJeu = require('./finJeu.js');
 const sfm = require('./saveFileManagement.js');
 const his = require('../Historique/historique.js')
+const gt = require('../Event/gestionTour.js')
 
 const client = new Discord.Client();
 
@@ -60,8 +61,12 @@ client.on('message', (message) => {
 
 
     switch(command) {
+      case 'gt':
+        gt.gTours(message, partie)
+        break;
       case 'fct':
         writeStat(message, partie);
+        break;
       // Start : commencer une partie
       case 'start':
         //sfm.save(message.author.id, partie);
@@ -184,7 +189,6 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
       if(channel.name === chanName)
       {
           id = channel.id;
-          console.log(id);
       }
   });
   return id;

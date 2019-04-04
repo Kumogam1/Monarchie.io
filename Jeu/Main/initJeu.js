@@ -159,18 +159,13 @@ function initChannelGrp(message, partie, channelGrpName, rolePers) {
 		res = chanGrp.id;
 		partie.chanGrp = chanGrp.id;
 		partie.player = message.author.id;
-		partie.tabPerso = [];
 		partie.nom = '';
 		partie.sexe = '';
 		partie.age = 20;
 
-		partie.partJour = 0;
-		partie.numJour = -1;
-		partie.numEvent = -1;
+		partie.annee = 1300;
 		partie.choixPerso = 0;
-		partie.nbInsu = 3;
 
-		partie.evenement = true;
 		partie.mort = false;
 
 		initChannel(message, partie, rolePers, 'Hub', res);
@@ -247,7 +242,7 @@ exports.accueilMedecin = function accueilMedecin(message, partie)
 	.setTitle('Le roi est mort, vive le roi !')
 	.setColor(808367)// Symbole médecine
 	.setTimestamp() // Crée de l'espace
-	.addField(':older_man:  ', 'Voici François I, le roi que vous allez incarner ! ')
+	.addField(':older_man:  ', 'Voici François I, le roi que vous allez incarner ! ');
 
 	message.channel.send({ embed })
 	.then(async function(message) {
