@@ -257,14 +257,16 @@ exports.accueil = function accueil(message, partie)
 	});
 };
 
-exports.choixPerso = function choixPerso(message)
+exports.choixPerso = function choixPerso(message, partie)
 {
+	const chanId = myBot.messageChannel(message, 'hub', partie);
+
 	const embed = new Discord.RichEmbed()
 	.setColor(15013890)
 	.setTitle('Choix du personnage')
 	.addField('Sélection', 'Pour selectionner votre personnage, choisissez son icone ci-dessous')
 
-	message.guild.channels.get(chanId).send({ embed })
+	message.channels.send({ embed })
 	.then(async function(mess) {
 		await mess.react('👴');
 		await mess.react('👱');
