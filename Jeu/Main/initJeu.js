@@ -273,6 +273,14 @@ exports.choixPerso = function choixPerso(message, partie)
 });
 };
 
+exports.initOpi = function(message, numPerso, partie) {
+	partie.aviClerge = opi.aviClerge ;
+	partie.aviArmee  = opi.aviArmee  ;
+	partie.aviAristo = opi.aviAristo ;
+
+	sfm.save(partie.player, partie);
+}
+
 exports.initPerso = function(message, numPerso, partie) {
 	partie.id = perso.id[numPerso];
 	partie.nom = perso.nom[numPerso];
