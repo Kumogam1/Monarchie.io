@@ -58,13 +58,11 @@ client.on('message', (message) => {
 
 
     switch(command) {
-      case 'perso':
-        for (var i=0; i < 5; i++){
-          writePerso(message, i);
-        }
+      case 'n':
+        console.log(naissance());
         break;
-      case 'fct':
-        writeStat(message, partie);
+      case 'd':
+        console.log(deces());
         break;
       // Start : commencer une partie
       case 'start':
@@ -372,6 +370,30 @@ function fete(message, partie){
 
   var id = myBot.messageChannel(message, "actions", partie);
   message.guild.channels.get(id).send({ embed })
+};
+
+function naissance(){
+  var res = null;
+  var nais = Math.floor(Math.random() * 10) + 1;
+  if (nais <= 5){
+    var sexe = Math.floor(Math.random() * 10) + 1;
+    if (sexe >= 5){
+      res = 'Homme';
+    }
+    else {
+      res = 'Femme'
+    }
+  }
+  return res;
+};
+
+function deces(){
+  var res = null;
+  var dec = Math.floor(Math.random() * 10) +1;
+  if(dec <= 3){
+    res = 'Deces'
+  }
+  return res;
 };
 
 client.login(config.token);
