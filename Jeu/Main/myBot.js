@@ -61,6 +61,10 @@ client.on('message', (message) => {
     switch(command) {
       case 'fct':
         writeStat(message, partie);
+        break;
+      case 'fct':
+        writeConseil(message, partie);
+        break;
       // Start : commencer une partie
       case 'start':
         //sfm.save(message.author.id, partie);
@@ -116,19 +120,19 @@ client.on('messageReactionAdd', (reaction, user) => {
   // on charge les informations du joueur
   const partie = sfm.loadSave(user.id);
   let tabNR = []; // tableau des noms des repas
-let tabNA = []; // tableau des noms d'activités
-let tabER = []; // tableau des emotes des repas
-let tabEA = []; // tableau des emotes d'activités
-let tabIA = []; // tableau de l'impact des activités
-let tabIR = []; // tableau de l'impact  des repas
+  let tabNA = []; // tableau des noms d'activités
+  let tabER = []; // tableau des emotes des repas
+  let tabEA = []; // tableau des emotes d'activités
+  let tabIA = []; // tableau de l'impact des activités
+  let tabIR = []; // tableau de l'impact  des repas
 
-//On attribut à chaque tableau les informations appropriées en fonction de la partie du jour
-tabNR = tableaux.nomRepasM;
-tabNA = tableaux.nomActiviteM;
-tabIA = tableaux.impactAM;
-tabIR = tableaux.impactRM;
+  //On attribut à chaque tableau les informations appropriées en fonction de la partie du jour
+  tabNR = tableaux.nomRepasM;
+  tabNA = tableaux.nomActiviteM;
+  tabIA = tableaux.impactAM;
+  tabIR = tableaux.impactRM;
 
-console.log('Partie du jour inconnue.');
+  console.log('Partie du jour inconnue.');
 
   // Action effectuée en fonction de la réaction
   switch(reaction.emoji.name) {
