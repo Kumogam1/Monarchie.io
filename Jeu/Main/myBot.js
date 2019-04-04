@@ -163,14 +163,19 @@ client.on('messageReactionAdd', (reaction, user) => {
         } });
       break;
       case '👴':
+        numPerso = 0;
       break;
       case '👱':
+        numPerso = 2;
       break;
       case '👲':
+        numPerso = 3;
       break;
       case '👵':
+        numPerso = 4;
       break;
       case '👸':
+        numPerso = 5;
       break;
   }
 });
