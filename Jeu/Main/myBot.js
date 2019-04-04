@@ -98,10 +98,7 @@ client.on('message', (message) => {
       default:
         message.channel.send('Commande inconnue');
         break;
-
 		}
-
-
   }
 });
 
@@ -132,19 +129,27 @@ console.log('Partie du jour inconnue.');
   switch(reaction.emoji.name) {
     // Choix d'un personnage prédéfini
     case '✅':
-
-        numPerso = 0;
-        initJeu.accueilMedecin(reaction.message, partie);
-
+        initJeu.accueil(reaction.message, partie);
       break;
     // Passer à l'évenement suivant
     case '➡':
         writeFamille(reaction.message,numPerso,partie);
     //  event.event(reaction.message, partie, tabNR, tabER);
       break;
+      case '👴':
+      break;
+      case '👱':
+      break;
+      case '👲':
+      break;
+      case '👵':
+      break;
+      case '👸':
 
-    case '👶':
-        marierEnfant(reaction.message,numPerso,partie);
+      break;
+      case '👶':
+      marierEnfant(reaction.message,numPerso,partie);
+      break;
   }
 });
 
@@ -174,8 +179,7 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
   return id;
 };
 
-
-function writePerso(message, numPerso) {
+exports.writePerso = function writePerso(message, numPerso) {
 
 
     // Affiche le texte du 4e personnage avec les réactions
