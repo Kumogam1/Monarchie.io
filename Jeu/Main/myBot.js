@@ -132,16 +132,20 @@ console.log('Partie du jour inconnue.');
   switch(reaction.emoji.name) {
     // Choix d'un personnage prédéfini
     case '✅':
-      choixPerso(reaction.message, partie);
+
         numPerso = 0;
+        initJeu.accueilMedecin(reaction.message, partie);
       break;
     // Passer à l'évenement suivant
     case '➡':
       if(partie.numEvent == -1 && !partie.evenement) {
-        const chanId2 = myBot.messageChannel(reaction.message, 'informations', partie);
-
+        const chanId1 = myBot.messageChannel(reaction.message, 'Statistiques', partie);
+        const chanId2 = myBot.messageChannel(reaction.message, 'Historique', partie);
+        const chanId3 = myBot.messageChannel(reaction.message, 'Conseil', partie);
+        const chanId4 = myBot.messageChannel(reaction.message, 'Famille', partie);
+        const chanId5 = myBot.messageChannel(reaction.message, 'Finances', partie);
         if(partie.tuto)
-          fieldTextInfo = 'Voici le channel informations.\nAvant chaque prise d\'insuline, un graphique montrant l\'évolution de votre taux de glycémie apparaitra dans ce channel.';
+          fieldTextInfo = 'Voici le channel Statistiques .\n Toutes les informations sur votre famille apparaitront ici';
         else
           fieldTextInfo = 'Un petit récapitulatif du taux de glycémie.';
 
@@ -184,28 +188,6 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
   return id;
 };
 
-function choixPerso(message, partie) {
-    myBot.clear(message)
-    .catch((err) => {
-        console.log(err);
-    });
-
-    // Présente le choix du personnage
-
-    fieldText = 'Voici François I , le roi que vous allez incarner.';
-
-    const embed = new Discord.RichEmbed()
-    .setColor(15013890)
-    .setTitle('**Présentation du personnage**')
-    .addField(' 👴', fieldText)
-
-    message.channel.send({ embed })
-    .then((msg) => {
-
-          writePerso(msg, i);
-
-    });
-}
 
 function writePerso(message, numPerso) {
 
@@ -221,19 +203,19 @@ function writePerso(message, numPerso) {
           },
           fields: [{
               name: 'Nom',
-              value: perso.nom[0],
+              value: perso.nom[numPerso],
           },
           {
               name: 'Sexe',
-              value: perso.sexe[0],
+              value: perso.sexe[numPerso],
           },
           {
               name: 'Age',
-              value: perso.age[0],
+              value: perso.age[numPerso],
           },
           {
             name: 'Enfants',
-            value: perso.enfants[0],
+            value: perso.enfants[numPerso],
           }
 
 
