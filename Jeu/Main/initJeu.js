@@ -124,6 +124,9 @@ function initChannel(message, partie, rolePers, channelName, chanGrpId) {
 
 			if(channelName == 'Hub')
 				bienvenue(message);
+
+			if(channelName == "Actions")
+			 	actions(message, partie);
 		}
 		).catch(console.error);
 	}).catch(console.error);
@@ -161,25 +164,23 @@ function initChannelGrp(message, partie, channelGrpName, rolePers) {
 		res = chanGrp.id;
 		partie.chanGrp = chanGrp.id;
 		partie.player = message.author.id;
-		partie.tabPerso = [];
 		partie.nom = '';
 		partie.sexe = '';
 		partie.age = 20;
 
-		partie.partJour = 0;
-		partie.numJour = -1;
-		partie.numEvent = -1;
+		partie.annee = 1300;
 		partie.choixPerso = 0;
-		partie.nbInsu = 3;
 
-		partie.evenement = true;
 		partie.mort = false;
+
+		partie.feteOrganise = true;
+		partie.guerreDeclare = true;
 
 		initChannel(message, partie, rolePers, 'Hub', res);
 		initChannel(message, partie, rolePers, 'Historique', res);
 		initChannel(message, partie, rolePers, 'Statistiques', res);
 		initChannel(message, partie, rolePers, 'Conseil', res);
-		initChannel(message, partie, rolePers, 'Finances', res);
+		initChannel(message, partie, rolePers, 'Actions', res);
 		initChannel(message, partie, rolePers, 'Famille', res);
 		sfm.save(message.author.id, partie);
 	})
@@ -241,9 +242,7 @@ exports.initStat = function initStat(user) {
 
 exports.accueil = function accueil(message, partie)
 {
-
 	myBot.clear(message);
-
 	const embed = new Discord.RichEmbed()
 	.setTitle('Le roi est mort, vive le roi !')
 	.setColor(808367)
@@ -275,5 +274,23 @@ exports.choixPerso = function choixPerso(message, partie)
 		await mess.react('👲');
 		await mess.react('👵');
 		await mess.react('👸');
+	});
+};
+
+
+// Fonctions menu action
+function actions(message, partie){
+	const chanId = myBot.messageChannel(message, 'actions', partie);
+
+	const embed = new Discord.RichEmbed()
+	.setColor(15013890)
+	.setTitle('Actions')
+	.addField('Organiser une fête 🎊', 'Organiser une fêtes pour améliorer vos relations avec la noblesse')
+	.addField('Déclarer une guerre 🏹', 'Déclarer la guerre à un pays voisin pour agrandir votre térritoire et améliorer votre image aux yeux de tous')
+
+	message.guild.channels.get(chanId).send({ embed })
+	.then(async function(mess) {
+		await mess.react('🎊');
+		await mess.react('🏹');
 	});
 };
