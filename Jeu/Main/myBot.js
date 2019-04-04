@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const myBot = require('./myBot.js');
 
+const opi = require('../Personnages/opignon.json');
+
 
 const initJeu = require('./initJeu.js');
 const finJeu = require('./finJeu.js');
@@ -11,8 +13,6 @@ const sfm = require('./saveFileManagement.js');
 const client = new Discord.Client();
 
 const config = require('../token.json');
-
-
 
 // Dossier des personnages
 const perso = require('../Personnages/perso.json');
@@ -64,9 +64,6 @@ client.on('message', (message) => {
         for (var i=0; i < 5; i++){
           writePerso(message, i);
         }
-        break;
-      case 'fct':
-        writeStat(message, partie);
         break;
       case 'fct':
         writeConseil(message, partie);
@@ -141,7 +138,6 @@ client.on('messageReactionAdd', (reaction, user) => {
   tabIA = tableaux.impactAM;
   tabIR = tableaux.impactRM;
 
-  console.log('Partie du jour inconnue.');
 
   // Action effectuée en fonction de la réaction
   switch(reaction.emoji.name) {
@@ -194,7 +190,7 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
       if(channel.name === chanName)
       {
           id = channel.id;
-          console.log(id);
+          console.log(id) ;
       }
   });
   return id;
@@ -238,6 +234,35 @@ function writePerso(message, numPerso) {
 
 }
 
+// Conseil
+function writeConseil(message, partie){
+
+  var id = myBot.messageChannel(message, "conseil", partie);
+
+  message.guild.channels.get(id).send({embed: {
+      color : 0X4141FF,
+      author:
+      {
+        name: 'Conseil',
+      },
+      fields: [
+        {
+          name : "Membres du conseil",
+          value : "les membres du conseils",
+        },
+        {
+          name : 'Loies Votables',
+          value : 'Liste des loies',
+        },
+        {
+          name : 'Loies Adopées',
+          value : 'Liste des loies votables',
+        },
+      ],
+    }
+  }) ;
+}
+
 
 // Statistiques
 function writeStat(message, partie){
@@ -249,37 +274,37 @@ function writeStat(message, partie){
     enf = enf + " " + perso.enfants[i];
   }
 
-var id = myBot.messageChannel(message, "statistiques", partie);
+  var id = myBot.messageChannel(message, "statistiques", partie);
 
-message.guild.channels.get(id).send({embed: {
-    color : 0Xa1f442,
-    author:
-    {
-      name: 'Statistiques',
-    },
-    fields: [
-    {
-      name : "Année actuelle",
-      value : "1300 (en dur, à mettre dans une variable globale)",
-    },
-    {
-      name : 'Nom',
-      value : perso.nom[0],
-    },
-    {
-      name : 'Age',
-      value : perso.age[0],
-    },
-    {
-      name : 'Epoux/se',
-      value : perso.epoux[0],
-    },
-    {
-      name : "Enfant(s)",
-      value : enf,
-    },
-  ],
-} });
+  message.guild.channels.get(id).send({embed: {
+      color : 0Xa1f442,
+      author:
+      {
+        name: 'Statistiques',
+      },
+      fields: [
+      {
+        name : "Année actuelle",
+        value : "1300 (en dur, à mettre dans une variable globale)",
+      },
+      {
+        name : 'Nom',
+        value : perso.nom[0],
+      },
+      {
+        name : 'Age',
+        value : perso.age[0],
+      },
+      {
+        name : 'Epoux/se',
+        value : perso.epoux[0],
+      },
+      {
+        name : "Enfant(s)",
+        value : enf,
+      },
+    ],
+  } });
 }
 
 

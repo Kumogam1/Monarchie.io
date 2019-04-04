@@ -116,7 +116,7 @@ exports.msgFin = function msgFin(message, partie) {
 			const embed = new Discord.RichEmbed()
 			.setColor(15013890)
 			.setImage('http://image.noelshack.com/fichiers/2018/49/4/1544133070-1544132547663.gif')
-			.addField('**T\'as perdu ! :cry:**', 'Pour quitter la partie : `' + config.prefix + 'quit`')
+			.addField('**T\'as perdu :cry:**', 'Le conseil n\'a pas pu trouver de descendance.\nPour quitter la partie : `' + config.prefix + "quit`")
 
 			message.channel.send({ embed });
 		}
