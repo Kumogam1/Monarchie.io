@@ -178,6 +178,9 @@ function initChannelGrp(message, partie, channelGrpName, rolePers) {
 		partie.evenement = true;
 		partie.mort = false;
 
+		partie.feteOrganise = true;
+		partie.guerreDeclare = true;
+
 		initChannel(message, partie, rolePers, 'Hub', res);
 		initChannel(message, partie, rolePers, 'Historique', res);
 		initChannel(message, partie, rolePers, 'Statistiques', res);

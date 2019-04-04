@@ -1,22 +1,18 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const myBot = require('./myBot.js');
-
-
 const initJeu = require('./initJeu.js');
 const finJeu = require('./finJeu.js');
 const sfm = require('./saveFileManagement.js');
 //const his = require('../Historique/historique.js')
 
 const client = new Discord.Client();
-
 const config = require('../token.json');
 
 // Dossier des personnages
 const perso = require('../Personnages/perso.json');
 // Dossier des actions
 const tableaux = require('../Actions/tableaux.json');
-
 
 // Fonction qui s'active quand le bot est lancé
 client.on('ready', () => {
@@ -58,12 +54,6 @@ client.on('message', (message) => {
 
 
     switch(command) {
-      case 'n':
-        console.log(naissance());
-        break;
-      case 'd':
-        console.log(deces());
-        break;
       // Start : commencer une partie
       case 'start':
         //sfm.save(message.author.id, partie);
@@ -174,10 +164,18 @@ client.on('messageReactionAdd', (reaction, user) => {
         numPerso = 5;
       break;
       case '🎊':
+      if (partie.feteOrganise){
         fete(reaction.message, partie);
+        partie.feteOrganise = false;
+        sfm.save(reaction.message.author.id, partie);
+      };
       break;
       case '🏹':
+      if (partie.guerreDeclare){
         guerre(reaction.message, partie);
+        partie.guerreDeclare = false;
+        sfm.save(reaction.message.author.id, partie);
+      };
       break;
   }
 });
