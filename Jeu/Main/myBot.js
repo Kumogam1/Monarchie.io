@@ -60,6 +60,8 @@ client.on('message', (message) => {
 
 
     switch(command) {
+      case 'fct':
+        writeStat(message, partie);
       // Start : commencer une partie
       case 'start':
         //sfm.save(message.author.id, partie);
@@ -188,11 +190,7 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
   return id;
 };
 
-
 function writePerso(message, numPerso) {
-
-
-    // Affiche le texte du 4e personnage avec les réactions
 
         message.channel.send({ embed: {
           color: 0x00AE86,
@@ -217,11 +215,52 @@ function writePerso(message, numPerso) {
             name: 'Enfants',
             value: perso.enfants[numPerso],
           }
-
-
         ],
         } });
 
+}
+
+
+// Statistiques
+function writeStat(message, partie){
+
+  //Récupérer les enfants
+  var enf =""
+  for (var i in perso.enfants){
+    enf = enf+" "+perso.enfants[i];
+  }
+
+var id = myBot.messageChannel(message, "statistiques", partie);
+
+message.guild.channels.get(id).send({embed: {
+    color : 0Xa1f442,
+    author:
+    {
+      name: 'Statistiques',
+    },
+    fields: [
+    {
+      name : "Année actuelle",
+      value : "1300 (à mettre dans une variable globale)",
+    },
+    {
+      name : 'Nom',
+      value : perso.nom[0],
+    },
+    {
+      name : 'Age',
+      value : perso.age[0],
+    },
+    {
+      name : 'Epoux/se',
+      value : perso.epoux[0],
+    },
+    {
+      name : "Enfant(s)",
+      value : enf,
+    },
+  ],
+} });
 }
 
 
