@@ -250,6 +250,12 @@ function writeConseil(message, partie){
 
   var id = myBot.messageChannel(message, "conseil", partie);
 
+  var laws = "" ;
+
+  for(var i = 0 ; i<opi.loies.length ; i++){
+    laws += "**" + opi.loies[i] + "** : " + opi.loiesDesc[i] + "\n" ;
+  }
+
   message.guild.channels.get(id).send({embed: {
       color : 0X4141FF,
       author:
@@ -262,8 +268,8 @@ function writeConseil(message, partie){
           value : "les membres du conseils",
         },
         {
-          name : 'Loies Votables',
-          value : 'Liste des loies',
+          name : 'Loies Votables (' + opi.loies.length + ")",
+          value : laws,
         },
         {
           name : 'Loies Adopées',
