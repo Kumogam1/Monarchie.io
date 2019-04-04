@@ -211,7 +211,11 @@ exports.writePerso = function writePerso(message, numPerso) {
 
         var enf =""
         for (var i in perso.enfants[numPerso]){
-          enf = enf + " " + perso.enfants[numPerso][i];
+          enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
+          if(enf == ' \n | undifined undifined'){
+            enf = '❌';
+          }
+          // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
         }
 
         message.channel.send({ embed: {
@@ -287,8 +291,9 @@ function writeStat(message, partie){
   //Récupérer les enfants
   var enf =""
 
-  for (var i in perso.enfants){
-    enf = enf + " " + perso.enfants[i];
+  for (var i in perso.enfants[numPerso]){
+    enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
+    // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
   }
 
   var id = myBot.messageChannel(message, "statistiques", partie);
@@ -332,14 +337,11 @@ function writeStat(message, partie){
   const id = myBot.messageChannel(message, "famille", partie);
   //Récupérer les enfants
   var enf =""
-    var enf =""
 
-  for (var i in perso.enfants){
-    enf = enf + " " + perso.enfants[i];
+  for (var i in perso.enfants[numPerso]){
+    enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
+    // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
   }
-    for (var i in perso.enfants[numPerso]){
-      enf = enf + " " +perso.id[perso.enfants[i]]  + " "  + perso.nom[perso.enfants[i]];
-    }
 
 var id = myBot.messageChannel(message, "statistiques", partie);
 
@@ -436,7 +438,7 @@ function marierEnfant(message,numPerso,partie) {
   var enf =""
   var pret = "Morgane"
   var nb = 0;
-  for (var i in perso.enfants[numPerso]){
+  for (var i of perso.enfants[numPerso]){
     enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
     nb += 1;
     // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
