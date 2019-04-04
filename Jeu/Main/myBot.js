@@ -11,6 +11,14 @@ const client = new Discord.Client();
 
 const config = require('../token.json');
 
+
+
+// Dossier des personnages
+const perso = require('../Personnages/perso.json');
+// Dossier des actions
+const tableaux = require('../Actions/tableaux.json');
+
+
 // Fonction qui s'active quand le bot est lancé
 client.on('ready', () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
@@ -114,11 +122,27 @@ client.on('messageReactionAdd', (reaction, user) => {
 
   // on charge les informations du joueur
   const partie = sfm.loadSave(user.id);
+  let tabNR = []; // tableau des noms des repas
+let tabNA = []; // tableau des noms d'activités
+let tabER = []; // tableau des emotes des repas
+let tabEA = []; // tableau des emotes d'activités
+let tabIA = []; // tableau de l'impact des activités
+let tabIR = []; // tableau de l'impact  des repas
+
+//On attribut à chaque tableau les informations appropriées en fonction de la partie du jour
+tabNR = tableaux.nomRepasM;
+tabNA = tableaux.nomActiviteM;
+tabIA = tableaux.impactAM;
+tabIR = tableaux.impactRM;
+
+console.log('Partie du jour inconnue.');
+
   // Action effectuée en fonction de la réaction
   switch(reaction.emoji.name) {
     // Choix d'un personnage prédéfini
     case '✅':
       choixPerso(reaction.message, partie);
+        numPerso = 0;
       break;
     // Passer à l'évenement suivant
     case '➡':
@@ -168,6 +192,65 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
   });
   return id;
 };
+
+function choixPerso(message, partie) {
+    myBot.clear(message)
+    .catch((err) => {
+        console.log(err);
+    });
+
+    // Présente le choix du personnage
+
+    fieldText = 'Voici François I , le roi que vous allez incarner.';
+
+    const embed = new Discord.RichEmbed()
+    .setColor(15013890)
+    .setTitle('**Présentation du personnage**')
+    .addField(' 👴', fieldText)
+
+    message.channel.send({ embed })
+    .then((msg) => {
+
+          writePerso(msg, i);
+
+    });
+}
+
+function writePerso(message, numPerso) {
+
+
+    // Affiche le texte du 4e personnage avec les réactions
+
+        message.channel.send({ embed: {
+          color: 0x00AE86,
+          author:
+          {
+            name: 'Le Roi',
+
+          },
+          fields: [{
+              name: 'Nom',
+              value: perso.nom[0],
+          },
+          {
+              name: 'Sexe',
+              value: perso.sexe[0],
+          },
+          {
+              name: 'Age',
+              value: perso.age[0],
+          },
+          {
+            name: 'Enfants',
+            value: perso.enfants[0],
+          }
+
+
+        ],
+        } });
+
+}
+
 
 /** Fonction qui écrit le texte explicatif sur le serveur Discord
 * @param {string} message - Message discord
