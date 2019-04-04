@@ -218,10 +218,14 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
 };
 
 exports.writePerso = function writePerso(message, numPerso) {
-
-        var enf =""
-        for (var i in perso.enfants[numPerso]){
-          enf = enf + " " + perso.enfants[numPerso][i];
+        var enf ="";
+        var size = perso.enfants[numPerso].length;
+        if (size == 0) {
+          enf = "Pas d'enfant :P";
+        } else {
+          for (var size in perso.enfants[numPerso]){
+            enf = enf + " " + perso.enfants[numPerso][size];
+          }
         }
 
         message.channel.send({ embed: {
