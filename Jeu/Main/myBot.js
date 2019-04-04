@@ -63,6 +63,7 @@ client.on('message', (message) => {
     switch(command) {
       case 'gt':
         gt.gTours(message, partie)
+        break;
       case 'perso':
         for (var i=0; i < 5; i++){
           writePerso(message, i);
@@ -143,37 +144,21 @@ client.on('messageReactionAdd', (reaction, user) => {
   switch(reaction.emoji.name) {
     // Choix d'un personnage prédéfini
     case '✅':
-        initJeu.accueil(reaction.message, partie);
+      initJeu.accueil(reaction.message, partie);
       break;
     // Passer à l'évenement suivant
     case '➡':
-      const chanId1 = myBot.messageChannel(reaction.message, 'Statistiques', partie);
-      const chanId2 = myBot.messageChannel(reaction.message, 'Historique', partie);
-      const chanId3 = myBot.messageChannel(reaction.message, 'Conseil', partie);
-      const chanId4 = myBot.messageChannel(reaction.message, 'Famille', partie);
-      const chanId5 = myBot.messageChannel(reaction.message, 'Finances', partie);
-      if(partie.tuto)
-        fieldTextInfo = 'Voici le channel Statistiques .\n Toutes les informations sur votre famille apparaitront ici';
-      else
-        fieldTextInfo = 'Un petit récapitulatif du taux de glycémie.';
-
-      reaction.message.guild.channels.get(chanId2).send({embed: {
-        color: 15013890,
-        fields: [{
-          name: 'Channel Informations',
-          value: fieldTextInfo
-        }]
-        } });
+      gt.gTours(reaction.message, partie);
       break;
-      case '👴':
+    case '👴':
       break;
-      case '👱':
+    case '👱':
       break;
-      case '👲':
+    case '👲':
       break;
-      case '👵':
+    case '👵':
       break;
-      case '👸':
+    case '👸':
       break;
   }
 });
