@@ -63,6 +63,10 @@ client.on('message', (message) => {
     switch(command) {
       case 'gt':
         gt.gTours(message, partie)
+      case 'perso':
+        for (var i=0; i < 5; i++){
+          writePerso(message, i);
+        }
         break;
       case 'fct':
         writeStat(message, partie);
@@ -109,10 +113,7 @@ client.on('message', (message) => {
       default:
         message.channel.send('Commande inconnue');
         break;
-
 		}
-
-
   }
 });
 
@@ -142,8 +143,7 @@ client.on('messageReactionAdd', (reaction, user) => {
   switch(reaction.emoji.name) {
     // Choix d'un personnage prédéfini
     case '✅':
-        numPerso = 0;
-        initJeu.accueilMedecin(reaction.message, partie);
+        initJeu.accueil(reaction.message, partie);
       break;
     // Passer à l'évenement suivant
     case '➡':
@@ -164,6 +164,16 @@ client.on('messageReactionAdd', (reaction, user) => {
           value: fieldTextInfo
         }]
         } });
+      break;
+      case '👴':
+      break;
+      case '👱':
+      break;
+      case '👲':
+      break;
+      case '👵':
+      break;
+      case '👸':
       break;
   }
 });
@@ -194,14 +204,18 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
   return id;
 };
 
-function writePerso(message, numPerso) {
+exports.writePerso = function writePerso(message, numPerso) {
+
+        var enf =""
+        for (var i in perso.enfants[numPerso]){
+          enf = enf + " " + perso.enfants[numPerso][i];
+        }
 
         message.channel.send({ embed: {
           color: 0x00AE86,
           author:
           {
-            name: 'Le Roi',
-
+            name: 'Présentation',
           },
           fields: [{
               name: 'Nom',
@@ -217,7 +231,11 @@ function writePerso(message, numPerso) {
           },
           {
             name: 'Enfants',
-            value: perso.enfants[numPerso],
+            value: enf,
+          },
+          {
+            name: 'Icone',
+            value : perso.icone[numPerso],
           }
         ],
         } });
@@ -230,8 +248,9 @@ function writeStat(message, partie){
 
   //Récupérer les enfants
   var enf =""
+
   for (var i in perso.enfants){
-    enf = enf+" "+perso.enfants[i];
+    enf = enf + " " + perso.enfants[i];
   }
 
 var id = myBot.messageChannel(message, "statistiques", partie);
@@ -245,7 +264,7 @@ message.guild.channels.get(id).send({embed: {
     fields: [
     {
       name : "Année actuelle",
-      value : "1300 (à mettre dans une variable globale)",
+      value : "1300 (en dur, à mettre dans une variable globale)",
     },
     {
       name : 'Nom',
@@ -298,55 +317,5 @@ exports.clear = async function(message) {
     const fetched = await message.channel.fetchMessages();
     message.channel.bulkDelete(fetched);
 };
-
-
-
-
-
-
-
-// Statistiques
-function writeStat(message, partie){
-  for (var i in perso.enfants){
-    console.log(perso.enfants[i]);
-  }
-
-var id = myBot.messageChannel(message, 'statistiques', partie);
-
-message.guild.channels.get(id).send({embed: {
-    color : 0Xa1f442,
-    author:
-    {
-      name: 'XX',
-    },
-    fields: [{
-      name : 'Nom',
-      value : perso.nom[0],
-    },
-    {
-      age : 'Age',
-      value : perso.age[0],
-    },
-    {
-      epoux : 'Epoux/se',
-      value : perso.epoux[0],
-    },
-    {
-      enfants : "Enfant(s)",
-      value : "hello",
-    }
-  ],
-} });
-}
-
-
-
-
-
-
-
-
-
-
 
 client.login(config.token);

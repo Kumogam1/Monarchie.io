@@ -1,7 +1,9 @@
 const Discord = require('discord.js');
 const sfm = require('./saveFileManagement.js');
 const myBot = require('./myBot.js');
-
+// Dossier des personnages
+const perso = require('../Personnages/perso.json');
+const initJeu = require('./initJeu.js');
 /** Fonction initialisant la partie
 * @param {string} message - Message discord
 * @param {Client} client - Le Client utilisé pour le jeu
@@ -232,20 +234,39 @@ exports.initStat = function initStat(user) {
 	sfm.save(user.id, partie);
 };
 
-
-
-
-exports.accueilMedecin = function accueilMedecin(message, partie)
+exports.accueil = function accueil(message, partie)
 {
 	myBot.clear(message);
 	const embed = new Discord.RichEmbed()
 	.setTitle('Le roi est mort, vive le roi !')
-	.setColor(808367)// Symbole médecine
+	.setColor(808367)
 	.setTimestamp() // Crée de l'espace
-	.addField(':older_man:  ', 'Voici François I, le roi que vous allez incarner ! ');
-
+	.addField('Démarrage', 'Choisissez la personne que vous allez incarner !')
 	message.channel.send({ embed })
-	.then(async function(message) {
-		await message.react('➡');
+	.then(async function(mess){
+		for (var i=0; i < 5; i++)
+		{
+			myBot.writePerso(message, i);
+		}
+		await initJeu.choixPerso(mess);
 	});
-}
+};
+
+exports.choixPerso = function choixPerso(message, partie)
+{
+	const chanId = myBot.messageChannel(message, 'hub', partie);
+
+	const embed = new Discord.RichEmbed()
+	.setColor(15013890)
+	.setTitle('Choix du personnage')
+	.addField('Sélection', 'Pour selectionner votre personnage, choisissez son icone ci-dessous')
+
+	message.channels.send({ embed })
+	.then(async function(mess) {
+		await mess.react('👴');
+		await mess.react('👱');
+		await mess.react('👲');
+		await mess.react('👵');
+		await mess.react('👸');
+	});
+};
