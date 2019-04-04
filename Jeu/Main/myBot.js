@@ -1,8 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const myBot = require('./myBot.js');
-
-
 const initJeu = require('./initJeu.js');
 const finJeu = require('./finJeu.js');
 const sfm = require('./saveFileManagement.js');
@@ -10,16 +8,12 @@ const his = require('../Historique/historique.js')
 const gt = require('../Event/gestionTour.js')
 
 const client = new Discord.Client();
-
 const config = require('../token.json');
-
-
 
 // Dossier des personnages
 const perso = require('../Personnages/perso.json');
 // Dossier des actions
 const tableaux = require('../Actions/tableaux.json');
-
 
 // Fonction qui s'active quand le bot est lancé
 client.on('ready', () => {
@@ -61,17 +55,6 @@ client.on('message', (message) => {
 
 
     switch(command) {
-      case 'gt':
-        gt.gTours(message, partie)
-        break;
-      case 'perso':
-        for (var i=0; i < 5; i++){
-          writePerso(message, i);
-        }
-        break;
-      case 'fct':
-        writeStat(message, partie);
-        break;
       // Start : commencer une partie
       case 'start':
         //sfm.save(message.author.id, partie);
@@ -148,7 +131,27 @@ client.on('messageReactionAdd', (reaction, user) => {
       break;
     // Passer à l'évenement suivant
     case '➡':
+<<<<<<< HEAD
+      const chanId1 = myBot.messageChannel(reaction.message, 'Statistiques', partie);
+      const chanId2 = myBot.messageChannel(reaction.message, 'Historique', partie);
+      const chanId3 = myBot.messageChannel(reaction.message, 'Conseil', partie);
+      const chanId4 = myBot.messageChannel(reaction.message, 'Famille', partie);
+      const chanId5 = myBot.messageChannel(reaction.message, 'Actions', partie);
+      if(partie.tuto)
+        fieldTextInfo = 'Voici le channel Statistiques .\n Toutes les informations sur votre famille apparaitront ici';
+      else
+        fieldTextInfo = 'Un petit récapitulatif du taux de glycémie.';
+
+      reaction.message.guild.channels.get(chanId2).send({embed: {
+        color: 15013890,
+        fields: [{
+          name: 'Channel Informations',
+          value: fieldTextInfo
+        }]
+        } });
+=======
       gt.gTours(reaction.message, partie);
+>>>>>>> 80b3c1ed647aace4aa914bc5b73d8cc5ddb6e18e
       break;
       case '👴':
         numPerso = 0;
@@ -168,6 +171,20 @@ client.on('messageReactionAdd', (reaction, user) => {
         numPerso = 5;
       case '👶':
         marierEnfant(reaction.message,numPerso,partie)
+      break;
+      case '🎊':
+      if (partie.feteOrganise){
+        fete(reaction.message, partie);
+        partie.feteOrganise = false;
+        sfm.save(reaction.message.author.id, partie);
+      };
+      break;
+      case '🏹':
+      if (partie.guerreDeclare){
+        guerre(reaction.message, partie);
+        partie.guerreDeclare = false;
+        sfm.save(reaction.message.author.id, partie);
+      };
       break;
   }
 });
@@ -468,6 +485,79 @@ exports.clear = async function(message) {
     // message.delete();
     const fetched = await message.channel.fetchMessages();
     message.channel.bulkDelete(fetched);
+};
+
+exports.war = function war(){
+  var res = 0;
+  var adv = Math.floor(Math.random() * 10) + 1 ;
+  var us = Math.floor(Math.random() * 10) + 1;
+  if (us >= adv){
+    res = 1;
+  }
+  return res;
+};
+
+exports.party = function party(){
+  var res = 0;
+  var lame = Math.floor(Math.random() * 3);
+  if (lame != 0){
+    res = 1;
+  }
+  return res;
+};
+
+function guerre(message, partie){
+  var res = 'Vous avez perdue la guerre, l\'opinion générale à votre égart a baissé';
+  if (myBot.war() == 1){
+    res = 'Vous avez gagné la guerre, vous gagnez en popularité'
+  }
+
+  const embed = new Discord.RichEmbed()
+  .setColor(0x00AE86)
+  .setTitle('Guerre 🏹')
+  .addField('Vous avez déclaré une guerre contre un pays voisin.', res);
+
+  var id = myBot.messageChannel(message, "actions", partie);
+  message.guild.channels.get(id).send({ embed })
+};
+
+function fete(message, partie){
+  var res = 'La soirée fut un desastre, votre relation avec la noblesse s\'est envenimée';
+  if (myBot.party() == 1){
+    res = 'La soirée fut un succès, votre relation avec la noblesse s\'est améliorée'
+  }
+
+  const embed = new Discord.RichEmbed()
+  .setColor(0x00AE86)
+  .setTitle('Fête 🎊')
+  .addField('Vous avez organisé une fête.', res);
+
+  var id = myBot.messageChannel(message, "actions", partie);
+  message.guild.channels.get(id).send({ embed })
+};
+
+function naissance(){
+  var res = null;
+  var nais = Math.floor(Math.random() * 10) + 1;
+  if (nais <= 5){
+    var sexe = Math.floor(Math.random() * 10) + 1;
+    if (sexe >= 5){
+      res = 'Homme';
+    }
+    else {
+      res = 'Femme'
+    }
+  }
+  return res;
+};
+
+function deces(){
+  var res = null;
+  var dec = Math.floor(Math.random() * 10) +1;
+  if(dec <= 3){
+    res = 'Deces'
+  }
+  return res;
 };
 
 client.login(config.token);
