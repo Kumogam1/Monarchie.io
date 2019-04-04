@@ -1,9 +1,8 @@
 ﻿{
-	"id" : [1,2,3,4,5,6,7],
-	"nom" : ["François Ier","Charles Quint","Louis XVI","Marie-Antoinette","Françoise de Foix","Fils 1","Fils 2"],
-	"sexe" : ["Homme","Homme","Homme","Femme","Femme","Femme","Homme","Homme"],
-	"age" : ["70 ans","42 ans","20 ans","65 ans","19 ans"," 5 ans", " 5 ans"],
-	"epoux" : [4, 0, 0, 1,0, 0, 0],
-	"enfants" : [[6,7], "❌", "❌", [1,2], "❌"],
-	"icone" : ["👴","👱","👲","👵","👸","👱","👱"]
+	"nom" : ["François Ier","Charles Quint","Louis XVI","Marie-Antoinette","Françoise de Foix"],
+	"sexe" : ["Homme","Homme","Homme","Femme","Femme","Femme"],
+	"age" : ["70 ans","42 ans","20 ans","65 ans","19 ans"],
+	"epoux" : ["Marie-Antoinette", "Célibataire", "Célibataire", "François Ier","Célibataire"],
+	"enfants" : [["Amal", "Anais", "Edouard"], "❌", "❌", ["Amal", "Anais", "Edouard"], "❌"],
+	"icone" : ["👴","👱","👲","👵","👸"]
 }
