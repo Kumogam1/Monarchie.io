@@ -9,3 +9,4 @@ Jeu/Evenement
 .gitignore
 Jeu/token.json
 node_module/*
+Test/
