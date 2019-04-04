@@ -10,9 +10,13 @@ exports.gTours = function(message, partie) {
   .addField('Meteo', 'Un temps légèrement nuagueux')
   .setFooter('Cliquez sur ➡ pour passer le tour');
   partie.annee += 5;
-  sfm.save(message.author.id, partie);
+  sfm.save(partie.player, partie);
   message.channel.send({ embed })
   .then(async function(mes) {
     await mes.react('➡');
   });
+
+  // CONSEIL
+  
+  //myBot.writeConseil(message, partie) ;
 };

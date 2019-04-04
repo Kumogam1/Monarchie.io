@@ -144,6 +144,7 @@ client.on('messageReactionAdd', (reaction, user) => {
     // Passer à l'évenement suivant
     case '➡':
       gt.gTours(reaction.message, partie);
+      myBot.writeConseil(reaction.message, partie) ;
       break;
     case '👴':
       myBot.clear(reaction.message);
@@ -177,14 +178,14 @@ client.on('messageReactionAdd', (reaction, user) => {
       if (partie.feteOrganise){
         fete(reaction.message, partie);
         partie.feteOrganise = false;
-        sfm.save(reaction.message.author.id, partie);
+        sfm.save(partie.player, partie);
       };
       break;
     case '🏹':
       if (partie.guerreDeclare){
         guerre(reaction.message, partie);
         partie.guerreDeclare = false;
-        sfm.save(reaction.message.author.id, partie);
+        sfm.save(partie.player, partie);
       };
       break;
   }
@@ -220,10 +221,10 @@ exports.writePerso = function writePerso(message, numPerso) {
         var enf ="";
         var size = perso.enfants[numPerso].length;
         if (size == 0) {
-          enf = "Pas d'enfant :P";
+          enf = "Aucun enfant";
         } else {
           for (var size in perso.enfants[numPerso]){
-            enf = enf + " " + perso.enfants[numPerso][size];
+              enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][size] - 1]  + " "  + perso.nom[perso.enfants[numPerso][size] - 1];
           }
         }
 
@@ -259,9 +260,13 @@ exports.writePerso = function writePerso(message, numPerso) {
 }
 
 // Conseil
-function writeConseil(message, partie){
+exports.writeConseil = function writeConseil(message, partie){
 
   var id = myBot.messageChannel(message, "conseil", partie);
+
+  message.delete();
+
+  myBot.clear(message)
 
   var laws = "" ;
 
@@ -273,13 +278,9 @@ function writeConseil(message, partie){
       color : 0X4141FF,
       author:
       {
-        name: 'Conseil',
+        name: 'Loies',
       },
       fields: [
-        {
-          name : "Membres du conseil",
-          value : "les membres du conseils",
-        },
         {
           name : 'Loies Votables (' + opi.loies.length + ")",
           value : laws,
@@ -291,6 +292,72 @@ function writeConseil(message, partie){
       ],
     }
   }) ;
+
+  var opiArmee = "" ;
+  var opiClerg = "" ;
+  var opiAristo = "" ;
+
+
+  for(var i = 0 ; i<opi.loies.length ; i++){
+    if(opi.aviArmee[i]<0.33)
+      opiArmee  += "" + opi.loies[i] + " :\n:small_orange_diamond:  nous sommes favorable à " + opi.aviArmee[i] *100 + "%\n" ;
+    else if(opi.aviArmee[i]<0.66)
+      opiArmee  += "" + opi.loies[i] + " :\n:white_small_square:  nous sommes favorable à " + opi.aviArmee[i] *100 + "%\n" ;
+    else
+      opiArmee  += "" + opi.loies[i] + " :\n:small_blue_diamond:  nous sommes favorable à " + opi.aviArmee[i] *100 + "%\n" ;
+
+    if(opi.aviClerge[i]<0.33)
+      opiClerg  += "" + opi.loies[i] + " :\n:small_orange_diamond:  nous sommes favorable à " + opi.aviClerge[i] *100 + "%\n" ;
+    else if(opi.aviClerge[i]<0.66)
+      opiClerg  += "" + opi.loies[i] + " :\n:white_small_square:  nous sommes favorable à " + opi.aviClerge[i] *100 + "%\n" ;
+    else
+      opiClerg  += "" + opi.loies[i] + " :\n:small_blue_diamond:  nous sommes favorable à " + opi.aviClerge[i] *100 + "%\n" ;
+
+    if(opi.aviAristo[i]<0.33)
+      opiAristo  += "" + opi.loies[i] + " :\n:small_orange_diamond:  nous sommes favorable à " + opi.aviAristo[i] *100 + "%\n" ;
+    else if(opi.aviAristo[i]<0.66)
+      opiAristo  += "" + opi.loies[i] + " :\n:white_small_square:  nous sommes favorable à " + opi.aviAristo[i] *100 + "%\n" ;
+    else
+      opiAristo  += "" + opi.loies[i] + " :\n:small_blue_diamond:  nous sommes favorable à " + opi.aviAristo[i] *100 + "%\n" ;
+  }
+
+  message.guild.channels.get(id).send({embed: {
+      color : 0X4141FF,
+      author:
+      {
+        name: 'Membres du conseil',
+      },
+      fields: [
+        {
+          name : "Armées (" + opi.armee*100 + '%)',
+          value : opiArmee,
+        },
+        {
+          name : "Clergé (" + opi.clerge*100 + '%)',
+          value : opiClerg,
+        },
+        {
+          name : "Arosticrates (" + opi.aristo*100 +'%)',
+          value : opiAristo,
+        },
+      ],
+    }
+  }) ;
+/*
+  console.log(opi.loies[0] + " : " +vote(opi.loies[0]));
+  console.log(opi.loies[1] + " : " +vote(opi.loies[1]));
+  console.log(opi.loies[2] + " : " +vote(opi.loies[2]));*/
+}
+
+exports.vote = function vote(law, partie){
+  var aviFinal = 0 ;
+
+  for(var i in opi.loies.length){
+    if(opi.loies[i] == "law")
+      aviFinal = (opi.aviArmee[i] * opi.armee + opi.aviClerge[i] * opi.clerge + opi.aviAristo * opi.aristo) / (opi.aristo + opi.clerge + opi.armee) ;
+  }
+
+  return aviFinal >= 0.5 ;
 }
 
 
@@ -300,8 +367,9 @@ function writeStat(message, partie){
   //Récupérer les enfants
   var enf =""
 
-  for (var i in perso.enfants){
-    enf = enf + " " + perso.enfants[i];
+  for (var i in perso.enfants[numPerso]){
+    enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
+    // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
   }
 
   var id = myBot.messageChannel(message, "statistiques", partie);
@@ -345,14 +413,11 @@ function writeStat(message, partie){
   const id = myBot.messageChannel(message, "famille", partie);
   //Récupérer les enfants
   var enf =""
-    var enf =""
 
-  for (var i in perso.enfants){
-    enf = enf + " " + perso.enfants[i];
+  for (var i in perso.enfants[numPerso]){
+    enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
+    // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
   }
-    for (var i in perso.enfants[numPerso]){
-      enf = enf + " " +perso.id[perso.enfants[i]]  + " "  + perso.nom[perso.enfants[i]];
-    }
 
 var id = myBot.messageChannel(message, "statistiques", partie);
 
@@ -448,7 +513,7 @@ function marierEnfant(message,numPerso,partie) {
   var enf =""
   var pret = "Morgane"
   var nb = 0;
-  for (var i in perso.enfants[numPerso]){
+  for (var i of perso.enfants[numPerso]){
     enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
     nb += 1;
     // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i

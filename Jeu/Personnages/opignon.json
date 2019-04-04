@@ -1,15 +1,17 @@
 {
   "clerge"    : 0.5,
-  "aviClerge" : [1.0],
+  "aviClerge" : [1.0,1.0,0.6],
 
   "armee"     : 0.5,
-  "aviArmee"  : [1.0],
+  "aviArmee"  : [0.95,1.0,0.05],
 
   "aristo"    : 0.5,
-  "aviAristo" : [1.0],
+  "aviAristo" : [0.2,1.0,0.0],
 
   "loies"     : ["Progeniture",
-                 "Salique"],
+                 "Salique",
+                 "Fiesta Boom Boom"],
   "loiesDesc" : ["les prétendants au trone sont uniquement des descendants",
-                 "loie unisex au trone"]
+                 "loie unisex au trone",
+                 "les nobles se retrouvent au camping paradis"]
 }
