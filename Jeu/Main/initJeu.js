@@ -208,6 +208,7 @@ function bienvenue(message) {
 	const embed = new Discord.RichEmbed()
 	.setColor(15013890)
 	.setTitle('Bienvenue dans Medieval.io.')
+	.setImage('https://images.pexels.com/photos/34223/mont-saint-michel-france-normandy-europe.jpg?cs=srgb&dl=ancient-architecture-castle-34223.jpg')
 
 	.addField(titre, text)
 	.addField('Continuer : ', '✅')
