@@ -135,20 +135,14 @@ console.log('Partie du jour inconnue.');
 
         numPerso = 0;
         initJeu.accueilMedecin(reaction.message, partie);
+
       break;
     // Passer à l'évenement suivant
     case '➡':
-      if(partie.numEvent == -1 && !partie.evenement) {
-        const chanId1 = myBot.messageChannel(reaction.message, 'Statistiques', partie);
-        const chanId2 = myBot.messageChannel(reaction.message, 'Historique', partie);
-        const chanId3 = myBot.messageChannel(reaction.message, 'Conseil', partie);
+      
         const chanId4 = myBot.messageChannel(reaction.message, 'Famille', partie);
-        const chanId5 = myBot.messageChannel(reaction.message, 'Finances', partie);
-        if(partie.tuto)
-          fieldTextInfo = 'Voici le channel Statistiques .\n Toutes les informations sur votre famille apparaitront ici';
-        else
-          fieldTextInfo = 'Un petit récapitulatif du taux de glycémie.';
 
+        fieldTextInfo = 'Un petit récapitulatif du taux de glycémie.';
         reaction.message.guild.channels.get(chanId2).send({embed: {
           color: 15013890,
           fields: [{
@@ -156,7 +150,6 @@ console.log('Partie du jour inconnue.');
             value: fieldTextInfo
           }]
         } });
-      }
       event.event(reaction.message, partie, tabNR, tabER);
       break;
   }
