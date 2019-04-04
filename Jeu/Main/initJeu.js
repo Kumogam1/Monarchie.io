@@ -246,9 +246,9 @@ exports.accueil = function accueil(message, partie)
 	.then(async function(mess){
 		for (var i=0; i < 5; i++)
 		{
-			myBot.writePerso(message, i);
+			myBot.writePerso(mess, i);
 		}
-		await initJeu.choixPerso(mess);
+		await initJeu.choixPerso(mess, partie);
 	});
 };
 
@@ -261,7 +261,7 @@ exports.choixPerso = function choixPerso(message, partie)
 	.setTitle('Choix du personnage')
 	.addField('Sélection', 'Pour selectionner votre personnage, choisissez son icone ci-dessous')
 
-	message.channels.send({ embed })
+	message.guild.channels.get(chanId).send({ embed })
 	.then(async function(mess) {
 		await mess.react('👴');
 		await mess.react('👱');
