@@ -178,14 +178,14 @@ client.on('messageReactionAdd', (reaction, user) => {
       if (partie.feteOrganise){
         fete(reaction.message, partie);
         partie.feteOrganise = false;
-        sfm.save(reaction.message.author.id, partie);
+        sfm.save(partie.player, partie);
       };
       break;
     case '🏹':
       if (partie.guerreDeclare){
         guerre(reaction.message, partie);
         partie.guerreDeclare = false;
-        sfm.save(reaction.message.author.id, partie);
+        sfm.save(partie.player, partie);
       };
       break;
   }
@@ -221,10 +221,10 @@ exports.writePerso = function writePerso(message, numPerso) {
         var enf ="";
         var size = perso.enfants[numPerso].length;
         if (size == 0) {
-          enf = "Pas d'enfant :P";
+          enf = "Aucun enfant";
         } else {
           for (var size in perso.enfants[numPerso]){
-            enf = enf + " " + perso.enfants[numPerso][size];
+              enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][size] - 1]  + " "  + perso.nom[perso.enfants[numPerso][size] - 1];
           }
         }
 
@@ -367,8 +367,9 @@ function writeStat(message, partie){
   //Récupérer les enfants
   var enf =""
 
-  for (var i in perso.enfants){
-    enf = enf + " " + perso.enfants[i];
+  for (var i in perso.enfants[numPerso]){
+    enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
+    // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
   }
 
   var id = myBot.messageChannel(message, "statistiques", partie);
@@ -412,14 +413,11 @@ function writeStat(message, partie){
   const id = myBot.messageChannel(message, "famille", partie);
   //Récupérer les enfants
   var enf =""
-    var enf =""
 
-  for (var i in perso.enfants){
-    enf = enf + " " + perso.enfants[i];
+  for (var i in perso.enfants[numPerso]){
+    enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
+    // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
   }
-    for (var i in perso.enfants[numPerso]){
-      enf = enf + " " +perso.id[perso.enfants[i]]  + " "  + perso.nom[perso.enfants[i]];
-    }
 
 var id = myBot.messageChannel(message, "statistiques", partie);
 
@@ -515,7 +513,7 @@ function marierEnfant(message,numPerso,partie) {
   var enf =""
   var pret = "Morgane"
   var nb = 0;
-  for (var i in perso.enfants[numPerso]){
+  for (var i of perso.enfants[numPerso]){
     enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
     nb += 1;
     // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
