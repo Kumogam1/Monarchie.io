@@ -8,3 +8,4 @@ Jeu/Evenement
 *.png
 .gitignore
 Jeu/token.json
+node_module/*
