@@ -94,7 +94,7 @@ function initChannel(message, partie, rolePers, channelName, chanGrpId) {
 				'SEND_MESSAGES': false
 			});
 
-			if(channelName == 'Hub') {
+			if(channelName == 'Historique' || channelName == 'Statistiques') {
 				chan2.overwritePermissions(message.guild.roles.find(role => {
 					if(role.name == rolePers) {
 						return role;
@@ -102,7 +102,7 @@ function initChannel(message, partie, rolePers, channelName, chanGrpId) {
 				}), {
 					'VIEW_CHANNEL': true,
 					'CONNECT': true,
-					'SEND_MESSAGES': true
+					'SEND_MESSAGES': false
 				});
 			}
 			else{
@@ -113,7 +113,7 @@ function initChannel(message, partie, rolePers, channelName, chanGrpId) {
 				}), {
 					'VIEW_CHANNEL': true,
 					'CONNECT': true,
-					'SEND_MESSAGES': false
+					'SEND_MESSAGES': true
 				});
 			}
 
@@ -155,6 +155,7 @@ function initChannelGrp(message, partie, channelGrpName, rolePers) {
 	.then(async chanGrp => {
 
 		// On initialise toutes les informations du joueur
+		// WIP
 		res = chanGrp.id;
 		partie.chanGrp = chanGrp.id;
 		partie.player = message.author.id;
@@ -197,25 +198,23 @@ function bienvenue(message) {
 
 	if(partie.tuto) {
 		titre = 'Tutoriel';
-		text = 'Ceci est le tutoriel du jeu Mellitus.';
+		text = 'Ceci est le tutoriel du jeu Medieval.io.';
 	}
 	else{
 		titre = 'Jeu';
-		text = 'Vous allez jouer à Mellitus. Bon jeu.';
+		text = 'Vous allez jouer à Medieval.io. Bon jeu.';
 	}
 
 	const embed = new Discord.RichEmbed()
 	.setColor(15013890)
-	.setTitle('Bienvenue dans Mellitus')
+	.setTitle('Bienvenue dans Medieval.io.')
 
 	.addField(titre, text)
-	.addField('Choisir un personnage prédéfini : ', '✅')
-	.addField('Créer son propre personnage : ', '☑')
+	.addField('Continuer : ', '✅')
 
 	message.guild.channels.get(chanId).send({ embed })
 	.then(async function(mess) {
 		await mess.react('✅');
-		await mess.react('☑');
 	});
 }
 
