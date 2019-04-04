@@ -144,6 +144,7 @@ client.on('messageReactionAdd', (reaction, user) => {
     // Passer à l'évenement suivant
     case '➡':
       gt.gTours(reaction.message, partie);
+      myBot.writeConseil(reaction.message, partie) ;
       break;
     case '👴':
       myBot.clear(reaction.message);
@@ -255,7 +256,7 @@ exports.writePerso = function writePerso(message, numPerso) {
 }
 
 // Conseil
-function writeConseil(message, partie){
+exports.writeConseil = function writeConseil(message, partie){
 
   var id = myBot.messageChannel(message, "conseil", partie);
 
@@ -338,13 +339,13 @@ function writeConseil(message, partie){
       ],
     }
   }) ;
-
+/*
   console.log(opi.loies[0] + " : " +vote(opi.loies[0]));
   console.log(opi.loies[1] + " : " +vote(opi.loies[1]));
-  console.log(opi.loies[2] + " : " +vote(opi.loies[2]));
+  console.log(opi.loies[2] + " : " +vote(opi.loies[2]));*/
 }
 
-function vote(law, partie){
+exports.vote = function vote(law, partie){
   var aviFinal = 0 ;
 
   for(var i in opi.loies.length){
