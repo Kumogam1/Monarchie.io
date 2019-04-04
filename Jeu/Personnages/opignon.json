@@ -1,13 +1,15 @@
 {
   "clerge"    : 0.5,
   "aviClerge" : [1.0],
-  
+
   "armee"     : 0.5,
   "aviArmee"  : [1.0],
 
   "aristo"    : 0.5,
   "aviAristo" : [1.0],
 
-  "loies"     : ["Salique"],
-  "loiesDesc" : ["loie unisex au throne"]
+  "loies"     : ["Progeniture",
+                 "Salique"],
+  "loiesDesc" : ["les prétendants au trone sont uniquement des descendants",
+                 "loie unisex au trone"]
 }
