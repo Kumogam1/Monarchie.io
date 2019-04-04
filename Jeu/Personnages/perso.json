@@ -1,9 +1,8 @@
 ﻿{
-	"nom" : ["Alphonse Brown"],
-	"sexe" : ["Homme"],
-	"age" : ["70 ans"],
-	"taille" : ["165 cm"],
-	"enfants" : ["Amal"],
-	"icone" : ["https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/155/man-bald-medium-light-skin-tone_1f468-1f3fc-200d-1f9b2.png"]
-	
+	"nom" : ["François Ier"] ["Charles Quint"] ["Louis XVI"] ["Marie-Antoinette"] ["Françoise de Foix"],
+	"sexe" : ["Homme"] ["Homme"] ["Homme"] ["Femme"] ["Femme"] ["Femme"],
+	"age" : ["70 ans"] ["42 ans"] ["20 ans"] ["19 ans"] ["65 ans"],
+	"epoux" : ["Marie-Antoinette"] ["Célibataire"] ["Célibataire"] ["François Ier"] ["Célibataire"],
+	"enfants" : ["Amal", "Anaïs", "Edouard"] [""] [""] ["Amal", "Anaïs", "Edouard"] [""],
+	"icone" : ["https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/155/man-bald-medium-light-skin-tone_1f468-1f3fc-200d-1f9b2.png"] ["👱"] ["👲"] ["👵"] ["👸"],
 }
