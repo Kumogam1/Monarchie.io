@@ -144,7 +144,6 @@ client.on('messageReactionAdd', (reaction, user) => {
     // Passer à l'évenement suivant
     case '➡':
       gt.gTours(reaction.message, partie);
-      myBot.writeConseil(reaction.message, partie) ;
       break;
     case '👴':
       myBot.clear(reaction.message);
@@ -329,24 +328,25 @@ exports.writeConseil = function writeConseil(message, partie){
       },
       fields: [
         {
-          name : "Armées (" + opi.armee*100 + '%)',
+          name : "Armées (" + partie.aviArmee*100 + '%)',
           value : opiArmee,
         },
         {
-          name : "Clergé (" + opi.clerge*100 + '%)',
+          name : "Clergé (" + partie.aviClerge*100 + '%)',
           value : opiClerg,
         },
         {
-          name : "Arosticrates (" + opi.aristo*100 +'%)',
+          name : "Arosticrates (" + partie.aviAristo*100 +'%)',
           value : opiAristo,
         },
       ],
     }
   }) ;
-/*
+  /*  EXEMPLE DE VOTE
   console.log(opi.loies[0] + " : " +vote(opi.loies[0]));
   console.log(opi.loies[1] + " : " +vote(opi.loies[1]));
-  console.log(opi.loies[2] + " : " +vote(opi.loies[2]));*/
+  console.log(opi.loies[2] + " : " +vote(opi.loies[2]));
+  //*/
 }
 
 exports.vote = function vote(law, partie){
@@ -354,7 +354,7 @@ exports.vote = function vote(law, partie){
 
   for(var i in opi.loies.length){
     if(opi.loies[i] == "law")
-      aviFinal = (opi.aviArmee[i] * opi.armee + opi.aviClerge[i] * opi.clerge + opi.aviAristo * opi.aristo) / (opi.aristo + opi.clerge + opi.armee) ;
+      aviFinal = (opi.aviArmee[i] * partie.aviArmee + opi.aviClerge[i] * partie.aviClerge + opi.aviAristo[i] * partie.aviAristo) / (partie.aviAristo + partie.aviClerge + partie.aviArmee) ;
   }
 
   return aviFinal >= 0.5 ;

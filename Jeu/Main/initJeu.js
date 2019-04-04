@@ -6,6 +6,8 @@ const perso = require('../Personnages/perso.json');
 const initJeu = require('./initJeu.js');
 const gt = require('../Event/gestionTour.js');
 
+const opi = require('../Personnages/opignon.json');
+
 /** Fonction initialisant la partie
 * @param {string} message - Message discord
 * @param {Client} client - Le Client utilisé pour le jeu
@@ -296,15 +298,18 @@ function actions(message, partie){
 		await mess.react('🏹');
 	});
 
-exports.initOpi = function(message, numPerso, partie) {
-	partie.aviClerge = opi.aviClerge ;
-	partie.aviArmee  = opi.aviArmee  ;
-	partie.aviAristo = opi.aviAristo ;
+function initOpi(message, numPerso, partie) {
+	partie.aviClerge = opi.clerge ;
+	partie.aviArmee  = opi.armee  ;
+	partie.aviAristo = opi.aristo ;
 
 	sfm.save(partie.player, partie);
 }
 
 exports.initPerso = function(message, numPerso, partie) {
+
+	initOpi(message, numPerso, partie) ;
+
 	partie.id = perso.id[numPerso];
 	partie.nom = perso.nom[numPerso];
 	partie.sexe = perso.sexe[numPerso];
