@@ -164,18 +164,13 @@ function initChannelGrp(message, partie, channelGrpName, rolePers) {
 		res = chanGrp.id;
 		partie.chanGrp = chanGrp.id;
 		partie.player = message.author.id;
-		partie.tabPerso = [];
 		partie.nom = '';
 		partie.sexe = '';
 		partie.age = 20;
 
-		partie.partJour = 0;
-		partie.numJour = -1;
-		partie.numEvent = -1;
+		partie.annee = 1300;
 		partie.choixPerso = 0;
-		partie.nbInsu = 3;
 
-		partie.evenement = true;
 		partie.mort = false;
 
 		partie.feteOrganise = true;
