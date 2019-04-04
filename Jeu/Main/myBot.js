@@ -436,6 +436,7 @@ function marierEnfant(message,numPerso,partie) {
        console.log(idenfant);
        perso.epoux[idenfant] = 8;
        console.log(perso.epoux[idenfant]);
+       perso.epoux[8 - 1 ] = idenfant;
 
        var phrase = "  " + perso.nom[perso.enfants[numPerso][enfant] - 1] + " et " + perso.nom[perso.epoux[idenfant] - 1] + " sont maintenant mari et femme ! ";
        const embed = new Discord.RichEmbed()
