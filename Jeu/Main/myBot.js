@@ -211,7 +211,7 @@ function choixPerso(message, partie) {
     message.channel.send({ embed })
     .then((msg) => {
 
-          writePerso(msg, i);
+          writePerso(msg,numPerso );
 
     });
 }
@@ -230,19 +230,19 @@ function writePerso(message, numPerso) {
           },
           fields: [{
               name: 'Nom',
-              value: perso.nom[0],
+              value: perso.nom[numPerso],
           },
           {
               name: 'Sexe',
-              value: perso.sexe[0],
+              value: perso.sexe[numPerso],
           },
           {
               name: 'Age',
-              value: perso.age[0],
+              value: perso.age[numPerso],
           },
           {
             name: 'Enfants',
-            value: perso.enfants[0],
+            value: perso.enfants[numPerso],
           }
 
 
