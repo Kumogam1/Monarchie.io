@@ -208,6 +208,7 @@ function bienvenue(message) {
 	const embed = new Discord.RichEmbed()
 	.setColor(15013890)
 	.setTitle('Bienvenue dans Medieval.io.')
+	.setImage('https://images.pexels.com/photos/34223/mont-saint-michel-france-normandy-europe.jpg?cs=srgb&dl=ancient-architecture-castle-34223.jpg')
 
 	.addField(titre, text)
 	.addField('Continuer : ', '✅')
@@ -235,3 +236,20 @@ exports.initStat = function initStat(user) {
 
 	sfm.save(user.id, partie);
 };
+
+
+
+
+exports.accueilMedecin = function accueilMedecin(message, partie)
+{
+
+	const embed = new Discord.RichEmbed()
+	.setTitle('Le roi est mort, vive le roi !')
+	.setColor(808367)// Symbole médecine
+	.setTimestamp() // Crée de l'espace
+	.addField(':older_man:  ', 'Voici François I, le roi que vous allez incarner ! ')
+
+	message.channel.send({ embed })
+	.then(async function(message) {
+		await message.react('➡');
+	});}
