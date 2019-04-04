@@ -15,7 +15,8 @@ const config = require('../token.json');
 
 // Dossier des personnages
 const perso = require('../Personnages/perso.json');
-
+// Dossier des actions
+const tableaux = require('../Actions/tableaux.json');
 
 
 // Fonction qui s'active quand le bot est lancé
@@ -130,9 +131,7 @@ let tabIR = []; // tableau de l'impact  des repas
 
 //On attribut à chaque tableau les informations appropriées en fonction de la partie du jour
 tabNR = tableaux.nomRepasM;
-tabER = emoteRepasM;
 tabNA = tableaux.nomActiviteM;
-tabEA = emoteActiviteM;
 tabIA = tableaux.impactAM;
 tabIR = tableaux.impactRM;
 
@@ -227,7 +226,7 @@ function writePerso(message, numPerso) {
           author:
           {
             name: 'Le Roi',
-        
+
           },
           fields: [{
               name: 'Nom',
