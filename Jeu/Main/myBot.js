@@ -6,6 +6,7 @@ const myBot = require('./myBot.js');
 const initJeu = require('./initJeu.js');
 const finJeu = require('./finJeu.js');
 const sfm = require('./saveFileManagement.js');
+const his = require('../Historique/historique.js')
 
 const client = new Discord.Client();
 
@@ -64,8 +65,11 @@ client.on('message', (message) => {
         //sfm.save(message.author.id, partie);
         initJeu.initJeu(message, client);
         break;
+      case 'test':
+        his.historique(message, partie);
+        break;
       // Help : afficher toutes les commandes importantes
-    case 'help':
+      case 'help':
         const embed = new Discord.RichEmbed()
         .setColor(15013890)
         .setTitle('**Help**')
@@ -111,53 +115,48 @@ client.on('messageReactionAdd', (reaction, user) => {
   // Si le message provient d'un bot, on ne fait rien
   if(user.bot) return;
 
-  // on charge les informations du joueur
+  // On charge les informations du joueur
   const partie = sfm.loadSave(user.id);
   let tabNR = []; // tableau des noms des repas
-let tabNA = []; // tableau des noms d'activités
-let tabER = []; // tableau des emotes des repas
-let tabEA = []; // tableau des emotes d'activités
-let tabIA = []; // tableau de l'impact des activités
-let tabIR = []; // tableau de l'impact  des repas
+  let tabNA = []; // tableau des noms d'activités
+  let tabER = []; // tableau des emotes des repas
+  let tabEA = []; // tableau des emotes d'activités
+  let tabIA = []; // tableau de l'impact des activités
+  let tabIR = []; // tableau de l'impact  des repas
 
-//On attribut à chaque tableau les informations appropriées en fonction de la partie du jour
-tabNR = tableaux.nomRepasM;
-tabNA = tableaux.nomActiviteM;
-tabIA = tableaux.impactAM;
-tabIR = tableaux.impactRM;
+  // On attribut à chaque tableau les informations appropriées en fonction de la partie du jour
+  tabNR = tableaux.nomRepasM;
+  tabNA = tableaux.nomActiviteM;
+  tabIA = tableaux.impactAM;
+  tabIR = tableaux.impactRM;
 
-console.log('Partie du jour inconnue.');
 
   // Action effectuée en fonction de la réaction
   switch(reaction.emoji.name) {
     // Choix d'un personnage prédéfini
     case '✅':
-
         numPerso = 0;
         initJeu.accueilMedecin(reaction.message, partie);
       break;
     // Passer à l'évenement suivant
     case '➡':
-      if(partie.numEvent == -1 && !partie.evenement) {
-        const chanId1 = myBot.messageChannel(reaction.message, 'Statistiques', partie);
-        const chanId2 = myBot.messageChannel(reaction.message, 'Historique', partie);
-        const chanId3 = myBot.messageChannel(reaction.message, 'Conseil', partie);
-        const chanId4 = myBot.messageChannel(reaction.message, 'Famille', partie);
-        const chanId5 = myBot.messageChannel(reaction.message, 'Finances', partie);
-        if(partie.tuto)
-          fieldTextInfo = 'Voici le channel Statistiques .\n Toutes les informations sur votre famille apparaitront ici';
-        else
-          fieldTextInfo = 'Un petit récapitulatif du taux de glycémie.';
+      const chanId1 = myBot.messageChannel(reaction.message, 'Statistiques', partie);
+      const chanId2 = myBot.messageChannel(reaction.message, 'Historique', partie);
+      const chanId3 = myBot.messageChannel(reaction.message, 'Conseil', partie);
+      const chanId4 = myBot.messageChannel(reaction.message, 'Famille', partie);
+      const chanId5 = myBot.messageChannel(reaction.message, 'Finances', partie);
+      if(partie.tuto)
+        fieldTextInfo = 'Voici le channel Statistiques .\n Toutes les informations sur votre famille apparaitront ici';
+      else
+        fieldTextInfo = 'Un petit récapitulatif du taux de glycémie.';
 
-        reaction.message.guild.channels.get(chanId2).send({embed: {
-          color: 15013890,
-          fields: [{
-            name: 'Channel Informations',
-            value: fieldTextInfo
-          }]
+      reaction.message.guild.channels.get(chanId2).send({embed: {
+        color: 15013890,
+        fields: [{
+          name: 'Channel Informations',
+          value: fieldTextInfo
+        }]
         } });
-      }
-      event.event(reaction.message, partie, tabNR, tabER);
       break;
   }
 });
@@ -183,6 +182,7 @@ exports.messageChannel = function messageChannel(message, chanName, partie) {
       if(channel.name === chanName)
       {
           id = channel.id;
+          console.log(id);
       }
   });
   return id;
@@ -255,5 +255,55 @@ exports.clear = async function(message) {
     const fetched = await message.channel.fetchMessages();
     message.channel.bulkDelete(fetched);
 };
+
+
+
+
+
+
+
+// Statistiques
+function writeStat(message, partie){
+  for (var i in perso.enfants){
+    console.log(perso.enfants[i]);
+  }
+
+var id = myBot.messageChannel(message, 'statistiques', partie);
+
+message.guild.channels.get(id).send({embed: {
+    color : 0Xa1f442,
+    author:
+    {
+      name: 'XX',
+    },
+    fields: [{
+      name : 'Nom',
+      value : perso.nom[0],
+    },
+    {
+      age : 'Age',
+      value : perso.age[0],
+    },
+    {
+      epoux : 'Epoux/se',
+      value : perso.epoux[0],
+    },
+    {
+      enfants : "Enfant(s)",
+      value : "hello",
+    }
+  ],
+} });
+}
+
+
+
+
+
+
+
+
+
+
 
 client.login(config.token);
