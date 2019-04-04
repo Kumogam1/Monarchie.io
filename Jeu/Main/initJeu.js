@@ -241,18 +241,15 @@ exports.initStat = function initStat(user) {
 
 exports.accueil = function accueil(message, partie)
 {
-<<<<<<< HEAD
-	 myBot.clear(message);
-=======
+
 	myBot.clear(message);
->>>>>>> be32b31cd4d02936cae8221ffe5384299f1cb8c8
+
 	const embed = new Discord.RichEmbed()
 	.setTitle('Le roi est mort, vive le roi !')
 	.setColor(808367)
 	.setTimestamp() // Crée de l'espace
 	.addField('Démarrage', 'Choisissez la personne que vous allez incarner !')
 	message.channel.send({ embed })
-<<<<<<< HEAD
 	.then(async function(mess){
 		for (var i=0; i < 5; i++)
 		{
@@ -280,9 +277,3 @@ exports.choixPerso = function choixPerso(message, partie)
 		await mess.react('👸');
 	});
 };
-=======
-	.then(async function(message) {
-		await message.react('➡');
-	});
-}
->>>>>>> be32b31cd4d02936cae8221ffe5384299f1cb8c8
