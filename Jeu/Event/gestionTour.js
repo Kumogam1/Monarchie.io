@@ -99,11 +99,12 @@ exports.gTours = function(message, partie) {
 
 
 
-
+  naissance(partie);
 
   sfm.save(partie.player, partie);
 
 };
+
 
 function sendNouvelleAnnee(message, partie){
     myBot.clear(message);
@@ -144,6 +145,34 @@ function gameOver(message, partie){
 
 }
 
+function naissance(partie){
+  var res = null;
+  var rand = null;
+  var nais = Math.floor(Math.random() * 10) + 1;
+  if (nais <= 5){
+    var sexe = Math.floor(Math.random() * 10) + 1;
+    if (sexe >= 5){
+      var myArray = ['Henry', 'Frederic', 'Philippe','Louis', 'Eric', 'Edouard','Charles'];
+     rand = myArray[Math.floor(Math.random() * myArray.length)];
+      res = 'Homme';
+    }
+    else {
+      var myArray = ['Margot', 'Antoinette', 'Lucile','Robertine', 'Amalia', 'Anais','Nolane'];
+      rand = myArray[Math.floor(Math.random() * myArray.length)];
+      res = 'Femme'
+    }
+    var nouveau = [4,rand,0,res,null];
+
+    partie.enfants.push(nouveau);
+  }
+  let embed = new Discord.RichEmbed()
+  .setColor(15013890)
+  .setTitle('Journal de bord - Année' + partie.annee)
+  .addField('Naissance !', rand + ' est né(e).')
+
+
+
+};
 
 
 function checkOpi(partie){
