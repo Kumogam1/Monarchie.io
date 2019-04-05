@@ -16,6 +16,58 @@ exports.gTours = function(message, partie) {
   // CONSEIL
   myBot.writeConseil(message, partie) ;
 
+  // AGES DU ROI SA FEMME ET SES ENFANTS
+  partie.age += 5;
+  if (partie.epoux != null ) {
+      partie.epoux[1] += 5;
+  }
+  var enfants = partie.enfants;
+
+	for ( var i in enfants) {
+
+		partie.enfants[i][2] += 5;
+	}
+
+
+  // ON VERIFIE SI LE ROI DOIT MOURIR
+
+if ( partie.age == 80 ) {
+  if ( enfants == null) {
+
+    // fin
+  }
+  else {
+      // SI IL DOIT MOURIR ON SELECTIONNE LE PREMIER FILS
+    var nouveauroi = 	partie.enfants[0];
+
+    for ( var i in enfants) {
+      // On regarde dans la liste des Enfants
+      // si l'enfant est le meme que le premier on fait rien
+      // si l'enfant est plus agé que l'autre enfant et que c'est un homme c'est le nouveau Roi
+      // si l'enfant est le plus agé et que la loi salique est abrogé alors c'est le nouveau roi
+      var candidat = 	partie.enfants[i];
+      if ( nouveauroi == candidat) {
+
+      }
+      else {
+
+        if (candidat[2] > nouveauroi[2] && candidat[3] =="Homme") {
+
+        }
+        else if ( candidat[2] > nouveauroi[2] &&  )
+      }
+
+    }
+  }
+
+
+}
+
+
+
+
+
+
 
   // CLEAR
   myBot.clear()

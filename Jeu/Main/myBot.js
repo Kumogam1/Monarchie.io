@@ -558,12 +558,12 @@ function marierEnfant(message,numPerso,partie) {
        pretendante = myArray[args[1].toLowerCase() - 1];
 
        // on change l'épouse
-      idenfant[3] = pretendante;
+      idenfant[4] = pretendante;
 
        perso.epoux[8 - 1 ] = idenfant[0];
        partie.aviClerge += 0.2 ;
        partie.aviAristo += 0.2 ;
-       var phrase = "  " + partie.enfants[enfant][1] + " et " + partie.enfants[enfant][3] + " sont maintenant mari et femme ! ";
+       var phrase = "  " + partie.enfants[enfant][1] + " et " + partie.enfants[enfant][4] + " sont maintenant mari et femme ! ";
        const embed = new Discord.RichEmbed()
        .setTitle('Marier un enfant')
        .setColor(808367)// Symbole médecine
