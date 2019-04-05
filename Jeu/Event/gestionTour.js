@@ -15,80 +15,6 @@ exports.gTours = function(message, partie) {
 
   // Ecriture des channels
   myBot.writeConseil(message, partie) ;
-<<<<<<< HEAD
-
-  // AGES DU ROI SA FEMME ET SES ENFANTS
-  partie.age += 5;
-  if (partie.epoux != null ) {
-      partie.epoux[1] += 5;
-  }
-  var enfants = partie.enfants;
-
-	for ( var i in enfants) {
-
-		partie.enfants[i][2] += 5;
-	}
-
-
-  // ON VERIFIE SI LE ROI DOIT MOURIR
-var nouveauroi = 	partie.enfants[0];
-if ( partie.age == 80 ) {
-  if ( enfants == null) {
-
-    // fin
-     gameOver(message, partie);
-  }
-  else {
-      // SI IL DOIT MOURIR ON SELECTIONNE LE PREMIER FIL
-
-
-
-    for ( var i in enfants) {
-      // On regarde dans la liste des Enfants
-      // si l'enfant est le meme que le premier on fait rien
-      // si l'enfant est plus agé que l'autre enfant et que c'est un homme c'est le nouveau Roi
-      // si l'enfant est le plus agé et que la loi salique est abrogé alors c'est le nouveau roi
-      var candidat = 	partie.enfants[i];
-      if ( nouveauroi == candidat) {
-
-      }
-      else {
-
-        if (candidat[2] > nouveauroi[2] && candidat[3] =="Homme") {
-
-        }
-        // si loi salique abrogée
-        else if ( candidat[2] > nouveauroi[2] )
-        {
-
-        }
-      }
-
-    }
-
-    // on modifie les stats de la partie pour le nouveau roi
-
-    partie.nom = nouveauroi[1];
-    partie.age = nouveauroi[2];
-    partie.sexe = nouveauroi[3];
-    partie.epoux = nouveauroi[4];
-    partie.enfants = null;
-    leroiestMort(message, partie);
-
-
-  }
-
-}
-
-
-
-
-
-
-
-  // CLEAR
-  myBot.clear()
-=======
   initJeu.actions(message, partie);
   myBot.writeFamille(message, partie);
 
@@ -106,13 +32,81 @@ if ( partie.age == 80 ) {
   .then(async function(mes) {
     await mes.react('➡');
   });
->>>>>>> bf06d2ccffc73ebb83121f2143d29d7db95a52ec
+
+    // AGES DU ROI SA FEMME ET SES ENFANTS
+    partie.age += 5;
+    if (partie.epoux != null ) {
+        partie.epoux[1] += 5;
+    }
+    var enfants = partie.enfants;
+
+  	for ( var i in enfants) {
+
+  		partie.enfants[i][2] += 5;
+  	}
+
+
+    // ON VERIFIE SI LE ROI DOIT MOURIR
+  var nouveauroi = 	partie.enfants[0];
+  if ( partie.age == 80 ) {
+    if ( enfants == null) {
+
+      // fin
+       gameOver(message, partie);
+    }
+    else {
+        // SI IL DOIT MOURIR ON SELECTIONNE LE PREMIER FIL
+
+
+
+      for ( var i in enfants) {
+        // On regarde dans la liste des Enfants
+        // si l'enfant est le meme que le premier on fait rien
+        // si l'enfant est plus agé que l'autre enfant et que c'est un homme c'est le nouveau Roi
+        // si l'enfant est le plus agé et que la loi salique est abrogé alors c'est le nouveau roi
+        var candidat = 	partie.enfants[i];
+        if ( nouveauroi == candidat) {
+
+        }
+        else {
+
+          if (candidat[2] > nouveauroi[2] && candidat[3] =="Homme") {
+
+          }
+          // si loi salique abrogée
+          else if ( candidat[2] > nouveauroi[2] )
+          {
+
+          }
+        }
+
+      }
+
+      // on modifie les stats de la partie pour le nouveau roi
+
+      partie.nom = nouveauroi[1];
+      partie.age = nouveauroi[2];
+      partie.sexe = nouveauroi[3];
+      partie.epoux = nouveauroi[4];
+      partie.enfants = null;
+      leroiestMort(message, partie);
+
+
+    }
+
+  }
+
+
+
+
+
+
+
 
   sfm.save(partie.player, partie);
 
 };
 
-<<<<<<< HEAD
 function sendNouvelleAnnee(message, partie){
     myBot.clear(message);
     const embed = new Discord.RichEmbed()
@@ -154,8 +148,6 @@ function gameOver(message, partie){
 
 
 
-=======
->>>>>>> bf06d2ccffc73ebb83121f2143d29d7db95a52ec
 function checkOpi(partie){
   if(partie.aviClerge>1)
     partie.aviClerge = 1 ;
