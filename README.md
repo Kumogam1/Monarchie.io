@@ -25,5 +25,5 @@ Vous allez alors avancer dans le temps et voir les générations de votre famill
 
 * Sinon, vous allez créer un bot.
     + Tout d'abord, télécharger [node.js](https://nodejs.org/en/download/) puis redémarrer votre ordinateur (ou créer une varible d'environement).
-    + Vous allez maintenant créer votre bot. Identifiez-vous [ici](https://discordapp.com/developers/applications/) puis cliquez sur New Application et nommez-là. Dans le menu de gauche selectionner Bot puis cliquer sur Add Bot et nommez-le. Enfin, copiez le TOKEN.
+    + Vous allez maintenant créer votre bot. Identifiez-vous [ici](https://discordapp.com/developers/applications/) puis cliquez sur `New Application` et nommez-là. Dans le menu de gauche selectionner `Bot` puis cliquer sur `Add Bot` et nommez-le. Enfin, copier le **TOKEN**.
     + Téléchargez ce git, puis dans `master/Jeu/token.json` remplacez le token existant par le token que vous avez copié.
