@@ -342,10 +342,10 @@ exports.writeConseil = function writeConseil(message, partie){
       ],
     }
   }) ;
-  /*  EXEMPLE DE VOTE
-  console.log(opi.loies[0] + " : " +vote(opi.loies[0]));
-  console.log(opi.loies[1] + " : " +vote(opi.loies[1]));
-  console.log(opi.loies[2] + " : " +vote(opi.loies[2]));
+  //*  EXEMPLE DE VOTE
+  console.log(opi.loies[0] + " : " +vote(opi.loies[0],partie));
+  console.log(opi.loies[1] + " : " +vote(opi.loies[1],partie));
+  console.log(opi.loies[2] + " : " +vote(opi.loies[2],partie));
   //*/
 }
 

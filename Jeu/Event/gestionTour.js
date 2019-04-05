@@ -2,8 +2,6 @@ const Discord = require('discord.js');
 const myBot = require('../Main/myBot.js');
 const sfm = require('../Main/saveFileManagement.js');
 
-var tour = 0 ;
-
 exports.gTours = function(message, partie) {
   sendNouvelleAnnee(message, partie) ;
 
@@ -18,11 +16,9 @@ exports.gTours = function(message, partie) {
 
 
   // CLEAR
-  myBot.clear()
+  //myBot.clear()
 
   sfm.save(partie.player, partie);
-
-  tour++ ;
 };
 
 function sendNouvelleAnnee(message, partie){
