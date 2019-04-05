@@ -15,4 +15,8 @@ exports.gTours = function(message, partie) {
   .then(async function(mes) {
     await mes.react('➡');
   });
+
+  // CONSEIL
+  
+  //myBot.writeConseil(message, partie) ;
 };

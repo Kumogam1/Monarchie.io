@@ -126,6 +126,10 @@ function initChannel(message, partie, rolePers, channelName, chanGrpId) {
 
 			if(channelName == 'Hub')
 				bienvenue(message);
+
+			if(channelName == "Actions")
+				actions(message, partie);
+
 		}
 		).catch(console.error);
 	}).catch(console.error);
@@ -172,11 +176,15 @@ function initChannelGrp(message, partie, channelGrpName, rolePers) {
 
 		partie.mort = false;
 
+		partie.feteOrganise = true;
+		partie.guerreDeclare = true;
+
+
 		initChannel(message, partie, rolePers, 'Hub', res);
 		initChannel(message, partie, rolePers, 'Historique', res);
 		initChannel(message, partie, rolePers, 'Statistiques', res);
 		initChannel(message, partie, rolePers, 'Conseil', res);
-		initChannel(message, partie, rolePers, 'Finances', res);
+		initChannel(message, partie, rolePers, 'Actions', res);
 		initChannel(message, partie, rolePers, 'Famille', res);
 		sfm.save(message.author.id, partie);
 	})
@@ -272,6 +280,29 @@ exports.choixPerso = function choixPerso(message, partie)
 		await mess.react('👸');
 });
 };
+// Fonctions menu action
+function actions(message, partie){
+	const chanId = myBot.messageChannel(message, 'actions', partie);
+
+	const embed = new Discord.RichEmbed()
+	.setColor(15013890)
+	.setTitle('Actions')
+	.addField('Organiser une fête 🎊', 'Organiser une fêtes pour améliorer vos relations avec la noblesse')
+	.addField('Déclarer une guerre 🏹', 'Déclarer la guerre à un pays voisin pour agrandir votre térritoire et améliorer votre image aux yeux de tous')
+
+	message.guild.channels.get(chanId).send({ embed })
+	.then(async function(mess) {
+		await mess.react('🎊');
+		await mess.react('🏹');
+	});
+
+exports.initOpi = function(message, numPerso, partie) {
+	partie.aviClerge = opi.aviClerge ;
+	partie.aviArmee  = opi.aviArmee  ;
+	partie.aviAristo = opi.aviAristo ;
+
+	sfm.save(partie.player, partie);
+}
 
 exports.initPerso = function(message, numPerso, partie) {
 	partie.id = perso.id[numPerso];
@@ -280,8 +311,21 @@ exports.initPerso = function(message, numPerso, partie) {
 	partie.age = perso.age[numPerso];
 	partie.epoux = perso.age[numPerso];
 	partie.role = perso.role[numPerso];
-	partie.enfants = perso.enfants[numPerso];
+	var enfants = perso.enfants[numPerso];
+	var gosses;
+	for ( var i in enfants) {
+		var e;
+		e.push(i);
+		e.push(perso.nom[enfants[i] - 1])
+		e.push(perso.age[enfants[i] - 1])
+		e.push(perso.nom[perso.epoux[enfants[i] - 1] - 1])
+		gosses.push(e);
+		console.log(e);
+	}
+	partie.enfants = gosses;
 	sfm.save(partie.player, partie);
 	gt.gTours(message, partie);
 
 };
+
+}
