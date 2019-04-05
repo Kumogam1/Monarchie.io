@@ -484,7 +484,7 @@ function writeFamille(message,numPerso,partie) {
     // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
   }
 
-  var conjoint = partie.epoux;
+  var conjoint = partie.epoux[0];
   var nom = partie.nom;
   console.log(conjoint,nom,partie.enfants[i][1])
   const embed = new Discord.RichEmbed()
@@ -511,19 +511,28 @@ function writeFamille(message,numPerso,partie) {
 function marierEnfant(message,numPerso,partie) {
   const id = myBot.messageChannel(message, "famille", partie);
   var enf =""
-  var pret = "Morgane"
+  var pret = ""
   var nb = 0;
-  for (var i of perso.enfants[numPerso]){
-    enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
-    nb += 1;
+  n
+  for (var i in partie.enfants){
+    var num =i + 1;
+    enf = enf + " | " +num + " ->  " +partie.enfants[i][1]  + " \n "  ;
+    // perso.nom[perso.enfsants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
+  }
+  var myArray = ['Marie-Eve', 'Juliette', 'Théophanie'];
+  for (var i in myArray){
+    var num =i + 1;
+    pret = pret + " | " + num + " ->  " +myArray[i]  + " \n "  ;
     // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
   }
+
+  console.log(pret);
   const embed = new Discord.RichEmbed()
   .setTitle('Marier un enfant')
   .setColor(808367)// Symbole médecine
   .setTimestamp() // Crée de l'espace
   .addField(' Liste des enfants  : ', enf)
-  .addField(' Liste des prétendant/es ', ' 1 - Morgane')
+  .addField(' Liste des prétendant/es ', pret)
   .addField(' Séléctionnez l\'enfant à marier et sa prétendante en écrivant le numéro de l\'enfant puis du prétendant', ' -')
   .addField('exemple : commande 1 1', ' - ')
   message.guild.channels.get(id).send({embed})
@@ -536,17 +545,18 @@ function marierEnfant(message,numPerso,partie) {
       const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 
       var enfant;
-      var pretendante = 1;
+      var pretendante;
       // command est la commande écrite par le joueur
        enfant = args[0].toLowerCase() - 1;
-       idenfant = perso.id[perso.enfants[numPerso][enfant] - 1];
+       idenfant = partie.enfants[enfant];
+       pretendante = myArray[args[1].toLowerCase() - 1];
 
-       console.log(idenfant);
-       perso.epoux[idenfant] = 8;
-       console.log(perso.epoux[idenfant]);
-       perso.epoux[8 - 1 ] = idenfant;
+       // on change l'épouse
+      idenfant[3] = pretendante;
 
-       var phrase = "  " + perso.nom[perso.enfants[numPerso][enfant] - 1] + " et " + perso.nom[perso.epoux[idenfant] - 1] + " sont maintenant mari et femme ! ";
+       perso.epoux[8 - 1 ] = idenfant[0];
+
+       var phrase = "  " + partie.enfants[enfant][1] + " et " + partie.enfants[enfant][3] + " sont maintenant mari et femme ! ";
        const embed = new Discord.RichEmbed()
        .setTitle('Marier un enfant')
        .setColor(808367)// Symbole médecine
