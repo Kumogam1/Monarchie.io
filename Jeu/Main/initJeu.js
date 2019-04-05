@@ -331,7 +331,7 @@ exports.initPerso = function(message, numPerso, partie) {
 		e.push(i);
 		e.push(perso.nom[enfants[i] - 1])
 		e.push(perso.age[enfants[i] - 1])
-		e.push(peeso.sexe[enfants[i] - 1]);
+		e.push(perso.sexe[enfants[i] - 1]);
 		if ( perso.epoux[enfants[i] - 1] == null) {
 
 			e.push("");

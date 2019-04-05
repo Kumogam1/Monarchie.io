@@ -150,7 +150,6 @@ client.on('messageReactionAdd', (reaction, user) => {
       numPerso = 0;
       initJeu.initPerso(reaction.message, numPerso, partie);
       writeFamille(reaction.message,numPerso,partie);
-
       break;
     case '👱':
       myBot.clear(reaction.message);
@@ -173,6 +172,7 @@ client.on('messageReactionAdd', (reaction, user) => {
       initJeu.initPerso(reaction.message, numPerso, partie);
       break;
     case '👶':
+
       marierEnfant(reaction.message, numPerso, partie)
       sfm.save(partie.player, partie);
       break;
@@ -480,7 +480,7 @@ message.guild.channels.get(id).send({embed: {
 }
 
 function writeFamille(message,numPerso,partie) {
-
+    myBot.clear(message);
   const id = myBot.messageChannel(message, "famille", partie);
   //Récupérer les enfants
   var enf =""

@@ -30,21 +30,17 @@ exports.gTours = function(message, partie) {
 
 
   // ON VERIFIE SI LE ROI DOIT MOURIR
-  var nouveauroi = 	partie.enfants[0];
+var nouveauroi = 	partie.enfants[0];
 if ( partie.age == 80 ) {
   if ( enfants == null) {
 
     // fin
+     gameOver(message, partie);
   }
   else {
-      // SI IL DOIT MOURIR ON SELECTIONNE LE PREMIER FILS
+      // SI IL DOIT MOURIR ON SELECTIONNE LE PREMIER FIL
 
-    if ( nouveauroi[3] =="Femme") {
 
-      // fin
-    }
-
-    else {
 
     for ( var i in enfants) {
       // On regarde dans la liste des Enfants
@@ -61,15 +57,25 @@ if ( partie.age == 80 ) {
 
         }
         // si loi salique abrogée
-        else if ( candidat[2] > nouveauroi[2]    )
+        else if ( candidat[2] > nouveauroi[2] )
+        {
+
+        }
       }
 
     }
+
+    // on modifie les stats de la partie pour le nouveau roi
+
+    partie.nom = nouveauroi[1];
+    partie.age = nouveauroi[2];
+    partie.sexe = nouveauroi[3];
+    partie.epoux = nouveauroi[4];
+    partie.enfants = null;
+    leroiestMort(message, partie);
+
+
   }
-}
-
-// on modifie les stats de la partie pour le nouveau roi
-
 
 }
 
@@ -101,6 +107,32 @@ function sendNouvelleAnnee(message, partie){
     });
 
 }
+
+function leroiestMort(message, partie){
+
+    myBot.clear(message);
+    const embed = new Discord.RichEmbed()
+    .setTitle('Le Roi est mort , vive le roi ! ')
+    .setTimestamp()
+    .addField('Le nouveau roi est ', partie.nom)
+    .setFooter('Une nouvelle ère démarre aujourd\'hui...');
+    message.channel.send({ embed });
+
+}
+
+function gameOver(message, partie){
+
+    myBot.clear(message);
+    const embed = new Discord.RichEmbed()
+    .setTitle('Le Roi est mort , .... il n\' a plus de prétendants au trone... ')
+    .setTimestamp()
+    .addField('Game Over ', ':skull:')
+    .setFooter('Une nouvelle ère se termine aujourd\'hui...');
+    message.channel.send({ embed });
+
+}
+
+
 
 function checkOpi(partie){
   if(partie.aviClerge>1)
