@@ -174,6 +174,7 @@ client.on('messageReactionAdd', (reaction, user) => {
       break;
     case '👶':
       marierEnfant(reaction.message, numPerso, partie)
+      sfm.save(partie.player, partie);
       break;
     case '🎊':
       if (partie.feteOrganise){
@@ -189,6 +190,11 @@ client.on('messageReactionAdd', (reaction, user) => {
         sfm.save(partie.player, partie);
       };
       break;
+    case'🗡':
+      if (partie.epoux != null) {
+        tuerfemme(reaction.message,partie);
+          sfm.save(partie.player, partie);
+      }
   }
 });
 
@@ -556,7 +562,7 @@ function marierEnfant(message,numPerso,partie) {
 
        perso.epoux[8 - 1 ] = idenfant[0];
        partie.aviClerge += 0.2 ;
-      partie.aviAristo += 0.2 ;
+       partie.aviAristo += 0.2 ;
        var phrase = "  " + partie.enfants[enfant][1] + " et " + partie.enfants[enfant][3] + " sont maintenant mari et femme ! ";
        const embed = new Discord.RichEmbed()
        .setTitle('Marier un enfant')
@@ -564,13 +570,67 @@ function marierEnfant(message,numPerso,partie) {
        .setTimestamp() // Crée de l'espace
        .addField(' Félicitations !   : ', phrase)
        message.guild.channels.get(id).send({embed})
-         sfm.save(partie.player, partie);
+
 
     }
   });
 
 }
 
+function tuerfemme(message,partie) {
+
+  const id = myBot.messageChannel(message, "famille", partie);
+  const embed = new Discord.RichEmbed()
+  .setTitle('Gérez votre famille')
+  .setColor(808367)// Symbole médecine
+  .setTimestamp() // Crée de l'espace
+  .addField( )
+  .addField(':scream:  ', ' Souhaitez vous vraiment vous débarasser de votre femme ?')
+  .addField(' ->   ', ' Répondez oui ou non dans le chat  !')
+  message.guild.channels.get(id).send({embed})
+  .then(async function(mess) {
+    await mess.react('😏');
+  });
+  client.on('message', (message) => {
+
+    // Si le message provient d'un bot ou qu'il ne contient pas le prefix approprié, on ne fait rien
+  	if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+
+    else {
+      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+
+      var enfant;
+      var pretendante;
+      // command est la commande écrite par le joueur
+       reponse = args[0].toLowerCase() - 1;
+       console.log(reponse);
+       if ( reponse =="non") {
+         var phrase = " " + partie.epoux + " est toujours en vie  " ;
+         const embed = new Discord.RichEmbed()
+         .setTitle('Votre femme va bien')
+         .setColor(808367)// Symbole médecine
+         .setTimestamp() // Crée de l'espace
+         .addField('ouf  ! ', phrase)
+       }
+      else {
+
+       partie.aviClerge += 0.2 ;
+       partie.aviAristo += 0.2 ;
+       var phrase = " " + partie.epoux + " a fait une chute fatale dans un puit ! " ;
+       const embed = new Discord.RichEmbed()
+       .setTitle('Votre femme vient de mystérieusement disparaitre')
+       .setColor(808367)// Symbole médecine
+       .setTimestamp() // Crée de l'espace
+       .addField('oops ! ', phrase)
+       message.guild.channels.get(id).send({embed})
+       partie.epoux = null;
+
+
+    }
+  }
+  });
+
+}
 
 
 /** Fonction qui écrit le texte explicatif sur le serveur Discord

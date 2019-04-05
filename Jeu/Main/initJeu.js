@@ -314,7 +314,15 @@ exports.initPerso = function(message, numPerso, partie) {
 	partie.nom = perso.nom[numPerso];
 	partie.sexe = perso.sexe[numPerso];
 	partie.age = perso.age[numPerso];
+
+	if ( perso.epoux[numPerso] != null) {
 	partie.epoux = [perso.nom[perso.epoux[numPerso] - 1], perso.age[perso.epoux[numPerso] - 1],perso.sexe[perso.epoux[numPerso] - 1]];
+
+	}
+	else {
+		partie.epoux = null;
+	}
+
 	partie.role = perso.role[numPerso];
 	var enfants = perso.enfants[numPerso];
 	var gosses =[];
@@ -324,7 +332,7 @@ exports.initPerso = function(message, numPerso, partie) {
 		e.push(i);
 		e.push(perso.nom[enfants[i] - 1])
 		e.push(perso.age[enfants[i] - 1])
-		if ( perso.epoux == null) {
+		if ( perso.epoux[enfants[i] - 1] == null) {
 
 			e.push("");
 			console.log("c'est bien null ");
