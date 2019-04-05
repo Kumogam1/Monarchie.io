@@ -614,14 +614,14 @@ function guerre(message, partie){
   var res = 'Vous avez perdue la guerre, l\'opinion générale à votre égart a baissé';
   if (myBot.war() == 1){
     res = 'Vous avez gagné la guerre, vous gagnez en popularité'
-    partie.opiArmee += 0.2;
-    partie.opiClerg += 0.2;
-    partie.opiAristo += 0.2;
+    partie.avisArmee += 0.2;
+    partie.avisClerg += 0.2;
+    partie.avisAristo += 0.2;
   }
   else{
-    partie.opiArmee -= 0.2;
-    partie.opiClerg -= 0.2;
-    partie.opiAristo -= 0.2;
+    partie.avisArmee -= 0.2;
+    partie.avisClerg -= 0.2;
+    partie.avisAristo -= 0.2;
   }
 
   const embed = new Discord.RichEmbed()
