@@ -191,10 +191,11 @@ client.on('messageReactionAdd', (reaction, user) => {
       };
       break;
     case'🗡':
-      if (partie.epoux != null) {
+    /*  if (partie.epoux != null) {
         tuerfemme(reaction.message,partie);
           sfm.save(partie.player, partie);
       }
+      */
   }
 });
 
