@@ -11,26 +11,25 @@ const md = require('../Event/mortDescendant.js');
 exports.historique = function(message, partie) {
 	let listmort = [];
 	const chanId = myBot.messageChannel(message, 'historique', partie);
-	partie.enfants[0].forEach(function(element) {
+
+	for (var i = 0; i < partie.enfants.length; i++) {
 		if(Math.random() < 0.2) {
-			md.mortDescendant(message, partie, element);
-			listmort.push(partie.nom[element]);
-			console.log(partie.nom[element]);
-			console.log(element);
+			listmort.push(partie.enfants[i]);
+			md.mortDescendant(partie, i);
 		}
-	});
+	}
 
 	let embed = new Discord.RichEmbed()
 	.setColor(15013890)
 	.setTitle('Journal de bord - Année' + partie.annee)
-	.addField('Prenom est né(e).')
-	.addField('Aled les amis');
+	.addField('Naissance !', 'Prénom est né(e).')
 	if (listmort.length > 0) {
-		console.log('ok');
+		let chaine = '';
 		listmort.forEach(function(element) {
-			embed = embed.addField(element + ' est mort');
+			console.log(element);
+			chaine += element[1] + ' est mort, ';
 		});
-
+		embed = embed.addField('Mort', chaine);
 	}
 
 
