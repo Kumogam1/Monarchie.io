@@ -300,15 +300,11 @@ function writeLaw(law, message, partie){
         }
       ],
     }
-  }) ;
-
-/*
-  message.guild.channels.get(id).send({embed})
+  })
   .then(async function(mess) {
-		await mess.react(':think:');
-    await mess.react(':heart:');
-    await mess.react(':white_small_square:');
-	});*/
+		await mess.react(':thumbsup:');
+    await mess.react(':thumbsdown:');
+	});
 
   return true ;
 }
