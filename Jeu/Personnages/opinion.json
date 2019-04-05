@@ -1,11 +1,11 @@
 {
-  "clerge"    : 0.5,
+  "clerge"    : 0.1,
   "aviClerge" : [1.0,1.0,0.6],
 
-  "armee"     : 0.5,
+  "armee"     : 0.01,
   "aviArmee"  : [0.95,1.0,0.05],
 
-  "aristo"    : 0.5,
+  "aristo"    : 0.09,
   "aviAristo" : [0.2,1.0,0.0],
 
   "loies"     : ["Progeniture",

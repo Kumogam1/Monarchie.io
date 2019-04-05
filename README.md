@@ -1,6 +1,15 @@
 # Monarchie.io
 
+> **Développeurs :**
+> * Amal MATMATI
+> * Edouard GU
+> * Anaïs EGNER
+> * Quentin de POTTER
+
+
 ## Objectifs pédagogiques du jeu
+
+![T4](screenshot.png)
 
 La monarchie est soumise à des lois qui ne sont pas toujours contournables, même pas le monarque lui-même. Les droits de succesions peuvent s'avérer compliqués; il est alors primordial d'assurer sa déscendance afin de rester au pouvoir.
 
@@ -27,3 +36,7 @@ Vous allez alors avancer dans le temps et voir les générations de votre famill
     + Tout d'abord, télécharger [node.js](https://nodejs.org/en/download/) puis redémarrer votre ordinateur (ou créer une varible d'environement).
     + Vous allez maintenant créer votre bot. Identifiez-vous [ici](https://discordapp.com/developers/applications/) puis cliquez sur `New Application` et nommez-là. Dans le menu de gauche selectionner `Bot` puis cliquer sur `Add Bot` et nommez-le. Enfin, copier le **TOKEN**.
     + Téléchargez ce git, puis dans `master/Jeu/token.json` remplacez le token existant par le token que vous avez copié.
+
+## Lien sur un serveur test
+
+https://discord.gg/ShsSVNn

@@ -1,15 +1,13 @@
 const Discord = require('discord.js');
 const myBot = require('../Main/myBot.js');
 const sfm = require('../Main/saveFileManagement.js');
-const initJeu = require('../Main/initJeu.js');
-const his = require('../Historique/historique.js');
 
 exports.gTours = function(message, partie) {
   myBot.clear(message);
 
-  partie.aviAristo -= 0.14 ;
-  partie.aviClerge += 0.01 ;
-  partie.aviArmee += 0.08 ;
+  partie.aviAristo -= 0.01 ;
+  partie.aviClerge -= 0.01 ;
+  partie.aviArmee  -= 0.01 ;
 
   checkOpi(partie) ;
 
