@@ -6,7 +6,7 @@ const perso = require('../Personnages/perso.json');
 const initJeu = require('./initJeu.js');
 const gt = require('../Event/gestionTour.js');
 
-const opi = require('../Personnages/opignon.json');
+const opi = require('../Personnages/opinion.json');
 
 /** Fonction initialisant la partie
 * @param {string} message - Message discord
