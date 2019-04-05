@@ -1,9 +1,6 @@
 const sfm = require('../Main/saveFileManagement.js');
 
-exports.mortDescendant = function(message, partie, id) {
-  const index = partie.enfants.indexOf(id);
-  if (index > -1) {
-    partie.enfants.splice(index, 1);
-  }
+exports.mortDescendant = function(partie, ind) {
+  partie.enfants.splice(ind);
   sfm.save(partie.player, partie);
 };
