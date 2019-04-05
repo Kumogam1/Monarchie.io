@@ -149,10 +149,6 @@ client.on('messageReactionAdd', (reaction, user) => {
       myBot.clear(reaction.message);
       numPerso = 0;
       initJeu.initPerso(reaction.message, numPerso, partie);
-<<<<<<< HEAD
-      writeFamille(reaction.message,numPerso,partie);
-=======
->>>>>>> bf06d2ccffc73ebb83121f2143d29d7db95a52ec
       break;
     case '👱':
       myBot.clear(reaction.message);
@@ -482,24 +478,18 @@ message.guild.channels.get(id).send({embed: {
 	});
 }
 
-<<<<<<< HEAD
-function writeFamille(message,numPerso,partie) {
-    myBot.clear(message);
-=======
 exports.writeFamille = function(message, partie) {
->>>>>>> bf06d2ccffc73ebb83121f2143d29d7db95a52ec
   const id = myBot.messageChannel(message, "famille", partie);
   //Récupérer les enfants
-  var enf =""
+  var enf =" "
 
   for (var i in partie.enfants){
     enf = enf + " | " +partie.enfants[i][1]  + " "  ;
     // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
   }
 
-  var conjoint = partie.epoux[0];
+  var conjoint = partie.epoux;
   var nom = partie.nom;
-  console.log(conjoint,nom,partie.enfants[i][1])
   const embed = new Discord.RichEmbed()
 	.setTitle('Gérez votre famille')
 	.setColor(808367)// Symbole médecine
@@ -734,28 +724,6 @@ function fete(message, partie){
   message.guild.channels.get(id).send({ embed })
 };
 
-function naissance(){
-  var res = null;
-  var nais = Math.floor(Math.random() * 10) + 1;
-  if (nais <= 5){
-    var sexe = Math.floor(Math.random() * 10) + 1;
-    if (sexe >= 5){
-      res = 'Homme';
-    }
-    else {
-      res = 'Femme'
-    }
-  }
-  return res;
-};
 
-function deces(){
-  var res = null;
-  var dec = Math.floor(Math.random() * 10) +1;
-  if(dec <= 3){
-    res = 'Deces'
-  }
-  return res;
-};
 
 client.login(config.token);
