@@ -335,6 +335,7 @@ exports.initPerso = function(message, numPerso, partie) {
 	partie.aviClerge = opi.clerge;
 	partie.aviArmee  = opi.armee;
 	partie.aviAristo = opi.aristo;
+	partie.loiesAdopt = [] ;
 	sfm.save(partie.player, partie);
 	gt.gTours(message, partie);
 

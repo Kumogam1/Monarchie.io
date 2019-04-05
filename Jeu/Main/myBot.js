@@ -268,16 +268,10 @@ exports.writePerso = function writePerso(message, numPerso) {
 // Conseil
 function writeLaw(law, message, partie){
 
-
-  console.log(law);
-
   var desc = "" ;
   for(var i=0 ; i< opi.loies.length ; i++){
-    if(opi.loies[i].toLowerCase() == law){
+    if(opi.loies[i].toLowerCase() == law)
       desc = opi.loiesDesc[i] ;
-      console.log(law + " == " + opi.loies[i].toLowerCase() );
-    }else
-      console.log(law + " != " + opi.loies[i].toLowerCase() );
   }
   if(desc == "")
     return false ;
@@ -298,11 +292,11 @@ function writeLaw(law, message, partie){
         }
       ],
     }
-  })
-  .then(async function(mess) {
-		await mess.react(':thumbsup:');
-    await mess.react(':thumbsdown:');
-	});
+  }) ;
+  //.then(async function(mess) {
+	//	await mess.react(':thumbsup:');
+  //  await mess.react(':thumbsdown:');
+	//});
 
   return true ;
 }
@@ -319,6 +313,15 @@ exports.writeConseil = function writeConseil(message, partie){
 
   for(var i = 0 ; i<opi.loies.length ; i++){
     laws += "**" + opi.loies[i] + "** : " + opi.loiesDesc[i] + "\n" ;
+  }
+
+  var adopt = "" ;
+  if(partie.loiesAdopt.length == 0){
+    adopt = ":x:"
+  }else{
+    for(var i = 0 ; i < partie.loiesAdopt.length ; i++){
+      adopt += partie.loiesAdopt[i] + "\n" ;
+    }
   }
 
   message.guild.channels.get(id).send({embed: {

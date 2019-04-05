@@ -1,11 +1,6 @@
 const Discord = require('discord.js');
 const myBot = require('../Main/myBot.js');
 const sfm = require('../Main/saveFileManagement.js');
-<<<<<<< HEAD
-=======
-const initJeu = require('../Main/initJeu.js');
-const his = require('../Historique/historique.js');
->>>>>>> bf06d2ccffc73ebb83121f2143d29d7db95a52ec
 
 exports.gTours = function(message, partie) {
   myBot.clear(message);
@@ -18,14 +13,6 @@ exports.gTours = function(message, partie) {
 
   // Ecriture des channels
   myBot.writeConseil(message, partie) ;
-<<<<<<< HEAD
-
-
-  // CLEAR
-  //myBot.clear()
-
-  sfm.save(partie.player, partie);
-=======
   initJeu.actions(message, partie);
   myBot.writeFamille(message, partie);
 
@@ -46,7 +33,6 @@ exports.gTours = function(message, partie) {
 
   sfm.save(partie.player, partie);
 
->>>>>>> bf06d2ccffc73ebb83121f2143d29d7db95a52ec
 };
 
 function checkOpi(partie){
