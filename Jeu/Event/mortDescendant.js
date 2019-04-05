@@ -1,8 +1,6 @@
-const Discord = require('discord.js');
-const myBot = require('../Main/myBot.js');
 const sfm = require('../Main/saveFileManagement.js');
 
-exports.mortDescendant = function(message, partie, id) {
-
-
-}
+exports.mortDescendant = function(partie, ind) {
+  partie.enfants.splice(ind);
+  sfm.save(partie.player, partie);
+};

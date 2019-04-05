@@ -1,11 +1,11 @@
 const Discord = require('discord.js');
 const myBot = require('../Main/myBot.js');
 const sfm = require('../Main/saveFileManagement.js');
-
-var tour = 0 ;
+const initJeu = require('../Main/initJeu.js');
+const his = require('../Historique/historique.js');
 
 exports.gTours = function(message, partie) {
-  sendNouvelleAnnee(message, partie) ;
+  myBot.clear(message);
 
   partie.aviAristo -= 0.14 ;
   partie.aviClerge += 0.01 ;
@@ -13,8 +13,9 @@ exports.gTours = function(message, partie) {
 
   checkOpi(partie) ;
 
-  // CONSEIL
+  // Ecriture des channels
   myBot.writeConseil(message, partie) ;
+<<<<<<< HEAD
 
   // AGES DU ROI SA FEMME ET SES ENFANTS
   partie.age += 5;
@@ -87,12 +88,31 @@ if ( partie.age == 80 ) {
 
   // CLEAR
   myBot.clear()
+=======
+  initJeu.actions(message, partie);
+  myBot.writeFamille(message, partie);
+
+  if (partie.annee > 1300) {
+    his.historique(message, partie);
+  }
+
+  const embed = new Discord.RichEmbed()
+  .setTitle('Année ' + partie.annee + ' !')
+  .setTimestamp()
+  .addField('Meteo', 'Un temps légèrement nuagueux')
+  .setFooter('Cliquez sur ➡ pour passer le tour');
+  partie.annee += 5;
+  message.channel.send({ embed })
+  .then(async function(mes) {
+    await mes.react('➡');
+  });
+>>>>>>> bf06d2ccffc73ebb83121f2143d29d7db95a52ec
 
   sfm.save(partie.player, partie);
 
-  tour++ ;
 };
 
+<<<<<<< HEAD
 function sendNouvelleAnnee(message, partie){
     myBot.clear(message);
     const embed = new Discord.RichEmbed()
@@ -134,6 +154,8 @@ function gameOver(message, partie){
 
 
 
+=======
+>>>>>>> bf06d2ccffc73ebb83121f2143d29d7db95a52ec
 function checkOpi(partie){
   if(partie.aviClerge>1)
     partie.aviClerge = 1 ;
