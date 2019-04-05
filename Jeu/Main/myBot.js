@@ -172,6 +172,7 @@ client.on('messageReactionAdd', (reaction, user) => {
       break;
     case '👶':
       marierEnfant(reaction.message, numPerso, partie)
+      sfm.save(partie.player, partie);
       break;
     case '🎊':
       if (partie.feteOrganise){
@@ -187,6 +188,11 @@ client.on('messageReactionAdd', (reaction, user) => {
         sfm.save(partie.player, partie);
       };
       break;
+    case'🗡':
+      if (partie.epoux != null) {
+        tuerfemme(reaction.message,partie);
+          sfm.save(partie.player, partie);
+      }
   }
 });
 
@@ -409,7 +415,6 @@ function writeStat(message, partie){
 // Statistiques
 function writeStat(message, partie){
 
-  console.log("on ecrit");
   const id = myBot.messageChannel(message, "famille", partie);
   //Récupérer les enfants
   var enf =""
@@ -481,7 +486,7 @@ exports.writeFamille = function(message, partie) {
     // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
   }
 
-  var conjoint = partie.epoux;
+  var conjoint = partie.epoux[0];
   var nom = partie.nom;
   console.log(conjoint,nom,partie.enfants[i][1])
   const embed = new Discord.RichEmbed()
@@ -508,19 +513,28 @@ exports.writeFamille = function(message, partie) {
 function marierEnfant(message,numPerso,partie) {
   const id = myBot.messageChannel(message, "famille", partie);
   var enf =""
-  var pret = "Morgane"
+  var pret = ""
   var nb = 0;
-  for (var i of perso.enfants[numPerso]){
-    enf = enf + "  \n | " +perso.id[perso.enfants[numPerso][i] - 1]  + " "  + perso.nom[perso.enfants[numPerso][i] - 1];
-    nb += 1;
+
+  for (var i in partie.enfants){
+    var num =i + 1;
+    enf = enf + " | " +num + " ->  " +partie.enfants[i][1]  + " \n "  ;
+    // perso.nom[perso.enfsants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
+  }
+  var myArray = ['Marie-Eve', 'Juliette', 'Théophanie'];
+  for (var i in myArray){
+    var num =i + 1;
+    pret = pret + " | " + num + " ->  " +myArray[i]  + " \n "  ;
     // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
   }
+
+  console.log(pret);
   const embed = new Discord.RichEmbed()
   .setTitle('Marier un enfant')
   .setColor(808367)// Symbole médecine
   .setTimestamp() // Crée de l'espace
   .addField(' Liste des enfants  : ', enf)
-  .addField(' Liste des prétendant/es ', ' 1 - Morgane')
+  .addField(' Liste des prétendant/es ', pret)
   .addField(' Séléctionnez l\'enfant à marier et sa prétendante en écrivant le numéro de l\'enfant puis du prétendant', ' -')
   .addField('exemple : commande 1 1', ' - ')
   message.guild.channels.get(id).send({embed})
@@ -533,17 +547,19 @@ function marierEnfant(message,numPerso,partie) {
       const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 
       var enfant;
-      var pretendante = 1;
+      var pretendante;
       // command est la commande écrite par le joueur
        enfant = args[0].toLowerCase() - 1;
-       idenfant = perso.id[perso.enfants[numPerso][enfant] - 1];
+       idenfant = partie.enfants[enfant];
+       pretendante = myArray[args[1].toLowerCase() - 1];
 
-       console.log(idenfant);
-       perso.epoux[idenfant] = 8;
-       console.log(perso.epoux[idenfant]);
-       perso.epoux[8 - 1 ] = idenfant;
+       // on change l'épouse
+      idenfant[3] = pretendante;
 
-       var phrase = "  " + perso.nom[perso.enfants[numPerso][enfant] - 1] + " et " + perso.nom[perso.epoux[idenfant] - 1] + " sont maintenant mari et femme ! ";
+       perso.epoux[8 - 1 ] = idenfant[0];
+       partie.aviClerge += 0.2 ;
+       partie.aviAristo += 0.2 ;
+       var phrase = "  " + partie.enfants[enfant][1] + " et " + partie.enfants[enfant][3] + " sont maintenant mari et femme ! ";
        const embed = new Discord.RichEmbed()
        .setTitle('Marier un enfant')
        .setColor(808367)// Symbole médecine
@@ -551,11 +567,68 @@ function marierEnfant(message,numPerso,partie) {
        .addField(' Félicitations !   : ', phrase)
        message.guild.channels.get(id).send({embed})
 
+
     }
   });
 
 }
 
+function tuerfemme(message,partie) {
+
+  const id = myBot.messageChannel(message, "famille", partie);
+  const embed = new Discord.RichEmbed()
+  .setTitle('Gérez votre famille')
+  .setColor(808367)// Symbole médecine
+  .setTimestamp() // Crée de l'espace
+  .addField( )
+  .addField(':scream:  ', ' Souhaitez vous vraiment vous débarasser de votre femme ?')
+  .addField(' ->   ', ' Répondez oui ou non dans le chat  !')
+  message.guild.channels.get(id).send({embed})
+  .then(async function(mess) {
+    await mess.react('😏');
+  });
+  client.on('message', (message) => {
+
+    // Si le message provient d'un bot ou qu'il ne contient pas le prefix approprié, on ne fait rien
+  	if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+
+    else {
+      const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+
+      var enfant;
+      var pretendante;
+      // command est la commande écrite par le joueur
+       reponse = args.shift().toLowerCase();
+
+       if ( reponse =="non") {
+         var phrase = " " + partie.epoux + " est toujours en vie  " ;
+         const embed = new Discord.RichEmbed()
+         .setTitle('Votre femme va bien')
+         .setColor(808367)// Symbole médecine
+         .setTimestamp() // Crée de l'espace
+         .addField('ouf  ! ', phrase)
+          message.guild.channels.get(id).send({embed})
+       }
+      else {
+
+       partie.aviClerge += 0.2 ;
+       partie.aviAristo += 0.2 ;
+       var phrase = " " + partie.epoux + " a fait une chute fatale dans un puit ! " ;
+       const embed = new Discord.RichEmbed()
+       .setTitle('Votre femme vient de mystérieusement disparaitre')
+       .setColor(808367)// Symbole médecine
+       .setTimestamp() // Crée de l'espace
+       .addField('oops ! ', phrase)
+       message.guild.channels.get(id).send({embed})
+       partie.epoux = null;
+       console.log(partie.epoux);
+       sfm.save(partie.player, partie);
+
+    }
+  }
+  });
+
+}
 
 
 /** Fonction qui écrit le texte explicatif sur le serveur Discord
