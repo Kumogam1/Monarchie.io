@@ -2,7 +2,7 @@
 	"id" : [1,2,3,4,5,6,7,8],
 	"nom" : ["François Ier","Charles Quint","Louis XVI","Marie-Antoinette","Françoise de Foix","Philippe le Boucher", "Henry XX","Morgane"],
 	"sexe" : ["Homme","Homme","Homme","Femme","Femme","Femme","Homme","Homme","Femme"],
-	"age" : [60,42,20,65,19 ,5, 5 ,8 ],
+	"age" : [40,42,20,65,19 ,5, 5 ,8 ],
 	"epoux" : [4, null, null, 1,null,null,8,null],
 	"role" : ["Roi","Roi","Roi","Roi","Reine","Reine","Prince","Prince","Prétendante"],
 	"enfants" : [[6,7], [], [], [6,7], [], [], [], []],
