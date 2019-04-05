@@ -9,8 +9,6 @@
 
 ## Objectifs pédagogiques du jeu
 
-![T4](screenshot.png)
-
 La monarchie est soumise à des lois qui ne sont pas toujours contournables, même pas le monarque lui-même. Les droits de succesions peuvent s'avérer compliqués; il est alors primordial d'assurer sa déscendance afin de rester au pouvoir.
 
 ## Contexte
@@ -27,6 +25,21 @@ Vous pouvez gérer votre famille; marier vos enfants améliora vos relations ave
 Les relations vous permettrons de changer la législation en votre faveure en faisant voter des lois pour que votre descendance reste au pouvoir après votre mort ou en abrogeant celles qui menacent votre lignée.
 
 Vous allez alors avancer dans le temps et voir les générations de votre famille de succéder.
+
+### Acceder au jeu
+![T4](screenshot.png)
+
+### Choisissez votre personnage
+![T4](screenshot2.png)
+
+### Gèrer votre famille
+![T4](screenshot3.png)
+
+### Consulter les loies
+![T4](screenshot4.png)
+
+### Organiser des evenements
+![T4](screenshot5.png)
 
 ## Comment l'installer ?
 
