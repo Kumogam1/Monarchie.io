@@ -149,6 +149,10 @@ client.on('messageReactionAdd', (reaction, user) => {
       myBot.clear(reaction.message);
       numPerso = 0;
       initJeu.initPerso(reaction.message, numPerso, partie);
+<<<<<<< HEAD
+      writeFamille(reaction.message,numPerso,partie);
+=======
+>>>>>>> bf06d2ccffc73ebb83121f2143d29d7db95a52ec
       break;
     case '👱':
       myBot.clear(reaction.message);
@@ -171,6 +175,7 @@ client.on('messageReactionAdd', (reaction, user) => {
       initJeu.initPerso(reaction.message, numPerso, partie);
       break;
     case '👶':
+
       marierEnfant(reaction.message, numPerso, partie)
       sfm.save(partie.player, partie);
       break;
@@ -189,10 +194,11 @@ client.on('messageReactionAdd', (reaction, user) => {
       };
       break;
     case'🗡':
-      if (partie.epoux != null) {
+    /*  if (partie.epoux != null) {
         tuerfemme(reaction.message,partie);
           sfm.save(partie.player, partie);
       }
+      */
   }
 });
 
@@ -476,7 +482,12 @@ message.guild.channels.get(id).send({embed: {
 	});
 }
 
+<<<<<<< HEAD
+function writeFamille(message,numPerso,partie) {
+    myBot.clear(message);
+=======
 exports.writeFamille = function(message, partie) {
+>>>>>>> bf06d2ccffc73ebb83121f2143d29d7db95a52ec
   const id = myBot.messageChannel(message, "famille", partie);
   //Récupérer les enfants
   var enf =""
@@ -554,12 +565,12 @@ function marierEnfant(message,numPerso,partie) {
        pretendante = myArray[args[1].toLowerCase() - 1];
 
        // on change l'épouse
-      idenfant[3] = pretendante;
+      idenfant[4] = pretendante;
 
        perso.epoux[8 - 1 ] = idenfant[0];
        partie.aviClerge += 0.2 ;
        partie.aviAristo += 0.2 ;
-       var phrase = "  " + partie.enfants[enfant][1] + " et " + partie.enfants[enfant][3] + " sont maintenant mari et femme ! ";
+       var phrase = "  " + partie.enfants[enfant][1] + " et " + partie.enfants[enfant][4] + " sont maintenant mari et femme ! ";
        const embed = new Discord.RichEmbed()
        .setTitle('Marier un enfant')
        .setColor(808367)// Symbole médecine
