@@ -67,8 +67,6 @@ client.on('message', (message) => {
       case 'fct':
         writeConseil(message, partie);
         break;
-      case 'gt':
-        gt.gTours(message, partie);
       // Start : commencer une partie
       case 'start':
         //sfm.save(message.author.id, partie);
@@ -151,8 +149,6 @@ client.on('messageReactionAdd', (reaction, user) => {
       myBot.clear(reaction.message);
       numPerso = 0;
       initJeu.initPerso(reaction.message, numPerso, partie);
-      writeFamille(reaction.message,numPerso,partie);
-
       break;
     case '👱':
       myBot.clear(reaction.message);
@@ -475,8 +471,7 @@ message.guild.channels.get(id).send({embed: {
 	});
 }
 
-function writeFamille(message,numPerso,partie) {
-
+exports.writeFamille = function(message, partie) {
   const id = myBot.messageChannel(message, "famille", partie);
   //Récupérer les enfants
   var enf =""
