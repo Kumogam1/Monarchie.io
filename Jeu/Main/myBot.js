@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const myBot = require('./myBot.js');
 
-const opi = require('../Personnages/opignon.json');
+const opi = require('../Personnages/opinion.json');
 
 
 const initJeu = require('./initJeu.js');
@@ -144,7 +144,6 @@ client.on('messageReactionAdd', (reaction, user) => {
     // Passer à l'évenement suivant
     case '➡':
       gt.gTours(reaction.message, partie);
-      myBot.writeConseil(reaction.message, partie) ;
       break;
     case '👴':
       myBot.clear(reaction.message);
@@ -302,25 +301,25 @@ exports.writeConseil = function writeConseil(message, partie){
 
   for(var i = 0 ; i<opi.loies.length ; i++){
     if(opi.aviArmee[i]<0.33)
-      opiArmee  += "" + opi.loies[i] + " :\n:small_orange_diamond:  nous sommes favorable à " + opi.aviArmee[i] *100 + "%\n" ;
+      opiArmee  += "" + opi.loies[i] + " :\n:small_orange_diamond:  nous sommes favorable à " + Math.trunc(opi.aviArmee[i] *100) + "%\n" ;
     else if(opi.aviArmee[i]<0.66)
-      opiArmee  += "" + opi.loies[i] + " :\n:white_small_square:  nous sommes favorable à " + opi.aviArmee[i] *100 + "%\n" ;
+      opiArmee  += "" + opi.loies[i] + " :\n:white_small_square:  nous sommes favorable à "   + Math.trunc(opi.aviArmee[i] *100) + "%\n" ;
     else
-      opiArmee  += "" + opi.loies[i] + " :\n:small_blue_diamond:  nous sommes favorable à " + opi.aviArmee[i] *100 + "%\n" ;
+      opiArmee  += "" + opi.loies[i] + " :\n:small_blue_diamond:  nous sommes favorable à "   + Math.trunc(opi.aviArmee[i] *100) + "%\n" ;
 
     if(opi.aviClerge[i]<0.33)
-      opiClerg  += "" + opi.loies[i] + " :\n:small_orange_diamond:  nous sommes favorable à " + opi.aviClerge[i] *100 + "%\n" ;
+      opiClerg  += "" + opi.loies[i] + " :\n:small_orange_diamond:  nous sommes favorable à " + Math.trunc(opi.aviClerge[i] *100) + "%\n" ;
     else if(opi.aviClerge[i]<0.66)
-      opiClerg  += "" + opi.loies[i] + " :\n:white_small_square:  nous sommes favorable à " + opi.aviClerge[i] *100 + "%\n" ;
+      opiClerg  += "" + opi.loies[i] + " :\n:white_small_square:  nous sommes favorable à "   + Math.trunc(opi.aviClerge[i] *100) + "%\n" ;
     else
-      opiClerg  += "" + opi.loies[i] + " :\n:small_blue_diamond:  nous sommes favorable à " + opi.aviClerge[i] *100 + "%\n" ;
+      opiClerg  += "" + opi.loies[i] + " :\n:small_blue_diamond:  nous sommes favorable à "   + Math.trunc(opi.aviClerge[i] *100) + "%\n" ;
 
     if(opi.aviAristo[i]<0.33)
-      opiAristo  += "" + opi.loies[i] + " :\n:small_orange_diamond:  nous sommes favorable à " + opi.aviAristo[i] *100 + "%\n" ;
+      opiAristo  += "" + opi.loies[i] + " :\n:small_orange_diamond:  nous sommes favorable à " + Math.trunc(opi.aviAristo[i] *100) + "%\n" ;
     else if(opi.aviAristo[i]<0.66)
-      opiAristo  += "" + opi.loies[i] + " :\n:white_small_square:  nous sommes favorable à " + opi.aviAristo[i] *100 + "%\n" ;
+      opiAristo  += "" + opi.loies[i] + " :\n:white_small_square:  nous sommes favorable à "   + Math.trunc(opi.aviAristo[i] *100) + "%\n" ;
     else
-      opiAristo  += "" + opi.loies[i] + " :\n:small_blue_diamond:  nous sommes favorable à " + opi.aviAristo[i] *100 + "%\n" ;
+      opiAristo  += "" + opi.loies[i] + " :\n:small_blue_diamond:  nous sommes favorable à "   + Math.trunc(opi.aviAristo[i] *100) + "%\n" ;
   }
 
   message.guild.channels.get(id).send({embed: {
@@ -331,24 +330,25 @@ exports.writeConseil = function writeConseil(message, partie){
       },
       fields: [
         {
-          name : "Armées (" + opi.armee*100 + '%)',
+          name : "Armées (" + partie.aviArmee*100 + '%)',
           value : opiArmee,
         },
         {
-          name : "Clergé (" + opi.clerge*100 + '%)',
+          name : "Clergé (" + partie.aviClerge*100 + '%)',
           value : opiClerg,
         },
         {
-          name : "Arosticrates (" + opi.aristo*100 +'%)',
+          name : "Arosticrates (" + partie.aviAristo*100 +'%)',
           value : opiAristo,
         },
       ],
     }
   }) ;
-/*
+  /*  EXEMPLE DE VOTE
   console.log(opi.loies[0] + " : " +vote(opi.loies[0]));
   console.log(opi.loies[1] + " : " +vote(opi.loies[1]));
-  console.log(opi.loies[2] + " : " +vote(opi.loies[2]));*/
+  console.log(opi.loies[2] + " : " +vote(opi.loies[2]));
+  //*/
 }
 
 exports.vote = function vote(law, partie){
@@ -356,7 +356,7 @@ exports.vote = function vote(law, partie){
 
   for(var i in opi.loies.length){
     if(opi.loies[i] == "law")
-      aviFinal = (opi.aviArmee[i] * opi.armee + opi.aviClerge[i] * opi.clerge + opi.aviAristo * opi.aristo) / (opi.aristo + opi.clerge + opi.armee) ;
+      aviFinal = (opi.aviArmee[i] * partie.aviArmee + opi.aviClerge[i] * partie.aviClerge + opi.aviAristo[i] * partie.aviAristo) / (partie.aviAristo + partie.aviClerge + partie.aviArmee) ;
   }
 
   return aviFinal >= 0.5 ;
@@ -615,6 +615,14 @@ function guerre(message, partie){
   var res = 'Vous avez perdue la guerre, l\'opinion générale à votre égart a baissé';
   if (myBot.war() == 1){
     res = 'Vous avez gagné la guerre, vous gagnez en popularité'
+    partie.avisArmee += 0.2;
+    partie.avisClerg += 0.2;
+    partie.avisAristo += 0.2;
+  }
+  else{
+    partie.avisArmee -= 0.2;
+    partie.avisClerg -= 0.2;
+    partie.avisAristo -= 0.2;
   }
 
   const embed = new Discord.RichEmbed()
@@ -629,7 +637,11 @@ function guerre(message, partie){
 function fete(message, partie){
   var res = 'La soirée fut un desastre, votre relation avec la noblesse s\'est envenimée';
   if (myBot.party() == 1){
-    res = 'La soirée fut un succès, votre relation avec la noblesse s\'est améliorée'
+    res = 'La soirée fut un succès, votre relation avec la noblesse s\'est améliorée';
+    partie.opiAristo += 0.1;
+  }
+  else{
+    partie.opiAristo -= 0.1;
   }
 
   const embed = new Discord.RichEmbed()
