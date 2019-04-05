@@ -417,7 +417,6 @@ function writeStat(message, partie){
 // Statistiques
 function writeStat(message, partie){
 
-  console.log("on ecrit");
   const id = myBot.messageChannel(message, "famille", partie);
   //Récupérer les enfants
   var enf =""
@@ -602,8 +601,8 @@ function tuerfemme(message,partie) {
       var enfant;
       var pretendante;
       // command est la commande écrite par le joueur
-       reponse = args[0].toLowerCase() - 1;
-       console.log(reponse);
+       reponse = args.shift().toLowerCase();
+
        if ( reponse =="non") {
          var phrase = " " + partie.epoux + " est toujours en vie  " ;
          const embed = new Discord.RichEmbed()
@@ -611,6 +610,7 @@ function tuerfemme(message,partie) {
          .setColor(808367)// Symbole médecine
          .setTimestamp() // Crée de l'espace
          .addField('ouf  ! ', phrase)
+          message.guild.channels.get(id).send({embed})
        }
       else {
 
@@ -624,7 +624,8 @@ function tuerfemme(message,partie) {
        .addField('oops ! ', phrase)
        message.guild.channels.get(id).send({embed})
        partie.epoux = null;
-
+       console.log(partie.epoux);
+       sfm.save(partie.player, partie);
 
     }
   }

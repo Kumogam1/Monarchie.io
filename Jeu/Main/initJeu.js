@@ -328,21 +328,20 @@ exports.initPerso = function(message, numPerso, partie) {
 	var gosses =[];
 	for ( var i in enfants) {
 		var e = [];
-		console.log(i);
 		e.push(i);
 		e.push(perso.nom[enfants[i] - 1])
 		e.push(perso.age[enfants[i] - 1])
 		if ( perso.epoux[enfants[i] - 1] == null) {
 
 			e.push("");
-			console.log("c'est bien null ");
+			console.log( " YESSSSSSSSSSSSSSc'est bien null ");
 		}
 		else {
 			e.push(perso.nom[perso.epoux[enfants[i] - 1] - 1]);
 		}
 
 		gosses.push(e);
-		console.log(e);
+
 	}
 	partie.enfants = gosses;
 	sfm.save(partie.player, partie);
