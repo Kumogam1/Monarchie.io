@@ -3,7 +3,7 @@
 	"nom" : ["François Ier","Charles Quint","Louis XVI","Marie-Antoinette","Françoise de Foix","Philippe le Boucher", "Henry XX","Morgane"],
 	"sexe" : ["Homme","Homme","Homme","Femme","Femme","Femme","Homme","Homme","Femme"],
 	"age" : ["70 ans","42 ans","20 ans","65 ans","19 ans","5 ans", " 5 ans","8 ans"],
-	"epoux" : [4, 0, 0, 1,0,8,8,0],
+	"epoux" : [4, 0, 0, 1,0,null,8,0],
 	"role" : ["Roi","Roi","Roi","Roi","Reine","Reine","Prince","Prince","Prétendante"],
 	"enfants" : [[6,7], [], [], [6,7], [], [], [], []],
 	"icone" : ["👴","👱","👲","👵","👸","👱","👱"]

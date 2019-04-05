@@ -324,7 +324,15 @@ exports.initPerso = function(message, numPerso, partie) {
 		e.push(i);
 		e.push(perso.nom[enfants[i] - 1])
 		e.push(perso.age[enfants[i] - 1])
-		e.push(perso.nom[perso.epoux[enfants[i] - 1] - 1])
+		if ( perso.epoux == null) {
+
+			e.push("");
+			console.log("c'est bien null ");
+		}
+		else {
+			e.push(perso.nom[perso.epoux[enfants[i] - 1] - 1]);
+		}
+
 		gosses.push(e);
 		console.log(e);
 	}

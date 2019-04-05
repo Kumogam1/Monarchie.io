@@ -556,7 +556,7 @@ function marierEnfant(message,numPerso,partie) {
 
        perso.epoux[8 - 1 ] = idenfant[0];
        partie.aviClerge += 0.2 ;
-      partie.avisAristo += 0.2 ;
+      partie.aviAristo += 0.2 ;
        var phrase = "  " + partie.enfants[enfant][1] + " et " + partie.enfants[enfant][3] + " sont maintenant mari et femme ! ";
        const embed = new Discord.RichEmbed()
        .setTitle('Marier un enfant')
