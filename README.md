@@ -21,7 +21,7 @@ Vous allez alors avancer dans le temps et voir les générations de votre famill
 
 ## Comment l'installer ?
 
-* Le bot tourne déjà sur un serveur; vous avez juste à accepeter l'invitation sur le server Discord
+* Si le bot tourne déjà sur un serveur Discord, vous avez juste à rejoindre ce serveur.
 
 * Sinon, vous allez créer un bot.
     + Tout d'abord, télécharger [node.js](https://nodejs.org/en/download/) puis redémarrer votre ordinateur (ou créer une varible d'environement).
