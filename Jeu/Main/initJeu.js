@@ -314,19 +314,34 @@ exports.initPerso = function(message, numPerso, partie) {
 	partie.nom = perso.nom[numPerso];
 	partie.sexe = perso.sexe[numPerso];
 	partie.age = perso.age[numPerso];
-	partie.epoux = perso.nom[perso.epoux[numPerso] - 1];
+
+	if ( perso.epoux[numPerso] != null) {
+	partie.epoux = [perso.nom[perso.epoux[numPerso] - 1], perso.age[perso.epoux[numPerso] - 1],perso.sexe[perso.epoux[numPerso] - 1]];
+
+	}
+	else {
+		partie.epoux = null;
+	}
+
 	partie.role = perso.role[numPerso];
 	var enfants = perso.enfants[numPerso];
 	var gosses =[];
 	for ( var i in enfants) {
 		var e = [];
-		console.log(i);
 		e.push(i);
 		e.push(perso.nom[enfants[i] - 1])
 		e.push(perso.age[enfants[i] - 1])
-		e.push(perso.nom[perso.epoux[enfants[i] - 1] - 1])
+		if ( perso.epoux[enfants[i] - 1] == null) {
+
+			e.push("");
+			console.log( " YESSSSSSSSSSSSSSc'est bien null ");
+		}
+		else {
+			e.push(perso.nom[perso.epoux[enfants[i] - 1] - 1]);
+		}
+
 		gosses.push(e);
-		console.log(e);
+
 	}
 	partie.enfants = gosses;
 	sfm.save(partie.player, partie);
