@@ -30,7 +30,7 @@ exports.gTours = function(message, partie) {
 
 
   // ON VERIFIE SI LE ROI DOIT MOURIR
-
+  var nouveauroi = 	partie.enfants[0];
 if ( partie.age == 80 ) {
   if ( enfants == null) {
 
@@ -38,7 +38,13 @@ if ( partie.age == 80 ) {
   }
   else {
       // SI IL DOIT MOURIR ON SELECTIONNE LE PREMIER FILS
-    var nouveauroi = 	partie.enfants[0];
+
+    if ( nouveauroi[3] =="Femme") {
+
+      // fin
+    }
+
+    else {
 
     for ( var i in enfants) {
       // On regarde dans la liste des Enfants
@@ -54,11 +60,15 @@ if ( partie.age == 80 ) {
         if (candidat[2] > nouveauroi[2] && candidat[3] =="Homme") {
 
         }
-        else if ( candidat[2] > nouveauroi[2] &&  )
+        // si loi salique abrogée
+        else if ( candidat[2] > nouveauroi[2]    )
       }
 
     }
   }
+}
+
+// on modifie les stats de la partie pour le nouveau roi
 
 
 }
