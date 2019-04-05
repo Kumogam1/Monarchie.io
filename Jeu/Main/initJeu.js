@@ -128,10 +128,6 @@ function initChannel(message, partie, rolePers, channelName, chanGrpId) {
 
 			if(channelName == 'Hub')
 				bienvenue(message);
-
-			if(channelName == "Actions")
-				actions(message, partie);
-
 		}
 		).catch(console.error);
 	}).catch(console.error);
@@ -282,8 +278,9 @@ exports.choixPerso = function choixPerso(message, partie)
 		await mess.react('👸');
 });
 };
+
 // Fonctions menu action
-function actions(message, partie){
+exports.actions = function(message, partie) {
 	const chanId = myBot.messageChannel(message, 'actions', partie);
 
 	const embed = new Discord.RichEmbed()
@@ -297,18 +294,9 @@ function actions(message, partie){
 		await mess.react('🎊');
 		await mess.react('🏹');
 	});
-
-function initOpi(message, numPerso, partie) {
-	partie.aviClerge = opi.clerge ;
-	partie.aviArmee  = opi.armee  ;
-	partie.aviAristo = opi.aristo ;
-
-	sfm.save(partie.player, partie);
 }
 
 exports.initPerso = function(message, numPerso, partie) {
-
-	initOpi(message, numPerso, partie) ;
 
 	partie.id = perso.id[numPerso];
 	partie.nom = perso.nom[numPerso];
@@ -344,9 +332,10 @@ exports.initPerso = function(message, numPerso, partie) {
 
 	}
 	partie.enfants = gosses;
+	partie.aviClerge = opi.clerge;
+	partie.aviArmee  = opi.armee;
+	partie.aviAristo = opi.aristo;
 	sfm.save(partie.player, partie);
 	gt.gTours(message, partie);
 
 };
-
-}
