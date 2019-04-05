@@ -615,6 +615,14 @@ function guerre(message, partie){
   var res = 'Vous avez perdue la guerre, l\'opinion générale à votre égart a baissé';
   if (myBot.war() == 1){
     res = 'Vous avez gagné la guerre, vous gagnez en popularité'
+    partie.avisArmee += 0.2;
+    partie.avisClerg += 0.2;
+    partie.avisAristo += 0.2;
+  }
+  else{
+    partie.avisArmee -= 0.2;
+    partie.avisClerg -= 0.2;
+    partie.avisAristo -= 0.2;
   }
 
   const embed = new Discord.RichEmbed()
@@ -629,7 +637,11 @@ function guerre(message, partie){
 function fete(message, partie){
   var res = 'La soirée fut un desastre, votre relation avec la noblesse s\'est envenimée';
   if (myBot.party() == 1){
-    res = 'La soirée fut un succès, votre relation avec la noblesse s\'est améliorée'
+    res = 'La soirée fut un succès, votre relation avec la noblesse s\'est améliorée';
+    partie.opiAristo += 0.1;
+  }
+  else{
+    partie.opiAristo -= 0.1;
   }
 
   const embed = new Discord.RichEmbed()
