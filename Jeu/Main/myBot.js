@@ -513,7 +513,7 @@ function marierEnfant(message,numPerso,partie) {
   var enf =""
   var pret = ""
   var nb = 0;
-  n
+
   for (var i in partie.enfants){
     var num =i + 1;
     enf = enf + " | " +num + " ->  " +partie.enfants[i][1]  + " \n "  ;
@@ -563,6 +563,7 @@ function marierEnfant(message,numPerso,partie) {
        .setTimestamp() // Crée de l'espace
        .addField(' Félicitations !   : ', phrase)
        message.guild.channels.get(id).send({embed})
+         sfm.save(partie.player, partie);
 
     }
   });
