@@ -19,7 +19,7 @@ Les relations vous permettrons de changer la législation en votre faveure en fa
 
 Vous allez alors avancer dans le temps et voir les générations de votre famille de succéder.
 
-## Comment jouer ?
+## Comment l'installer ?
 
 * Le bot tourne déjà sur un serveur; vous avez juste à accepeter l'invitation sur le server Discord
 
