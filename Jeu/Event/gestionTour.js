@@ -5,9 +5,9 @@ const sfm = require('../Main/saveFileManagement.js');
 exports.gTours = function(message, partie) {
   sendNouvelleAnnee(message, partie) ;
 
-  partie.aviAristo -= 0.14 ;
-  partie.aviClerge += 0.01 ;
-  partie.aviArmee += 0.08 ;
+  partie.aviAristo -= 0.01 ;
+  partie.aviClerge -= 0.01 ;
+  partie.aviArmee  -= 0.01 ;
 
   checkOpi(partie) ;
 

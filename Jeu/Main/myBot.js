@@ -107,7 +107,8 @@ client.on('message', (message) => {
         break;
       // Autre : commande inconnue
       default:
-        message.channel.send('Commande inconnue');
+        if(!writeLaw(command,message,partie))
+          message.channel.send('Commande inconnue');
         break;
 		}
   }
@@ -261,6 +262,51 @@ exports.writePerso = function writePerso(message, numPerso) {
 }
 
 // Conseil
+function writeLaw(law, message, partie){
+
+
+  console.log(law);
+
+  var desc = "" ;
+  for(var i=0 ; i< opi.loies.length ; i++){
+    if(opi.loies[i].toLowerCase() == law){
+      desc = opi.loiesDesc[i] ;
+      console.log(law + " == " + opi.loies[i].toLowerCase() );
+    }else
+      console.log(law + " != " + opi.loies[i].toLowerCase() );
+  }
+  if(desc == "")
+    return false ;
+
+
+  var id = myBot.messageChannel(message, "conseil", partie);
+
+  message.guild.channels.get(id).send({embed: {
+      color : 0xFFFFFF,
+      author:
+      {
+        name: '🤔',
+      },
+      fields: [
+        {
+          name : "Loie " + law,
+          value : desc,
+        }
+      ],
+    }
+  }) ;
+
+/*
+  message.guild.channels.get(id).send({embed})
+  .then(async function(mess) {
+		await mess.react(':think:');
+    await mess.react(':heart:');
+    await mess.react(':white_small_square:');
+	});*/
+
+  return true ;
+}
+
 exports.writeConseil = function writeConseil(message, partie){
 
   var id = myBot.messageChannel(message, "conseil", partie);
@@ -341,10 +387,15 @@ exports.writeConseil = function writeConseil(message, partie){
           name : "Arosticrates (" + partie.aviAristo*100 +'%)',
           value : opiAristo,
         },
+        {
+          name : "Donnes ton avis, vote :incoming_envelope: ",
+          value : "donne ton avis sur les loies avec : `" + config.prefix + " <nom_de_loie>` ",
+        },
       ],
     }
   }) ;
-  //*  EXEMPLE DE VOTE
+
+  /*  EXEMPLE DE VOTE
   console.log(opi.loies[0] + " : " +vote(opi.loies[0],partie));
   console.log(opi.loies[1] + " : " +vote(opi.loies[1],partie));
   console.log(opi.loies[2] + " : " +vote(opi.loies[2],partie));
