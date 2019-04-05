@@ -309,12 +309,13 @@ exports.initPerso = function(message, numPerso, partie) {
 	partie.nom = perso.nom[numPerso];
 	partie.sexe = perso.sexe[numPerso];
 	partie.age = perso.age[numPerso];
-	partie.epoux = perso.age[numPerso];
+	partie.epoux = perso.nom[perso.epoux[numPerso] - 1];
 	partie.role = perso.role[numPerso];
 	var enfants = perso.enfants[numPerso];
-	var gosses;
+	var gosses =[];
 	for ( var i in enfants) {
-		var e;
+		var e = [];
+		console.log(i);
 		e.push(i);
 		e.push(perso.nom[enfants[i] - 1])
 		e.push(perso.age[enfants[i] - 1])
