@@ -531,13 +531,16 @@ message.guild.channels.get(id).send({embed: {
 exports.writeFamille = function(message, partie) {
   const id = myBot.messageChannel(message, "famille", partie);
   //Récupérer les enfants
-  var enf =" "
-
-  for (var i in partie.enfants){
-    enf = enf + " | " +partie.enfants[i][1]  + " "  ;
-    // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
+  var enf='';
+  if(partie.enfants.length>0){
+      for (var i = 0; i < partie.enfants.length; i++) {
+        enf = enf + " | " +partie.enfants[i][1]  + " "  ;
+        // perso.nom[perso.enfants[i]] = Le nom de l'enfant dont l'ID est mentionné au rang i
+      }
   }
-
+  else {
+     enf ='aucun';
+  }
   var conjoint = partie.epoux;
   var nom = partie.nom;
   const embed = new Discord.RichEmbed()

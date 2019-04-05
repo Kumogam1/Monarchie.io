@@ -9,14 +9,18 @@ const md = require('../Event/mortDescendant.js');
 * @param {number} partie.numJour - Numéro du jour
 **/
 exports.historique = function(message, partie) {
+	let listmortId = [];
 	let listmort = [];
 	const chanId = myBot.messageChannel(message, 'historique', partie);
 
 	for (var i = 0; i < partie.enfants.length; i++) {
 		if(Math.random() < 0.2) {
+			listmortId.push(i);
 			listmort.push(partie.enfants[i]);
-			md.mortDescendant(partie, i);
 		}
+	}
+	for (var i = 0; i < listmort.length; i++) {
+		md.mortDescendant(partie, listmort[i] - i);
 	}
 
 	let embed = new Discord.RichEmbed()

@@ -12,13 +12,13 @@ exports.gTours = function(message, partie) {
   checkOpi(partie) ;
 
   // Ecriture des channels
+  if (partie.annee > 1300) {
+    his.historique(message, partie);
+  }
   myBot.writeConseil(message, partie) ;
   initJeu.actions(message, partie);
   myBot.writeFamille(message, partie);
 
-  if (partie.annee > 1300) {
-    his.historique(message, partie);
-  }
 
   const embed = new Discord.RichEmbed()
   .setTitle('Année ' + partie.annee + ' !')
