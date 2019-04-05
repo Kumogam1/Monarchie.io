@@ -1,6 +1,15 @@
 # Monarchie.io
 
+> **Développeurs :**
+> * Amal MATMATI
+> * Edouard GU
+> * Anaïs EGNER
+> * Quentin de POTTER
+
+
 ## Objectifs pédagogiques du jeu
+
+![T4](screenshot.png)
 
 La monarchie est soumise à des lois qui ne sont pas toujours contournables, même pas le monarque lui-même. Les droits de succesions peuvent s'avérer compliqués; il est alors primordial d'assurer sa déscendance afin de rester au pouvoir.
 
@@ -18,3 +27,7 @@ Vous pouvez gérer votre famille; marier vos enfants améliora vos relations ave
 Les relations vous permettrons de changer la législation en votre faveure en faisant voter des lois pour que votre descendance reste au pouvoir après votre mort ou en abrogeant celles qui menacent votre lignée.
 
 Vous allez alors avancer dans le temps et voir les générations de votre famille de succéder.
+
+## Lien sur un serveur test
+
+https://discord.gg/ShsSVNn
